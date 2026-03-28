@@ -1,0 +1,28 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+---
+
+<SiteLayout
+  title="Voice of Self"
+  description="Voice of Self public site, privacy policy, and terms of service."
+>
+  <section class="hero">
+    <p class="hero__eyebrow">Public Site</p>
+    <h1 class="hero__title">Voice of Self</h1>
+    <p class="hero__body">
+      A calm, deliberate home for the app&apos;s public legal pages today, with
+      room to grow into something richer later.
+    </p>
+
+    <div class="hero__actions">
+      <a class="hero__button hero__button--primary" href={withBase("/privacy-policy/")}>
+        Privacy Policy
+      </a>
+      <a class="hero__button hero__button--secondary" href={withBase("/terms-of-service/")}>
+        Terms of Service
+      </a>
+    </div>
+  </section>
+</SiteLayout>
