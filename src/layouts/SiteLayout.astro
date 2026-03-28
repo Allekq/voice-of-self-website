@@ -33,6 +33,7 @@ const isHomePage = pathname === baseUrl;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href={`${baseUrl}favicon.png`} />
     <title>{title}</title>
   </head>
   <body class:list={[isHomePage ? "is-home" : "is-legal"]}>
