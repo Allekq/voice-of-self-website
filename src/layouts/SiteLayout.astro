@@ -1,19 +1,30 @@
 ---
 import "../styles/global.css";
 
-interface Props {
-  title: string;
+interface Frontmatter {
+  title?: string;
   description?: string;
 }
 
-const {
-  title,
-  description = "Voice of Self legal hub and public website.",
-} = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  frontmatter?: Frontmatter;
+}
 
-const baseUrl = import.meta.env.BASE_URL;
+const normalizeBasePath = (path: string) => (path.endsWith("/") ? path : `${path}/`);
+
+const { frontmatter } = Astro.props as Props;
+const title = Astro.props.title ?? frontmatter?.title ?? "Voice of Self";
+const description =
+  Astro.props.description ??
+  frontmatter?.description ??
+  "Voice of Self legal hub and public website.";
+
+const baseUrl = normalizeBasePath(import.meta.env.BASE_URL);
+const pathname = normalizeBasePath(Astro.url.pathname);
 const homeHref = baseUrl;
-const isHomePage = Astro.url.pathname === baseUrl;
+const isHomePage = pathname === baseUrl;
 ---
 
 <!doctype html>
