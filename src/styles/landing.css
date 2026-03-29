@@ -801,10 +801,15 @@
 }
 
 .floating-feature-card {
-  --hero-parallax-rotate-x: 0deg;
-  --hero-parallax-rotate-y: 0deg;
-  --hero-parallax-x: 0px;
-  --hero-parallax-y: 0px;
+  --floating-card-range-x: 0.33rem;
+  --floating-card-range-y: 0.63rem;
+  --floating-card-tilt: 1.2deg;
+  --float-direction-x: 1;
+  --float-direction-y: 1;
+  --float-range-x-scale: 1;
+  --float-range-y-scale: 1;
+  --float-tilt-direction: 1;
+  --float-tilt-scale: 1;
   --orbit-offset-x: 0px;
   --orbit-offset-y: 0px;
   --orbit-rotate: 0deg;
@@ -814,28 +819,21 @@
   opacity: 1;
   position: absolute;
   transform:
-    translate3d(
-      calc(var(--hero-parallax-x) + var(--orbit-offset-x)),
-      calc(var(--hero-parallax-y) + var(--orbit-offset-y)),
-      0
-    )
-    rotateX(var(--hero-parallax-rotate-x))
-    rotateY(var(--hero-parallax-rotate-y))
+    translate3d(var(--orbit-offset-x), var(--orbit-offset-y), 0)
     rotateZ(var(--orbit-rotate))
     scale(var(--orbit-scale));
   transition:
     opacity var(--motion-slow),
-    transform var(--motion-fold),
-    box-shadow var(--motion-standard),
-    border-color var(--motion-standard);
+    transform var(--motion-fold);
   will-change: transform, opacity;
   width: 100%;
   z-index: var(--z-floating);
 }
 
 .floating-feature-card__inner {
-  --drift-x: 0px;
-  --drift-y: 0px;
+  --float-range-x: calc(var(--floating-card-range-x) * var(--float-range-x-scale));
+  --float-range-y: calc(var(--floating-card-range-y) * var(--float-range-y-scale));
+  --float-tilt: calc(var(--floating-card-tilt) * var(--float-tilt-scale));
   align-items: center;
   background: rgba(18, 23, 38, 0.95);
   border: 1px solid var(--color-accent-border);
@@ -846,7 +844,8 @@
   gap: 0.8rem;
   box-sizing: border-box;
   padding: 0.8rem 0.9rem;
-  transform: translate3d(var(--drift-x), var(--drift-y), 0);
+  animation: hero-card-float 7.2s ease-in-out infinite;
+  transform: translate3d(0, 0, 0);
   width: 100%;
   will-change: transform;
 }
@@ -883,6 +882,12 @@
   --orbit-start-rotate: -8deg;
   --orbit-start-x: -1.8rem;
   --orbit-start-y: -1.1rem;
+  --float-direction-x: -1;
+  --float-direction-y: 1;
+  --float-range-x-scale: 1.08;
+  --float-range-y-scale: 1.12;
+  --float-tilt-direction: -1;
+  --float-tilt-scale: 0.95;
   transition-delay: 120ms;
 }
 
@@ -890,6 +895,12 @@
   --orbit-start-rotate: -6deg;
   --orbit-start-x: -1.65rem;
   --orbit-start-y: 1.1rem;
+  --float-direction-x: 1;
+  --float-direction-y: -1;
+  --float-range-x-scale: 1.38;
+  --float-range-y-scale: 1.32;
+  --float-tilt-direction: 1;
+  --float-tilt-scale: 1.08;
   transition-delay: 210ms;
 }
 
@@ -897,7 +908,28 @@
   --orbit-start-rotate: 8deg;
   --orbit-start-x: 1.9rem;
   --orbit-start-y: -0.5rem;
+  --float-direction-x: -1;
+  --float-direction-y: -1;
+  --float-range-x-scale: 0.96;
+  --float-range-y-scale: 1.22;
+  --float-tilt-direction: 1;
+  --float-tilt-scale: 1.02;
   transition-delay: 300ms;
+}
+
+.floating-feature-card--top-left .floating-feature-card__inner {
+  animation-delay: -1.1s;
+  animation-duration: 6.6s;
+}
+
+.floating-feature-card--bottom-left .floating-feature-card__inner {
+  animation-delay: -3.4s;
+  animation-duration: 7.8s;
+}
+
+.floating-feature-card--right .floating-feature-card__inner {
+  animation-delay: -2.2s;
+  animation-duration: 7s;
 }
 
 .floating-feature-card__copy {
@@ -929,6 +961,7 @@
 .product-preview-card {
   --surface-glow-x: 50%;
   --surface-glow-y: 22%;
+  --surface-glow-opacity: 0;
   --surface-hover-lift: 0px;
   --surface-rotate-x: 0deg;
   --surface-rotate-y: 0deg;
@@ -950,7 +983,7 @@
     );
   content: "";
   inset: 0;
-  opacity: 0;
+  opacity: var(--surface-glow-opacity);
   pointer-events: none;
   position: absolute;
   transition:
@@ -965,10 +998,8 @@
   z-index: 1;
 }
 
-.feature-card:hover::before,
-.feature-card.is-depth-active::before,
-.product-preview-card:hover::before,
-.product-preview-card.is-depth-active::before {
+:root:not(.js) .feature-card:hover::before,
+:root:not(.js) .product-preview-card:hover::before {
   opacity: 1;
 }
 
@@ -1021,7 +1052,8 @@
     border-color var(--motion-standard);
 }
 
-.feature-card:hover {
+.feature-card:hover,
+.feature-card.is-depth-active {
   --surface-hover-lift: -0.45rem;
   border-color: var(--color-accent-border-strong);
   box-shadow:
@@ -1029,27 +1061,32 @@
     0 0 0 1px rgba(214, 180, 122, 0.06);
 }
 
-.feature-card:hover::after {
+.feature-card:hover::after,
+.feature-card.is-depth-active::after {
   opacity: 1;
   transform: scale(1);
 }
 
-.feature-card:hover .feature-card__icon {
+.feature-card:hover .feature-card__icon,
+.feature-card.is-depth-active .feature-card__icon {
   background: rgba(214, 180, 122, 0.16);
   box-shadow: 0 14px 24px rgba(214, 180, 122, 0.12);
   transform: translateY(-0.18rem) scale(1.03);
 }
 
-.feature-card:hover .feature-card__icon svg {
+.feature-card:hover .feature-card__icon svg,
+.feature-card.is-depth-active .feature-card__icon svg {
   transform: rotate(-5deg) scale(1.08);
 }
 
-.feature-card:hover .feature-card__title {
+.feature-card:hover .feature-card__title,
+.feature-card.is-depth-active .feature-card__title {
   color: var(--color-text-strong);
   transform: translateY(-0.08rem);
 }
 
-.feature-card:hover .feature-card__body {
+.feature-card:hover .feature-card__body,
+.feature-card.is-depth-active .feature-card__body {
   color: var(--color-text);
 }
 
@@ -1940,6 +1977,43 @@
   }
 }
 
+@keyframes hero-card-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotateZ(0deg);
+  }
+
+  25% {
+    transform:
+      translate3d(
+        calc(var(--float-range-x) * 0.75 * var(--float-direction-x)),
+        calc(var(--float-range-y) * -0.55 * var(--float-direction-y)),
+        0
+      )
+      rotateZ(calc(var(--float-tilt) * -0.65 * var(--float-tilt-direction)));
+  }
+
+  50% {
+    transform:
+      translate3d(
+        calc(var(--float-range-x) * -0.4 * var(--float-direction-x)),
+        calc(var(--float-range-y) * -1 * var(--float-direction-y)),
+        0
+      )
+      rotateZ(calc(var(--float-tilt) * 0.4 * var(--float-tilt-direction)));
+  }
+
+  75% {
+    transform:
+      translate3d(
+        calc(var(--float-range-x) * -1 * var(--float-direction-x)),
+        calc(var(--float-range-y) * -0.24 * var(--float-direction-y)),
+        0
+      )
+      rotateZ(calc(var(--float-tilt) * 0.85 * var(--float-tilt-direction)));
+  }
+}
+
 @media (min-width: 62rem) {
   .hero-section__grid {
     grid-template-columns: minmax(0, 0.98fr) minmax(19rem, 0.92fr);
@@ -1984,6 +2058,9 @@
   }
 
   .floating-feature-card {
+    --floating-card-range-x: 0.24rem;
+    --floating-card-range-y: 0.45rem;
+    --floating-card-tilt: 0.9deg;
     display: flex;
     max-width: 8.7rem;
   }
@@ -2060,25 +2137,31 @@
   }
 
   .landing-header__bar {
-    gap: var(--space-sm);
+    gap: 0.78rem;
     grid-template-columns: 1fr;
     justify-items: center;
-    padding: 0.7rem;
+    padding: 0.82rem;
   }
 
   .landing-header__cta {
     min-width: 0;
-    width: 100%;
+    width: min(100%, 19.5rem);
   }
 
   .landing-brand {
-    font-size: 1.08rem;
+    font-size: 1.14rem;
     justify-content: center;
     letter-spacing: -0.025em;
     padding-inline: 0.2rem;
     text-align: center;
     white-space: normal;
     width: 100%;
+  }
+
+  .landing-header__cta.landing-button {
+    font-size: 0.92rem;
+    min-height: 2.9rem;
+    padding: 0.82rem 1.2rem;
   }
 
   .landing-header__mobile-nav {
@@ -2143,6 +2226,9 @@
   }
 
   .floating-feature-card {
+    --floating-card-range-x: 0.18rem;
+    --floating-card-range-y: 0.36rem;
+    --floating-card-tilt: 0.72deg;
     max-width: 7.45rem;
   }
 
@@ -2188,11 +2274,11 @@
 
 @media (max-width: 29.99rem) {
   .landing-header__bar {
-    padding: 0.62rem;
+    padding: 0.72rem;
   }
 
   .landing-brand {
-    font-size: clamp(0.96rem, 5.5vw, 1rem);
+    font-size: clamp(1.02rem, 5.8vw, 1.08rem);
     line-height: 1.04;
     max-width: 100%;
     text-wrap: balance;
@@ -2240,6 +2326,9 @@
   }
 
   .floating-feature-card {
+    --floating-card-range-x: 0.15rem;
+    --floating-card-range-y: 0.3rem;
+    --floating-card-tilt: 0.6deg;
     max-width: 7rem;
   }
 
@@ -2305,6 +2394,7 @@
   .phone-mockup__device-layer,
   .record-button-mock::before,
   .floating-feature-card,
+  .floating-feature-card__inner,
   .step-card__node,
   .faq-item__content,
   .faq-item__icon {

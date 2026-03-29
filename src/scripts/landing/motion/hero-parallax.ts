@@ -22,6 +22,7 @@ interface RootState {
   currentY: number;
   layers: LayerState[];
   root: HTMLElement;
+  touchIdentifier: number | null;
   targetScroll: number;
   targetX: number;
   targetY: number;
@@ -34,11 +35,18 @@ const syncPointerTargets = (
   strength = 1,
 ) => {
   const rect = state.root.getBoundingClientRect();
-  const localX = ((clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * 2;
-  const localY = ((clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * 2;
+  const percentX = clamp((clientX - rect.left) / Math.max(rect.width, 1), 0, 1);
+  const percentY = clamp((clientY - rect.top) / Math.max(rect.height, 1), 0, 1);
+  const localX = (percentX - 0.5) * 2;
+  const localY = (percentY - 0.5) * 2;
 
   state.targetX = clamp(localX * strength, -1, 1);
   state.targetY = clamp(localY * strength, -1, 1);
+};
+
+const resetPointerTargets = (state: RootState) => {
+  state.targetX = 0;
+  state.targetY = 0;
 };
 
 export const setupHeroParallax = () => {
@@ -72,6 +80,7 @@ export const setupHeroParallax = () => {
         targetY: 0,
         currentScroll: 0,
         targetScroll: 0,
+        touchIdentifier: null,
       };
     })
     .filter((state): state is RootState => state !== null);
@@ -142,45 +151,95 @@ export const setupHeroParallax = () => {
 
   states.forEach((state) => {
     state.root.addEventListener("pointermove", (event) => {
-      const isDirectTouch = event.pointerType === "touch" || event.pointerType === "pen";
-
-      if (!finePointerQuery.matches && !isDirectTouch) {
+      if (event.pointerType !== "mouse" || !finePointerQuery.matches) {
         return;
       }
 
-      syncPointerTargets(state, event.clientX, event.clientY, isDirectTouch ? 0.62 : 1);
-      ensureAnimation();
-    });
-
-    state.root.addEventListener("pointerdown", (event) => {
-      if (event.pointerType === "mouse" && !finePointerQuery.matches) {
-        return;
-      }
-
-      syncPointerTargets(
-        state,
-        event.clientX,
-        event.clientY,
-        event.pointerType === "touch" || event.pointerType === "pen" ? 0.62 : 1,
-      );
+      syncPointerTargets(state, event.clientX, event.clientY);
       ensureAnimation();
     });
 
     state.root.addEventListener("pointerleave", () => {
-      state.targetX = 0;
-      state.targetY = 0;
+      resetPointerTargets(state);
       ensureAnimation();
     });
 
-    state.root.addEventListener("pointerup", () => {
-      state.targetX = 0;
-      state.targetY = 0;
-      ensureAnimation();
-    });
+    state.root.addEventListener(
+      "touchstart",
+      (event) => {
+        if (state.touchIdentifier !== null) {
+          return;
+        }
 
-    state.root.addEventListener("pointercancel", () => {
-      state.targetX = 0;
-      state.targetY = 0;
+        const touch = event.changedTouches[0];
+
+        if (!touch) {
+          return;
+        }
+
+        state.touchIdentifier = touch.identifier;
+      },
+      { passive: true },
+    );
+
+    state.root.addEventListener(
+      "touchmove",
+      (event) => {
+        if (state.touchIdentifier === null) {
+          return;
+        }
+
+        const touch = Array.from(event.touches).find(
+          ({ identifier }) => identifier === state.touchIdentifier,
+        );
+
+        if (!touch) {
+          return;
+        }
+
+        syncPointerTargets(state, touch.clientX, touch.clientY, 0.38);
+        ensureAnimation();
+      },
+      { passive: true },
+    );
+
+    const finishTouch = (touchList: TouchList) => {
+      if (state.touchIdentifier === null) {
+        return;
+      }
+
+      const touch = Array.from(touchList).find(({ identifier }) => identifier === state.touchIdentifier);
+
+      if (!touch) {
+        return;
+      }
+
+      state.touchIdentifier = null;
+      resetPointerTargets(state);
+      ensureAnimation();
+    };
+
+    state.root.addEventListener(
+      "touchend",
+      (event) => {
+        finishTouch(event.changedTouches);
+      },
+      { passive: true },
+    );
+
+    state.root.addEventListener(
+      "touchcancel",
+      (event) => {
+        finishTouch(event.changedTouches);
+      },
+      { passive: true },
+    );
+
+    window.addEventListener("scroll", () => {
+      if (state.touchIdentifier === null) {
+        return;
+      }
+
       ensureAnimation();
     });
   });

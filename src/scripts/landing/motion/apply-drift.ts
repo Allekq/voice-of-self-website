@@ -15,6 +15,7 @@ export const setupNoiseDrift = () => {
     return;
   }
 
+  const coarsePointerQuery = window.matchMedia("(pointer: coarse)");
   const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-noise-drift]"));
   if (!elements.length) {
     return;
@@ -22,8 +23,11 @@ export const setupNoiseDrift = () => {
 
   const states: DriftState[] = elements.map((element) => {
     const seed = parseNumber(element.dataset.driftSeed, 1);
-    const amplitudeX = parseNumber(element.dataset.driftAmplitudeX, 8);
-    const amplitudeY = parseNumber(element.dataset.driftAmplitudeY, 8);
+    const coarseFactor = coarsePointerQuery.matches
+      ? parseNumber(element.dataset.driftCoarseFactor, 1)
+      : 1;
+    const amplitudeX = parseNumber(element.dataset.driftAmplitudeX, 8) * coarseFactor;
+    const amplitudeY = parseNumber(element.dataset.driftAmplitudeY, 8) * coarseFactor;
     const speed = parseNumber(element.dataset.driftSpeed, 0.6);
 
     return {

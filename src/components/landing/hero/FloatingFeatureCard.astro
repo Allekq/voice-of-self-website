@@ -1,5 +1,5 @@
 ---
-import type { DriftConfig, IconName } from "../types";
+import type { IconName } from "../types";
 import IconSymbol from "../ui/IconSymbol.astro";
 
 interface Props {
@@ -7,26 +7,13 @@ interface Props {
   title: string;
   subtitle: string;
   positionClass: string;
-  drift: DriftConfig;
-  depth: number;
 }
 
-const { icon, title, subtitle, positionClass, drift, depth } = Astro.props as Props;
+const { icon, title, subtitle, positionClass } = Astro.props as Props;
 ---
 
-<div
-  class:list={["floating-feature-card", positionClass]}
-  data-hero-parallax-layer
-  data-hero-depth={depth}
->
-  <div
-    class="floating-feature-card__inner"
-    data-noise-drift
-    data-drift-seed={drift.seed}
-    data-drift-amplitude-x={drift.amplitudeX}
-    data-drift-amplitude-y={drift.amplitudeY}
-    data-drift-speed={drift.speed}
-  >
+<div class:list={["floating-feature-card", positionClass]}>
+  <div class="floating-feature-card__inner">
     <div class="floating-feature-card__icon">
       <IconSymbol name={icon} size={16} />
     </div>
