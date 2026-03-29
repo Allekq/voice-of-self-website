@@ -5,6 +5,11 @@ interface FaqState {
   transitionEndHandler: ((event: TransitionEvent) => void) | null;
 }
 
+const setExpandedState = (state: FaqState, expanded: boolean) => {
+  state.details.classList.toggle("is-expanded", expanded);
+  state.summary.setAttribute("aria-expanded", String(expanded));
+};
+
 const setOpenStyles = (content: HTMLElement) => {
   content.style.height = "auto";
   content.style.opacity = "1";
@@ -31,6 +36,7 @@ const animateOpen = (state: FaqState) => {
 
   clearTransitionHandler(state);
   details.open = true;
+  setExpandedState(state, true);
 
   const endHeight = content.scrollHeight;
 
@@ -59,6 +65,7 @@ const animateClose = (state: FaqState) => {
   const { details, content } = state;
 
   clearTransitionHandler(state);
+  setExpandedState(state, false);
 
   const startHeight = content.getBoundingClientRect().height || content.scrollHeight;
 
@@ -111,6 +118,7 @@ export const setupFaqAccordion = () => {
 
   states.forEach((state) => {
     state.details.classList.add("is-enhanced");
+    setExpandedState(state, state.details.open);
 
     if (state.details.open) {
       setOpenStyles(state.content);

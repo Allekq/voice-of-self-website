@@ -3,6 +3,8 @@ import { setupFaqAccordion } from "./faq-accordion";
 import { setupDesktopHowItWorks } from "./how-it-works/desktop-stepper";
 import { setupMobileHowItWorks } from "./how-it-works/mobile-stepper";
 import { setupNoiseDrift } from "./motion/apply-drift";
+import { setupHeroParallax } from "./motion/hero-parallax";
+import { setupSurfaceDepth } from "./motion/surface-depth";
 import { setupRevealOnScroll } from "./reveal-on-scroll";
 import { setupStickyHeader } from "./sticky-header";
 import { setupWaitlistCtas } from "./waitlist-cta";
@@ -21,6 +23,8 @@ const boot = () => {
   safeSetup("active-section-nav", setupActiveSectionNav);
   safeSetup("faq-accordion", setupFaqAccordion);
   safeSetup("noise-drift", setupNoiseDrift);
+  safeSetup("hero-parallax", setupHeroParallax);
+  safeSetup("surface-depth", setupSurfaceDepth);
   safeSetup("desktop-stepper", setupDesktopHowItWorks);
   safeSetup("mobile-stepper", setupMobileHowItWorks);
   safeSetup("waitlist-cta", setupWaitlistCtas);

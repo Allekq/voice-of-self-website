@@ -8,14 +8,17 @@ interface Props {
   subtitle: string;
   positionClass: string;
   drift: DriftConfig;
+  depth: number;
 }
 
-const { icon, title, subtitle, positionClass, drift } = Astro.props as Props;
+const { icon, title, subtitle, positionClass, drift, depth } = Astro.props as Props;
 ---
 
 <div
   class:list={["floating-feature-card", positionClass]}
   data-noise-drift
+  data-hero-parallax-layer
+  data-hero-depth={depth}
   data-drift-seed={drift.seed}
   data-drift-amplitude-x={drift.amplitudeX}
   data-drift-amplitude-y={drift.amplitudeY}

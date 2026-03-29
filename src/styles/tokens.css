@@ -59,6 +59,7 @@
 
   --shadow-soft: 0 24px 70px rgba(0, 0, 0, 0.28);
   --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --shadow-deep: 0 30px 82px rgba(0, 0, 0, 0.34);
   --shadow-glow: 0 0 70px rgba(214, 180, 122, 0.12);
   --shadow-device: 0 24px 64px rgba(0, 0, 0, 0.58);
 
@@ -66,6 +67,8 @@
   --motion-standard: 280ms cubic-bezier(0.23, 1, 0.32, 1);
   --motion-slow: 480ms cubic-bezier(0.23, 1, 0.32, 1);
   --motion-emphasis: 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-fold: 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-spring: 620ms cubic-bezier(0.16, 1, 0.26, 1);
   --motion-drift: 720ms cubic-bezier(0.2, 0.9, 0.28, 1);
 
   --tracking-label: 0.2em;

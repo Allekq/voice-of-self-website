@@ -6,7 +6,7 @@ type Props = FeatureItem;
 const { icon, title, description } = Astro.props as Props;
 ---
 
-<article class="feature-card landing-surface" data-reveal>
+<article class="feature-card landing-surface" data-reveal data-surface-depth>
   <div class="feature-card__icon">
     <IconSymbol name={icon} size={22} />
   </div>

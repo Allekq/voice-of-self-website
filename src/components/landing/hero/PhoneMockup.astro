@@ -8,13 +8,14 @@ import RecordButtonMock from "./RecordButtonMock.astro";
 import RelicPreviewCard from "./RelicPreviewCard.astro";
 ---
 
-<div class="phone-mockup">
+<div class="phone-mockup" data-hero-parallax-root>
   <FloatingFeatureCard
     icon="mic"
     title="Voice reflection"
     subtitle="Speak, don't type"
     positionClass="floating-feature-card--top-left"
     drift={{ seed: 11, amplitudeX: 10, amplitudeY: 8, speed: 0.72 }}
+    depth={1.2}
   />
   <FloatingFeatureCard
     icon="wave"
@@ -22,6 +23,7 @@ import RelicPreviewCard from "./RelicPreviewCard.astro";
     subtitle="Worries that return"
     positionClass="floating-feature-card--bottom-left"
     drift={{ seed: 23, amplitudeX: 12, amplitudeY: 9, speed: 0.58 }}
+    depth={1}
   />
   <FloatingFeatureCard
     icon="check"
@@ -29,55 +31,64 @@ import RelicPreviewCard from "./RelicPreviewCard.astro";
     subtitle="No longer in your head"
     positionClass="floating-feature-card--right"
     drift={{ seed: 37, amplitudeX: 9, amplitudeY: 11, speed: 0.66 }}
+    depth={1.15}
   />
 
-  <MockPhoneFrame>
-    <div class="phone-screen">
-      <AnimatedPhoneBackdrop className="phone-screen__backdrop" />
+  <div
+    class="phone-mockup__device-layer"
+    data-hero-parallax-layer
+    data-hero-depth="0.62"
+    data-hero-scroll-depth="0.72"
+    data-hero-rotate-factor="2.6"
+  >
+    <MockPhoneFrame>
+      <div class="phone-screen">
+        <AnimatedPhoneBackdrop className="phone-screen__backdrop" />
 
-      <div class="phone-screen__content">
-        <div class="phone-screen__top">
-          <div class="phone-screen__toolbar">
-            <div class="phone-screen__settings">
-              <IconSymbol name="gear" size={14} />
+        <div class="phone-screen__content">
+          <div class="phone-screen__top">
+            <div class="phone-screen__toolbar">
+              <div class="phone-screen__settings">
+                <IconSymbol name="gear" size={14} />
+              </div>
+            </div>
+
+            <div class="phone-screen__heading">
+              <span class="phone-screen__heading-icon">
+                <IconSymbol name="star" size={14} />
+              </span>
+              <h3>Your Relics</h3>
+            </div>
+            <p class="phone-screen__subcopy">
+              Worries that once weighed on you, now resolved and transformed into wisdom.
+            </p>
+
+            <div class="phone-screen__cards">
+              <RelicPreviewCard
+                title="Fear of being behind"
+                dateLabel="Mar 9"
+                summary="Limited progress causing anxiety about falling behind peers."
+                insight="Consistent effort has begun to close the gap. No longer a daily worry."
+              />
+              <RelicPreviewCard
+                title="Work-life balance"
+                dateLabel="Mar 9"
+                summary="Overworking and missing personal time."
+                compact={true}
+              />
             </div>
           </div>
 
-          <div class="phone-screen__heading">
-            <span class="phone-screen__heading-icon">
-              <IconSymbol name="star" size={14} />
-            </span>
-            <h3>Your Relics</h3>
+          <div class="phone-screen__divider"></div>
+
+          <div class="phone-screen__bottom">
+            <p class="phone-screen__prompt">What's on your mind</p>
+            <RecordButtonMock />
           </div>
-          <p class="phone-screen__subcopy">
-            Worries that once weighed on you, now resolved and transformed into wisdom.
-          </p>
 
-          <div class="phone-screen__cards">
-            <RelicPreviewCard
-              title="Fear of being behind"
-              dateLabel="Mar 9"
-              summary="Limited progress causing anxiety about falling behind peers."
-              insight="Consistent effort has begun to close the gap. No longer a daily worry."
-            />
-            <RelicPreviewCard
-              title="Work-life balance"
-              dateLabel="Mar 9"
-              summary="Overworking and missing personal time."
-              compact={true}
-            />
-          </div>
+          <MockTabBar />
         </div>
-
-        <div class="phone-screen__divider"></div>
-
-        <div class="phone-screen__bottom">
-          <p class="phone-screen__prompt">What's on your mind</p>
-          <RecordButtonMock />
-        </div>
-
-        <MockTabBar />
       </div>
-    </div>
-  </MockPhoneFrame>
+    </MockPhoneFrame>
+  </div>
 </div>
