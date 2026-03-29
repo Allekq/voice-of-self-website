@@ -1,0 +1,12 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props as Props;
+---
+
+<div class="why-growth-stage__metric">
+  <span class="why-growth-stage__metric-label">{label}</span>
+  <slot />
+</div>

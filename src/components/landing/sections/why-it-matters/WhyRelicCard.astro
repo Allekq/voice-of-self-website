@@ -1,0 +1,24 @@
+---
+import type { WhyItMattersRelic } from "./why-it-matters.data";
+
+interface Props {
+  relic: WhyItMattersRelic;
+}
+
+const { relic } = Astro.props as Props;
+---
+
+<article
+  class:list={["why-relic-card", `why-relic-card--${relic.accent}`]}
+  data-why-relic
+  style={`--relic-left:${relic.left}; --relic-top:${relic.top}; --relic-width:${relic.width}; --relic-base-rotate:${relic.rotate}; --relic-entry-x:${relic.entryX}; --relic-entry-y:${relic.entryY};`}
+>
+  <p class="why-relic-card__title">{relic.title}</p>
+
+  <p class="why-relic-card__worry">{relic.worry}</p>
+
+  <div class="why-relic-card__growth-panel">
+    <p class="why-relic-card__label">Growth inside</p>
+    <p class="why-relic-card__growth">{relic.growth}</p>
+  </div>
+</article>

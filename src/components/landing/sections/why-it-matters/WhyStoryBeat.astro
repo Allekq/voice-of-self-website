@@ -1,0 +1,20 @@
+---
+import type { WhyItMattersBeat } from "./why-it-matters.data";
+
+interface Props {
+  beat: WhyItMattersBeat;
+  index: number;
+}
+
+const { beat, index } = Astro.props as Props;
+const formattedIndex = String(index).padStart(2, "0");
+---
+
+<article class="why-story-beat">
+  <div class="why-story-beat__index">{formattedIndex}</div>
+  <div class="why-story-beat__copy">
+    <p class="why-story-beat__eyebrow">{beat.eyebrow}</p>
+    <h4 class="why-story-beat__title">{beat.title}</h4>
+    <p class="why-story-beat__body">{beat.body}</p>
+  </div>
+</article>

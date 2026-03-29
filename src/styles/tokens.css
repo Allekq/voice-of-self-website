@@ -21,6 +21,8 @@
   --section-pad-y: clamp(4.75rem, 8vw, 7rem);
   --section-pad-y-tight: clamp(4rem, 7vw, 5.75rem);
   --section-pad-x: clamp(1.1rem, 3vw, 1.75rem);
+  --section-heading-stack-gap: clamp(0.7rem, 1.5vw, 0.95rem);
+  --section-heading-panel-gap: clamp(2.4rem, 4.4vw, 3.35rem);
 
   --radius-sm: 0.75rem;
   --radius-md: 1rem;
