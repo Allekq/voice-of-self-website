@@ -9,6 +9,7 @@ interface DesktopRootState {
   progress: HTMLElement;
   centers: number[];
   currentProgress: number;
+  targetProgress: number;
 }
 
 const setStrength = (card: HTMLElement, value: number) => {
@@ -65,6 +66,7 @@ const createState = (root: HTMLElement): DesktopRootState | null => {
     progress,
     centers: [],
     currentProgress: 0,
+    targetProgress: 0,
   };
 };
 
@@ -77,6 +79,35 @@ export const setupDesktopHowItWorks = () => {
   const states = roots
     .map((root) => createState(root))
     .filter((state): state is DesktopRootState => state !== null);
+
+  let frameId = 0;
+
+  const tick = () => {
+    let keepAnimating = false;
+
+    states.forEach((state) => {
+      const delta = state.targetProgress - state.currentProgress;
+
+      if (Math.abs(delta) < 0.001) {
+        state.currentProgress = state.targetProgress;
+      } else {
+        state.currentProgress = lerp(state.currentProgress, state.targetProgress, 0.18);
+        keepAnimating = true;
+      }
+
+      applyProgress(state, state.currentProgress);
+    });
+
+    frameId = keepAnimating ? window.requestAnimationFrame(tick) : 0;
+  };
+
+  const ensureAnimation = () => {
+    if (frameId !== 0) {
+      return;
+    }
+
+    frameId = window.requestAnimationFrame(tick);
+  };
 
   const syncGeometry = () => {
     states.forEach((state) => {
@@ -105,11 +136,13 @@ export const setupDesktopHowItWorks = () => {
       const ratio = (localX - firstCenter) / width;
       const maxIndex = Math.max(state.centers.length - 1, 1);
 
-      applyProgress(state, ratio * maxIndex);
+      state.targetProgress = ratio * maxIndex;
+      ensureAnimation();
     });
 
     state.root.addEventListener("pointerleave", () => {
-      applyProgress(state, 0);
+      state.targetProgress = 0;
+      ensureAnimation();
     });
   });
 

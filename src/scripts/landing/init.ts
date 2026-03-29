@@ -1,4 +1,5 @@
 import { setupActiveSectionNav } from "./active-section-nav";
+import { setupFaqAccordion } from "./faq-accordion";
 import { setupDesktopHowItWorks } from "./how-it-works/desktop-stepper";
 import { setupMobileHowItWorks } from "./how-it-works/mobile-stepper";
 import { setupNoiseDrift } from "./motion/apply-drift";
@@ -8,6 +9,7 @@ import { setupStickyHeader } from "./sticky-header";
 const boot = () => {
   setupStickyHeader();
   setupActiveSectionNav();
+  setupFaqAccordion();
   setupNoiseDrift();
   setupDesktopHowItWorks();
   setupMobileHowItWorks();

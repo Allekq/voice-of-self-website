@@ -7,6 +7,12 @@ interface MobileRootState {
   line: HTMLElement;
   fill: HTMLElement;
   progress: HTMLElement;
+  lineStartY: number;
+  currentProgress: number;
+  targetProgress: number;
+  currentY: number;
+  targetY: number;
+  initialized: boolean;
 }
 
 const setStrength = (card: HTMLElement, value: number) => {
@@ -50,7 +56,18 @@ const resolveContinuousProgress = (centers: Array<{ viewportY: number; rootY: nu
   return { progressUnit: 0, progressY: centers[0].rootY };
 };
 
-const syncRoot = (state: MobileRootState) => {
+const applyVisuals = (state: MobileRootState) => {
+  state.fill.style.top = `${state.lineStartY}px`;
+  state.fill.style.height = `${Math.max(state.currentY - state.lineStartY, 0)}px`;
+  state.progress.style.top = `${state.currentY}px`;
+
+  state.cards.forEach((card, index) => {
+    const strength = Math.max(0, 1 - Math.abs(state.currentProgress - index));
+    setStrength(card, strength);
+  });
+};
+
+const syncRootTargets = (state: MobileRootState, immediate = false) => {
   if (state.root.offsetParent === null) {
     return;
   }
@@ -70,16 +87,19 @@ const syncRoot = (state: MobileRootState) => {
   const lastY = centers[centers.length - 1]?.rootY ?? firstY;
   const { progressUnit, progressY } = resolveContinuousProgress(centers);
 
+  state.lineStartY = firstY;
   state.line.style.top = `${firstY}px`;
   state.line.style.height = `${Math.max(lastY - firstY, 0)}px`;
-  state.fill.style.top = `${firstY}px`;
-  state.fill.style.height = `${Math.max(progressY - firstY, 0)}px`;
-  state.progress.style.top = `${progressY}px`;
+  state.targetProgress = progressUnit;
+  state.targetY = progressY;
 
-  state.cards.forEach((card, index) => {
-    const strength = Math.max(0, 1 - Math.abs(progressUnit - index));
-    setStrength(card, strength);
-  });
+  if (!state.initialized || immediate) {
+    state.currentProgress = progressUnit;
+    state.currentY = progressY;
+    state.initialized = true;
+  }
+
+  applyVisuals(state);
 };
 
 export const setupMobileHowItWorks = () => {
@@ -100,27 +120,76 @@ export const setupMobileHowItWorks = () => {
         return null;
       }
 
-      return { root, cards, nodes, line, fill, progress };
+      return {
+        root,
+        cards,
+        nodes,
+        line,
+        fill,
+        progress,
+        lineStartY: 0,
+        currentProgress: 0,
+        targetProgress: 0,
+        currentY: 0,
+        targetY: 0,
+        initialized: false,
+      };
     })
     .filter((state): state is MobileRootState => state !== null);
 
-  let isTicking = false;
+  let syncFrameId = 0;
+  let animationFrameId = 0;
 
-  const runSync = () => {
-    isTicking = false;
-    states.forEach(syncRoot);
+  const animate = () => {
+    let keepAnimating = false;
+
+    states.forEach((state) => {
+      const progressDelta = state.targetProgress - state.currentProgress;
+      const yDelta = state.targetY - state.currentY;
+
+      if (Math.abs(progressDelta) < 0.001) {
+        state.currentProgress = state.targetProgress;
+      } else {
+        state.currentProgress = lerp(state.currentProgress, state.targetProgress, 0.18);
+        keepAnimating = true;
+      }
+
+      if (Math.abs(yDelta) < 0.5) {
+        state.currentY = state.targetY;
+      } else {
+        state.currentY = lerp(state.currentY, state.targetY, 0.2);
+        keepAnimating = true;
+      }
+
+      applyVisuals(state);
+    });
+
+    animationFrameId = keepAnimating ? window.requestAnimationFrame(animate) : 0;
   };
 
-  const schedule = () => {
-    if (isTicking) {
+  const ensureAnimation = () => {
+    if (animationFrameId !== 0) {
       return;
     }
 
-    isTicking = true;
-    window.requestAnimationFrame(runSync);
+    animationFrameId = window.requestAnimationFrame(animate);
   };
 
-  schedule();
+  const runSync = (immediate = false) => {
+    syncFrameId = 0;
+    states.forEach((state) => syncRootTargets(state, immediate));
+    ensureAnimation();
+  };
+
+  const schedule = () => {
+    if (syncFrameId !== 0) {
+      return;
+    }
+
+    syncFrameId = window.requestAnimationFrame(() => runSync(false));
+  };
+
+  runSync(true);
   window.addEventListener("scroll", schedule, { passive: true });
   window.addEventListener("resize", schedule);
 };

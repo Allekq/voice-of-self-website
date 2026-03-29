@@ -9,12 +9,12 @@ interface Props {
 const { id, question, answer, defaultOpen = false } = Astro.props as Props;
 ---
 
-<details class="faq-item" open={defaultOpen} data-reveal>
-  <summary class="faq-item__button" id={`${id}-button`}>
+<details class="faq-item" open={defaultOpen} data-faq-item data-reveal>
+  <summary class="faq-item__button" id={`${id}-button`} data-faq-trigger>
     <span class="faq-item__question">{question}</span>
     <span class="faq-item__icon" aria-hidden="true">+</span>
   </summary>
-  <div class="faq-item__content">
+  <div class="faq-item__content" data-faq-content>
     <div class="faq-item__panel" id={`${id}-panel`} role="region" aria-labelledby={`${id}-button`}>
       <p>{answer}</p>
     </div>
