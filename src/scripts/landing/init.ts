@@ -8,6 +8,7 @@ import { setupSurfaceDepth } from "./motion/surface-depth";
 import { setupRevealOnScroll } from "./reveal-on-scroll";
 import { setupStickyHeader } from "./sticky-header";
 import { setupWaitlistCtas } from "./waitlist-cta";
+import { setupWhyItMattersStage } from "./why-it-matters/stage-progress";
 
 const safeSetup = (label: string, setup: () => void) => {
   try {
@@ -27,6 +28,7 @@ const boot = () => {
   safeSetup("surface-depth", setupSurfaceDepth);
   safeSetup("desktop-stepper", setupDesktopHowItWorks);
   safeSetup("mobile-stepper", setupMobileHowItWorks);
+  safeSetup("why-it-matters-stage", setupWhyItMattersStage);
   safeSetup("waitlist-cta", setupWaitlistCtas);
 };
 

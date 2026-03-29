@@ -1,14 +1,57 @@
 ---
+import WhyItMattersStage from "./why-it-matters/WhyItMattersStage.astro";
+import IconSymbol from "../ui/IconSymbol.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
 import SectionShell from "../ui/SectionShell.astro";
 ---
 
-<SectionShell id="why-it-matters" tone="muted" className="why-section">
+<SectionShell id="why-it-matters" className="why-section">
   <SectionHeading
     eyebrow="Why it matters"
-    title="Most people are not failing to grow. They are failing to notice that they've grown."
-    body="We remember stress, fear, and unresolved problems much more vividly than the moment they quietly stop controlling us. Voice of Self helps restore that missing context and makes personal change easier to see."
+    title="The important changes rarely announce themselves."
     align="center"
     className="why-section__heading"
   />
+
+  <div class="why-showcase landing-surface" data-reveal>
+    <div class="why-showcase__visual">
+      <WhyItMattersStage />
+    </div>
+
+    <div class="why-showcase__copy">
+      <p class="why-showcase__eyebrow">Quiet change deserves visible proof</p>
+      <h3 class="why-showcase__title">
+        Most people are not failing to grow. They are failing to notice that they've grown.
+      </h3>
+      <p class="why-showcase__body">
+        We remember stress, fear, and unresolved problems much more vividly than the moment they
+        quietly stop controlling us.
+      </p>
+      <p class="why-showcase__body why-showcase__body--strong">
+        Voice of Self restores that missing context and makes personal change easier to see,
+        without turning your life into a dashboard.
+      </p>
+
+      <ul class="why-showcase__list">
+        <li>
+          <span class="why-showcase__list-icon">
+            <IconSymbol name="check" size={14} />
+          </span>
+          <span>Recurring worries lose their grip before most people realize they have changed.</span>
+        </li>
+        <li>
+          <span class="why-showcase__list-icon">
+            <IconSymbol name="check" size={14} />
+          </span>
+          <span>Silence becomes meaningful when you can see what used to come up all the time.</span>
+        </li>
+        <li>
+          <span class="why-showcase__list-icon">
+            <IconSymbol name="check" size={14} />
+          </span>
+          <span>You get gentle evidence of growth instead of streaks, scores, or self-surveillance.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </SectionShell>

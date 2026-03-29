@@ -1,0 +1,64 @@
+---
+import {
+  whyItMattersMetrics,
+  whyItMattersSignals,
+} from "./why-it-matters.data";
+---
+
+<div class="why-growth-stage" aria-hidden="true" data-surface-depth data-why-stage>
+  <div class="why-growth-stage__glow why-growth-stage__glow--gold"></div>
+  <div class="why-growth-stage__glow why-growth-stage__glow--blue"></div>
+
+  <div class="why-growth-stage__labels">
+    <span>Repeated often</span>
+    <span>Quiet now</span>
+  </div>
+
+  <div class="why-growth-stage__arena">
+    <div class="why-growth-stage__orbit why-growth-stage__orbit--outer"></div>
+    <div class="why-growth-stage__orbit why-growth-stage__orbit--middle"></div>
+    <div class="why-growth-stage__orbit why-growth-stage__orbit--inner"></div>
+    <div class="why-growth-stage__scan"></div>
+
+    {whyItMattersSignals.map((signal) => (
+      <article
+        class="why-growth-stage__chip"
+        style={`--chip-angle:${signal.angle}deg; --chip-distance:${signal.distance}; --chip-spread:${signal.spread}; --chip-delay:${signal.delay};`}
+      >
+        <div class="why-growth-stage__chip-inner">
+          <p class="why-growth-stage__chip-title">{signal.label}</p>
+          <p class="why-growth-stage__chip-meta">{signal.thenLabel}</p>
+          <p class="why-growth-stage__chip-meta why-growth-stage__chip-meta--quiet">
+            {signal.nowLabel}
+          </p>
+        </div>
+      </article>
+    ))}
+
+    <div class="why-growth-stage__core">
+      <p class="why-growth-stage__core-eyebrow">Absence can be evidence</p>
+      <p class="why-growth-stage__core-title">Growth, noticed.</p>
+      <p class="why-growth-stage__core-body">
+        What used to keep returning is no longer asking for attention.
+      </p>
+    </div>
+  </div>
+
+  <div class="why-growth-stage__timeline">
+    <span>Then</span>
+    <div class="why-growth-stage__timeline-track">
+      <div class="why-growth-stage__timeline-fill"></div>
+      <div class="why-growth-stage__timeline-marker"></div>
+    </div>
+    <span>Now</span>
+  </div>
+
+  <div class="why-growth-stage__metrics">
+    {whyItMattersMetrics.map((metric) => (
+      <div class="why-growth-stage__metric">
+        <span class="why-growth-stage__metric-value">{metric.value}</span>
+        <span class="why-growth-stage__metric-label">{metric.label}</span>
+      </div>
+    ))}
+  </div>
+</div>
