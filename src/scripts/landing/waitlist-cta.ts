@@ -1,7 +1,7 @@
 const MOBILE_USER_AGENT_PATTERN =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
 
-const shouldOpenDirectDraft = () =>
+const shouldPreferEmailApp = () =>
   window.matchMedia("(pointer: coarse)").matches || MOBILE_USER_AGENT_PATTERN.test(navigator.userAgent);
 
 export const setupWaitlistCtas = () => {
@@ -11,17 +11,17 @@ export const setupWaitlistCtas = () => {
     return;
   }
 
-  const directDraft = shouldOpenDirectDraft();
+  const preferEmailApp = shouldPreferEmailApp();
 
   buttons.forEach((button) => {
-    const directHref = button.dataset.waitlistDirectHref;
-    const fallbackHref = button.dataset.waitlistFallbackHref;
+    const mobileHref = button.dataset.waitlistMobileHref;
+    const desktopHref = button.dataset.waitlistDesktopHref;
 
-    if (!directHref || !fallbackHref) {
+    if (!mobileHref || !desktopHref) {
       return;
     }
 
-    button.href = directDraft ? directHref : fallbackHref;
-    button.dataset.waitlistMode = directDraft ? "direct" : "fallback";
+    button.href = preferEmailApp ? mobileHref : desktopHref;
+    button.dataset.waitlistMode = preferEmailApp ? "email-app" : "gmail-browser";
   });
 };

@@ -14,22 +14,28 @@ import "../styles/waitlist-guide.css";
 >
   <div class="waitlist-guide">
     <section class="waitlist-guide__hero landing-surface">
-      <p class="waitlist-guide__eyebrow">Desktop fallback</p>
+      <p class="waitlist-guide__eyebrow">Desktop join options</p>
       <h1 class="waitlist-guide__title">Join the Voice of Self waitlist from any browser.</h1>
       <p class="waitlist-guide__lead">
         On phones and tablets, the main waitlist button usually opens an email draft right away. On
-        desktop browsers, mail handling varies, so this page gives you a reliable path either way.
+        desktop browsers, Gmail in the browser is the default because system mail handling varies,
+        and this page keeps both options plus a copy-ready fallback.
       </p>
 
       <div class="waitlist-guide__actions">
-        <ActionButton href={siteConfig.waitlistMailtoHref}>Open your email app</ActionButton>
-        <ActionButton href={siteConfig.waitlistGmailHref} variant="secondary">
-          Open Gmail in browser
+        <ActionButton href={siteConfig.waitlistGmailHref}>Open Gmail in browser</ActionButton>
+        <ActionButton href={siteConfig.waitlistMailtoHref} variant="secondary">
+          Open your email app
         </ActionButton>
       </div>
 
       <p class="waitlist-guide__note">
-        If those buttons do not open cleanly, copy the email address and the short draft below.
+        Gmail is the most reliable desktop path. If you prefer Apple Mail or another client, try
+        your email app instead.
+      </p>
+
+      <p class="waitlist-guide__note">
+        If those options do not open cleanly, copy the email address and the short draft below.
       </p>
     </section>
 
@@ -53,8 +59,8 @@ import "../styles/waitlist-guide.css";
         </div>
 
         <p class="waitlist-guide__body">
-          If you use Gmail on desktop, the Gmail button above opens a prefilled compose window in
-          the browser instead of relying on your system mail settings.
+          The Gmail button above opens a prefilled compose window in the browser instead of relying
+          on your system mail settings.
         </p>
       </section>
 

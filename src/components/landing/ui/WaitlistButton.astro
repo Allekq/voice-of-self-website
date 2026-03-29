@@ -14,9 +14,9 @@ const { variant = "primary", className, label } = Astro.props as Props;
 <ActionButton
   className={className}
   data-waitlist-cta="auto"
-  data-waitlist-direct-href={siteConfig.waitlistMailtoHref}
-  data-waitlist-fallback-href={siteConfig.waitlistGuideHref}
-  href={siteConfig.waitlistGuideHref}
+  data-waitlist-mobile-href={siteConfig.waitlistMailtoHref}
+  data-waitlist-desktop-href={siteConfig.waitlistGmailHref}
+  href={siteConfig.waitlistMailtoHref}
   variant={variant}
 >
   <slot>{label ?? siteConfig.ctas.primary}</slot>

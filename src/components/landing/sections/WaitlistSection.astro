@@ -1,4 +1,5 @@
 ---
+import { siteConfig } from "../../../config/site";
 import WaitlistButton from "../ui/WaitlistButton.astro";
 import SectionShell from "../ui/SectionShell.astro";
 ---
@@ -13,9 +14,10 @@ import SectionShell from "../ui/SectionShell.astro";
       <WaitlistButton />
     </div>
     <p class="waitlist-callout__caption">
-      On phones and tablets, this tries to open an email draft right away. On desktop browsers, it
-      takes you to a quick join page with Gmail and copy-ready fallback options. The waitlist stays
-      static: no account, no backend, no hidden signup flow.
+      On phones and tablets, this opens an email draft right away. On desktop browsers, it opens
+      Gmail in the browser by default. Prefer another mail app or manual copy? Use the <a
+        href={siteConfig.waitlistGuideHref}>quick join guide</a>. The waitlist stays static: no
+      account, no backend, no hidden signup flow.
     </p>
   </div>
 </SectionShell>
