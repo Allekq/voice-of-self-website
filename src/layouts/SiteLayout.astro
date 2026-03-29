@@ -12,9 +12,15 @@ interface Props {
   title?: string;
   description?: string;
   frontmatter?: Frontmatter;
+  pageType?: "auto" | "content" | "legal";
+  articleClassName?: string;
 }
 
-const { frontmatter } = Astro.props as Props;
+const {
+  frontmatter,
+  pageType = "auto",
+  articleClassName,
+} = Astro.props as Props;
 const pageTitle = Astro.props.title ?? frontmatter?.title ?? siteConfig.homeTitle;
 const description =
   Astro.props.description ??
@@ -26,6 +32,7 @@ const normalizedPathname = Astro.url.pathname.endsWith("/")
   : `${Astro.url.pathname}/`;
 const homeHref = withBase("/");
 const isHomePage = normalizedPathname === basePath;
+const resolvedPageType = isHomePage ? "home" : pageType === "auto" ? "legal" : pageType;
 const title =
   isHomePage || pageTitle.includes(siteConfig.name)
     ? pageTitle
@@ -45,21 +52,38 @@ const title =
     </script>
     <title>{title}</title>
   </head>
-  <body class:list={[isHomePage ? "is-home" : "is-legal"]}>
+  <body
+    class:list={[
+      resolvedPageType === "home" && "is-home",
+      resolvedPageType === "legal" && "is-legal",
+      resolvedPageType === "content" && "is-content",
+    ]}
+  >
     <div class="site-backdrop" aria-hidden="true">
       <div class="site-backdrop__orb site-backdrop__orb--gold"></div>
       <div class="site-backdrop__orb site-backdrop__orb--blue"></div>
       <div class="site-backdrop__grid"></div>
     </div>
 
-    {!isHomePage && (
+    {resolvedPageType !== "home" && (
       <header class="site-header">
         <a class="site-header__home-link" href={homeHref}>{siteConfig.name}</a>
       </header>
     )}
 
-    <main class:list={["site-frame", isHomePage && "landing-page"]}>
-      {isHomePage ? <slot /> : <article class="legal-article"><slot /></article>}
+    <main class:list={["site-frame", resolvedPageType === "home" && "landing-page"]}>
+      {resolvedPageType === "home" ? (
+        <slot />
+      ) : (
+        <article
+          class:list={[
+            resolvedPageType === "legal" ? "legal-article" : "content-article",
+            articleClassName,
+          ]}
+        >
+          <slot />
+        </article>
+      )}
     </main>
   </body>
 </html>

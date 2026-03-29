@@ -1,0 +1,209 @@
+.waitlist-guide {
+  display: grid;
+  gap: clamp(var(--space-lg), 4vw, var(--space-2xl));
+}
+
+.waitlist-guide__hero,
+.waitlist-guide__card {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.waitlist-guide__hero {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.waitlist-guide__eyebrow,
+.waitlist-guide__kicker {
+  color: var(--color-accent);
+  font-size: var(--text-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.waitlist-guide__title,
+.waitlist-guide__card-title,
+.waitlist-guide__detail-value {
+  color: var(--color-text-strong);
+  font-family: var(--font-serif);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+.waitlist-guide__title {
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  line-height: 0.98;
+  max-width: 12ch;
+  text-wrap: balance;
+}
+
+.waitlist-guide__lead,
+.waitlist-guide__note,
+.waitlist-guide__body,
+.waitlist-guide__list {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.waitlist-guide__lead {
+  font-size: var(--text-body-lg);
+  line-height: 1.8;
+  max-width: 46rem;
+}
+
+.waitlist-guide__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.waitlist-guide__note {
+  color: var(--color-text-dim);
+  font-size: var(--text-body-sm);
+}
+
+.waitlist-guide__grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+}
+
+.waitlist-guide__card {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.waitlist-guide__card-head {
+  align-items: start;
+  display: flex;
+  gap: var(--space-md);
+  justify-content: space-between;
+}
+
+.waitlist-guide__card-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.waitlist-guide__copy {
+  background: rgba(10, 16, 27, 0.72);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  min-height: 2.75rem;
+  padding: 0.75rem 1rem;
+  transition:
+    transform var(--motion-quick),
+    border-color var(--motion-quick),
+    background-color var(--motion-standard),
+    color var(--motion-standard);
+}
+
+.waitlist-guide__copy:hover,
+.waitlist-guide__copy:focus-visible {
+  background: rgba(18, 24, 39, 0.92);
+  border-color: var(--color-accent-border-strong);
+  color: var(--color-text-strong);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.waitlist-guide__detail {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.waitlist-guide__detail-label {
+  color: var(--color-text-dim);
+  font-size: var(--text-caption);
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.waitlist-guide__detail-value {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.08;
+  word-break: break-word;
+}
+
+.waitlist-guide__pill {
+  background: rgba(214, 180, 122, 0.08);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  display: inline-flex;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0.65rem 0.95rem;
+  width: fit-content;
+}
+
+.waitlist-guide__list {
+  display: grid;
+  gap: var(--space-sm);
+  line-height: 1.7;
+  padding-left: 1.2rem;
+}
+
+.waitlist-guide__template {
+  background:
+    linear-gradient(180deg, rgba(15, 21, 34, 0.88), rgba(10, 15, 25, 0.88)),
+    rgba(8, 12, 20, 0.78);
+  border: 1px solid rgba(245, 239, 230, 0.08);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family:
+    "SFMono-Regular",
+    "SF Mono",
+    ui-monospace,
+    "Cascadia Code",
+    "Source Code Pro",
+    Menlo,
+    monospace;
+  font-size: 0.94rem;
+  line-height: 1.75;
+  margin: 0;
+  overflow-x: auto;
+  padding: 1.25rem;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 52rem) {
+  .waitlist-guide__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 42rem) {
+  .waitlist-guide__actions {
+    flex-direction: column;
+  }
+
+  .waitlist-guide__actions .landing-button {
+    width: 100%;
+  }
+
+  .waitlist-guide__card-head {
+    flex-direction: column;
+  }
+
+  .waitlist-guide__copy {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waitlist-guide__copy {
+    transition: none;
+  }
+}

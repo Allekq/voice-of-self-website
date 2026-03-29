@@ -3,6 +3,7 @@ import { siteConfig } from "../../../config/site";
 import PhoneMockup from "../hero/PhoneMockup.astro";
 import ActionButton from "../ui/ActionButton.astro";
 import SectionShell from "../ui/SectionShell.astro";
+import WaitlistButton from "../ui/WaitlistButton.astro";
 ---
 
 <SectionShell id="main" className="hero-section">
@@ -20,7 +21,7 @@ import SectionShell from "../ui/SectionShell.astro";
       </p>
 
       <div class="hero-section__actions">
-        <ActionButton href={siteConfig.waitlistHref}>{siteConfig.ctas.primary}</ActionButton>
+        <WaitlistButton />
         <ActionButton href="#why-it-matters" variant="secondary">
           {siteConfig.ctas.whyItMatters}
         </ActionButton>

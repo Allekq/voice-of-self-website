@@ -132,6 +132,11 @@ svg {
   padding-top: 1rem;
 }
 
+.is-content .site-frame {
+  max-width: var(--container-content);
+  padding-top: 1rem;
+}
+
 .legal-article {
   backdrop-filter: blur(18px);
   background: rgba(9, 15, 27, 0.78);
@@ -140,6 +145,13 @@ svg {
   box-shadow: var(--shadow-soft);
   margin: 0 auto;
   padding: 2.25rem 1.4rem;
+}
+
+.content-article {
+  display: grid;
+  gap: var(--space-xl);
+  margin: 0 auto;
+  width: 100%;
 }
 
 .is-legal h1,

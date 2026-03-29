@@ -1,9 +1,9 @@
 ---
 import { siteConfig } from "../../../config/site";
 import type { NavPillLink } from "../types";
-import ActionButton from "../ui/ActionButton.astro";
 import NavPillItem from "../ui/NavPillItem.astro";
 import NavPills from "../ui/NavPills.astro";
+import WaitlistButton from "../ui/WaitlistButton.astro";
 
 interface Props {
   tabs: NavPillLink[];
@@ -22,9 +22,7 @@ const { tabs } = Astro.props as Props;
       </NavPills>
     </div>
 
-    <ActionButton href={siteConfig.waitlistHref} className="landing-header__cta">
-      {siteConfig.ctas.primary}
-    </ActionButton>
+    <WaitlistButton className="landing-header__cta" />
   </div>
 
   <div class="landing-header__mobile-nav">

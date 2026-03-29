@@ -1,0 +1,91 @@
+---
+import SiteFooter from "../components/landing/sections/SiteFooter.astro";
+import ActionButton from "../components/landing/ui/ActionButton.astro";
+import { siteConfig } from "../config/site";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/landing.css";
+import "../styles/waitlist-guide.css";
+---
+
+<SiteLayout
+  title="How to join the waitlist"
+  description="A browser-safe guide for joining the Voice of Self waitlist."
+  pageType="content"
+>
+  <div class="waitlist-guide">
+    <section class="waitlist-guide__hero landing-surface">
+      <p class="waitlist-guide__eyebrow">Desktop fallback</p>
+      <h1 class="waitlist-guide__title">Join the Voice of Self waitlist from any browser.</h1>
+      <p class="waitlist-guide__lead">
+        On phones and tablets, the main waitlist button usually opens an email draft right away. On
+        desktop browsers, mail handling varies, so this page gives you a reliable path either way.
+      </p>
+
+      <div class="waitlist-guide__actions">
+        <ActionButton href={siteConfig.waitlistMailtoHref}>Open your email app</ActionButton>
+        <ActionButton href={siteConfig.waitlistGmailHref} variant="secondary">
+          Open Gmail in browser
+        </ActionButton>
+      </div>
+
+      <p class="waitlist-guide__note">
+        If those buttons do not open cleanly, copy the email address and the ready-made draft below.
+      </p>
+    </section>
+
+    <div class="waitlist-guide__grid">
+      <section class="waitlist-guide__card landing-surface">
+        <div class="waitlist-guide__card-head">
+          <div class="waitlist-guide__detail">
+            <p class="waitlist-guide__detail-label">Send it to</p>
+            <p class="waitlist-guide__detail-value">{siteConfig.waitlistEmail}</p>
+          </div>
+          <button class="waitlist-guide__copy" type="button" data-copy-value={siteConfig.waitlistEmail}>
+            Copy email
+          </button>
+        </div>
+
+        <div class="waitlist-guide__detail">
+          <p class="waitlist-guide__detail-label">Suggested subject</p>
+          <p class="waitlist-guide__pill">{siteConfig.waitlistDraft.subject}</p>
+        </div>
+
+        <p class="waitlist-guide__body">
+          If you use Gmail on desktop, the Gmail button above opens a prefilled compose window in
+          the browser instead of relying on your system mail settings.
+        </p>
+      </section>
+
+      <section class="waitlist-guide__card landing-surface">
+        <p class="waitlist-guide__kicker">What helps most</p>
+        <h2 class="waitlist-guide__card-title">A little context makes the waitlist more useful.</h2>
+
+        <ul class="waitlist-guide__list">
+          {siteConfig.waitlistDraft.shareTips.map((tip) => (
+            <li>{tip}</li>
+          ))}
+        </ul>
+      </section>
+    </div>
+
+    <section class="waitlist-guide__card landing-surface">
+      <div class="waitlist-guide__card-head">
+        <div>
+          <p class="waitlist-guide__kicker">Ready-made draft</p>
+          <h2 class="waitlist-guide__card-title">Send this as-is or personalize it.</h2>
+        </div>
+        <button class="waitlist-guide__copy" type="button" data-copy-value={siteConfig.waitlistDraft.body}>
+          Copy draft
+        </button>
+      </div>
+
+      <pre class="waitlist-guide__template">{siteConfig.waitlistDraft.body}</pre>
+    </section>
+  </div>
+
+  <SiteFooter />
+
+  <script>
+    import "../scripts/waitlist-guide/copy-buttons";
+  </script>
+</SiteLayout>

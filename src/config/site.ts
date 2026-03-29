@@ -3,20 +3,33 @@ import { withBase } from "../lib/paths";
 const contactEmail = "alekgameshelp2@gmail.com";
 const waitlistEmail = "waitlist@voiceofself.app";
 const waitlistSubject = "Voice of Self waitlist";
-const waitlistBody = [
-  "Hi, I'm [your name].",
+const waitlistDraftLines = [
+  "Hi Voice of Self team,",
   "",
-  "I'd like to join the Voice of Self waitlist.",
+  "I'm [your name], and I'd like to join the Voice of Self waitlist.",
+  "",
+  "What I'd love to use it for:",
+  "[optional note]",
   "",
   "Anything else you'd like to share:",
+  "[optional note]",
   "",
   "Thanks,",
-].join("\n");
+  "[your name]",
+];
+const waitlistBody = waitlistDraftLines.join("\r\n");
+const waitlistShareTips = [
+  "Your name, or the name you'd like us to use.",
+  "Why you're interested in Voice of Self or what you hope to use it for.",
+  "Anything you'd especially like to test, plus your device or region if that's helpful.",
+];
 
 const buildMailtoHref = (email: string, subject: string, body: string) => {
-  const params = new URLSearchParams({ subject, body });
-  return `mailto:${email}?${params.toString()}`;
+  return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 };
+
+const buildGmailComposeHref = (email: string, subject: string, body: string) =>
+  `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
 export const siteConfig = {
   name: "Voice of Self",
@@ -28,7 +41,15 @@ export const siteConfig = {
   contactEmail,
   waitlistEmail,
   homeHref: withBase("/"),
-  waitlistHref: buildMailtoHref(waitlistEmail, waitlistSubject, waitlistBody),
+  waitlistGuideHref: withBase("/how-to-join-wish-list/"),
+  waitlistMailtoHref: buildMailtoHref(waitlistEmail, waitlistSubject, waitlistBody),
+  waitlistGmailHref: buildGmailComposeHref(waitlistEmail, waitlistSubject, waitlistBody),
+  waitlistDraft: {
+    subject: waitlistSubject,
+    body: waitlistBody,
+    lines: waitlistDraftLines,
+    shareTips: waitlistShareTips,
+  },
   ctas: {
     primary: "Join the waitlist",
     whyItMatters: "Why it matters",

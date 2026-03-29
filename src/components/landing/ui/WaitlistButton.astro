@@ -1,0 +1,23 @@
+---
+import { siteConfig } from "../../../config/site";
+import ActionButton from "./ActionButton.astro";
+
+interface Props {
+  variant?: "primary" | "secondary";
+  className?: string;
+  label?: string;
+}
+
+const { variant = "primary", className, label } = Astro.props as Props;
+---
+
+<ActionButton
+  className={className}
+  data-waitlist-cta="auto"
+  data-waitlist-direct-href={siteConfig.waitlistMailtoHref}
+  data-waitlist-fallback-href={siteConfig.waitlistGuideHref}
+  href={siteConfig.waitlistGuideHref}
+  variant={variant}
+>
+  <slot>{label ?? siteConfig.ctas.primary}</slot>
+</ActionButton>

@@ -1,6 +1,5 @@
 ---
-import { siteConfig } from "../../../config/site";
-import ActionButton from "../ui/ActionButton.astro";
+import WaitlistButton from "../ui/WaitlistButton.astro";
 import SectionShell from "../ui/SectionShell.astro";
 ---
 
@@ -11,11 +10,12 @@ import SectionShell from "../ui/SectionShell.astro";
       Be first to try the MVP and help shape a calmer way to notice your own progress.
     </p>
     <div class="waitlist-callout__actions">
-      <ActionButton href={siteConfig.waitlistHref}>{siteConfig.ctas.primary}</ActionButton>
+      <WaitlistButton />
     </div>
     <p class="waitlist-callout__caption">
-      This opens your email app with a draft. The waitlist stays static: no account, no backend,
-      no hidden signup flow.
+      On phones and tablets, this tries to open an email draft right away. On desktop browsers, it
+      takes you to a quick join page with Gmail and copy-ready fallback options. The waitlist stays
+      static: no account, no backend, no hidden signup flow.
     </p>
   </div>
 </SectionShell>

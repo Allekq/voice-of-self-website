@@ -1,20 +1,31 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import { isExternalHref } from "../../../lib/paths";
 
-interface Props {
+interface Props extends HTMLAttributes<"a"> {
   href: string;
   variant?: "primary" | "secondary";
   className?: string;
   label?: string;
 }
 
-const { href, variant = "primary", className, label } = Astro.props as Props;
+const { href, variant = "primary", className, label, rel: relProp, ...attributes } =
+  Astro.props as Props;
 const rel =
-  isExternalHref(href) && !href.startsWith("mailto:") && !href.startsWith("tel:") && !href.startsWith("#")
+  relProp ??
+  (isExternalHref(href) &&
+  !href.startsWith("mailto:") &&
+  !href.startsWith("tel:") &&
+  !href.startsWith("#")
     ? "noreferrer"
-    : undefined;
+    : undefined);
 ---
 
-<a class:list={["landing-button", `landing-button--${variant}`, className]} href={href} rel={rel}>
+<a
+  {...attributes}
+  class:list={["landing-button", `landing-button--${variant}`, className]}
+  href={href}
+  rel={rel}
+>
   <slot>{label}</slot>
 </a>

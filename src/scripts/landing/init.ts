@@ -5,6 +5,7 @@ import { setupMobileHowItWorks } from "./how-it-works/mobile-stepper";
 import { setupNoiseDrift } from "./motion/apply-drift";
 import { setupRevealOnScroll } from "./reveal-on-scroll";
 import { setupStickyHeader } from "./sticky-header";
+import { setupWaitlistCtas } from "./waitlist-cta";
 
 const safeSetup = (label: string, setup: () => void) => {
   try {
@@ -22,6 +23,7 @@ const boot = () => {
   safeSetup("noise-drift", setupNoiseDrift);
   safeSetup("desktop-stepper", setupDesktopHowItWorks);
   safeSetup("mobile-stepper", setupMobileHowItWorks);
+  safeSetup("waitlist-cta", setupWaitlistCtas);
 };
 
 if (document.readyState === "loading") {
