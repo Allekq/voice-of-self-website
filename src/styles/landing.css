@@ -205,14 +205,18 @@
 }
 
 .landing-brand {
+  align-items: center;
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  display: inline-flex;
   font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: -0.03em;
+  line-height: 1.08;
+  max-width: 100%;
   padding-inline: var(--space-sm);
   transition:
     filter var(--motion-standard),
@@ -1435,14 +1439,50 @@
   .landing-header__bar {
     gap: var(--space-sm);
     grid-template-columns: 1fr;
+    padding: 0.7rem;
   }
 
   .landing-header__cta {
+    min-width: 0;
     width: 100%;
   }
 
   .landing-brand {
     padding-inline: 0.2rem;
+  }
+
+  .landing-header__mobile-nav {
+    padding: 0.35rem;
+  }
+
+  .landing-header__mobile-nav .nav-pills {
+    display: grid;
+    gap: 0.12rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
+    padding: 0.12rem;
+  }
+
+  .landing-header__mobile-nav .nav-pills__highlight {
+    height: calc(100% - 0.24rem);
+    top: 0.12rem;
+  }
+
+  .landing-header__mobile-nav .nav-pill {
+    align-items: center;
+    display: inline-flex;
+    font-size: 0.76rem;
+    justify-content: center;
+    line-height: 1.15;
+    min-height: 2.65rem;
+    min-width: 0;
+    padding: 0.5rem 0.36rem;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .landing-header__mobile-nav .nav-pill__glow {
+    width: 1.4rem;
   }
 
   .hero-section__actions,

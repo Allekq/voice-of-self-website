@@ -36,9 +36,11 @@ import "../styles/waitlist-guide.css";
     <div class="waitlist-guide__grid">
       <section class="waitlist-guide__card landing-surface">
         <div class="waitlist-guide__card-head">
-          <div class="waitlist-guide__detail">
+          <div class="waitlist-guide__detail waitlist-guide__detail--email">
             <p class="waitlist-guide__detail-label">Send it to</p>
-            <p class="waitlist-guide__detail-value">{siteConfig.waitlistEmail}</p>
+            <p class="waitlist-guide__detail-value waitlist-guide__detail-value--email">
+              {siteConfig.waitlistEmail}
+            </p>
           </div>
           <button class="waitlist-guide__copy" type="button" data-copy-value={siteConfig.waitlistEmail}>
             Copy email
