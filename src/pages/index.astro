@@ -1,6 +1,5 @@
 ---
 import "../styles/landing.css";
-import landingScript from "../scripts/landing/init.ts?url";
 import HomePageOrchestrator from "../components/landing/orchestrator/HomePageOrchestrator.astro";
 import { siteConfig } from "../config/site";
 import SiteLayout from "../layouts/SiteLayout.astro";
@@ -11,5 +10,7 @@ import SiteFooter from "../components/landing/sections/SiteFooter.astro";
   <HomePageOrchestrator />
   <SiteFooter />
 
-  <script is:inline type="module" src={landingScript}></script>
+  <script>
+    import "../scripts/landing/init";
+  </script>
 </SiteLayout>
