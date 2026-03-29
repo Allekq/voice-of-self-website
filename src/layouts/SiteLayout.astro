@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import { siteConfig } from "../config/site";
+import { basePath, withBase } from "../lib/paths";
 
 interface Frontmatter {
   title?: string;
@@ -12,19 +14,22 @@ interface Props {
   frontmatter?: Frontmatter;
 }
 
-const normalizeBasePath = (path: string) => (path.endsWith("/") ? path : `${path}/`);
-
 const { frontmatter } = Astro.props as Props;
-const title = Astro.props.title ?? frontmatter?.title ?? "Voice of Self";
+const pageTitle = Astro.props.title ?? frontmatter?.title ?? siteConfig.homeTitle;
 const description =
   Astro.props.description ??
   frontmatter?.description ??
-  "Voice of Self legal hub and public website.";
+  siteConfig.defaultDescription;
 
-const baseUrl = normalizeBasePath(import.meta.env.BASE_URL);
-const pathname = normalizeBasePath(Astro.url.pathname);
-const homeHref = baseUrl;
-const isHomePage = pathname === baseUrl;
+const normalizedPathname = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const homeHref = withBase("/");
+const isHomePage = normalizedPathname === basePath;
+const title =
+  isHomePage || pageTitle.includes(siteConfig.name)
+    ? pageTitle
+    : `${pageTitle} | ${siteConfig.name}`;
 ---
 
 <!doctype html>
@@ -33,7 +38,11 @@ const isHomePage = pathname === baseUrl;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/png" href={`${baseUrl}favicon.png`} />
+    <meta name="theme-color" content="#0c1019" />
+    <link rel="icon" type="image/png" href={withBase("/favicon.png")} />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
     <title>{title}</title>
   </head>
   <body class:list={[isHomePage ? "is-home" : "is-legal"]}>
@@ -45,11 +54,11 @@ const isHomePage = pathname === baseUrl;
 
     {!isHomePage && (
       <header class="site-header">
-        <a class="site-header__home-link" href={homeHref}>Voice of Self</a>
+        <a class="site-header__home-link" href={homeHref}>{siteConfig.name}</a>
       </header>
     )}
 
-    <main class="site-frame">
+    <main class:list={["site-frame", isHomePage && "landing-page"]}>
       {isHomePage ? <slot /> : <article class="legal-article"><slot /></article>}
     </main>
   </body>

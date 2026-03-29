@@ -1,0 +1,51 @@
+---
+import IconSymbol from "../ui/IconSymbol.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import SectionShell from "../ui/SectionShell.astro";
+---
+
+<SectionShell className="positioning-section">
+  <SectionHeading title="Clear about what we are." align="center" />
+
+  <div class="positioning-grid" data-reveal>
+    <article class="positioning-panel landing-surface">
+      <p class="positioning-panel__eyebrow">What it is</p>
+      <ul class="positioning-panel__list">
+        <li>
+          <IconSymbol name="check" size={16} />
+          <span>A voice-first reflection app</span>
+        </li>
+        <li>
+          <IconSymbol name="check" size={16} />
+          <span>A tool for seeing change over time</span>
+        </li>
+        <li>
+          <IconSymbol name="check" size={16} />
+          <span>A system for surfacing resolved worries</span>
+        </li>
+      </ul>
+    </article>
+
+    <article class="positioning-panel landing-surface">
+      <p class="positioning-panel__eyebrow positioning-panel__eyebrow--muted">What it is not</p>
+      <ul class="positioning-panel__list positioning-panel__list--muted">
+        <li>
+          <IconSymbol name="close" size={16} />
+          <span>Therapy</span>
+        </li>
+        <li>
+          <IconSymbol name="close" size={16} />
+          <span>Mood tracking</span>
+        </li>
+        <li>
+          <IconSymbol name="close" size={16} />
+          <span>Traditional journaling</span>
+        </li>
+        <li>
+          <IconSymbol name="close" size={16} />
+          <span>A productivity dashboard</span>
+        </li>
+      </ul>
+    </article>
+  </div>
+</SectionShell>

@@ -1,0 +1,21 @@
+---
+import { siteConfig } from "../../../config/site";
+import ActionButton from "../ui/ActionButton.astro";
+import SectionShell from "../ui/SectionShell.astro";
+---
+
+<SectionShell id="contact" className="waitlist-section">
+  <div class="waitlist-callout landing-surface" data-reveal>
+    <h2 class="waitlist-callout__title">Join the first group testing Voice of Self.</h2>
+    <p class="waitlist-callout__body">
+      Be first to try the MVP and help shape a calmer way to notice your own progress.
+    </p>
+    <div class="waitlist-callout__actions">
+      <ActionButton href={siteConfig.waitlistHref}>{siteConfig.ctas.primary}</ActionButton>
+    </div>
+    <p class="waitlist-callout__caption">
+      This opens your email app with a draft. The waitlist stays static: no account, no backend,
+      no hidden signup flow.
+    </p>
+  </div>
+</SectionShell>

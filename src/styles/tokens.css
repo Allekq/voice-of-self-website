@@ -1,0 +1,85 @@
+:root {
+  color-scheme: dark;
+
+  --font-sans: "Avenir Next", "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+  --space-4xl: 6rem;
+
+  --container-reading: 46rem;
+  --container-content: 72rem;
+  --container-wide: 78rem;
+
+  --section-pad-y: clamp(4.75rem, 8vw, 7rem);
+  --section-pad-y-tight: clamp(4rem, 7vw, 5.75rem);
+  --section-pad-x: clamp(1.1rem, 3vw, 1.75rem);
+
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-pill: 999px;
+  --radius-device: 2.75rem;
+
+  --border-thin: 1px;
+  --border-strong: 1.5px;
+
+  --color-bg: #0c1019;
+  --color-bg-deep: #080c14;
+  --color-bg-elevated: rgba(18, 23, 38, 0.88);
+  --color-bg-surface: rgba(24, 30, 48, 0.88);
+  --color-bg-soft: rgba(232, 228, 219, 0.045);
+  --color-bg-card: rgba(20, 25, 40, 0.82);
+
+  --color-text: #f5efe6;
+  --color-text-strong: #fff9f0;
+  --color-text-muted: rgba(245, 239, 230, 0.72);
+  --color-text-dim: rgba(245, 239, 230, 0.48);
+
+  --color-accent: #d6b47a;
+  --color-accent-strong: #f0d8a9;
+  --color-accent-soft: rgba(214, 180, 122, 0.14);
+  --color-accent-border: rgba(214, 180, 122, 0.18);
+  --color-accent-border-strong: rgba(214, 180, 122, 0.34);
+
+  --color-blue: #8ecff3;
+  --color-red: #cf6457;
+  --color-purple: #7669d8;
+  --color-cream: #f2eee5;
+  --color-ink: #1f1d1c;
+  --color-divider: rgba(245, 239, 230, 0.1);
+
+  --shadow-soft: 0 24px 70px rgba(0, 0, 0, 0.28);
+  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 70px rgba(214, 180, 122, 0.12);
+  --shadow-device: 0 24px 64px rgba(0, 0, 0, 0.58);
+
+  --motion-quick: 160ms ease;
+  --motion-standard: 280ms cubic-bezier(0.23, 1, 0.32, 1);
+  --motion-slow: 480ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  --tracking-label: 0.2em;
+  --tracking-tight: -0.04em;
+
+  --text-body-sm: 0.95rem;
+  --text-body: 1rem;
+  --text-body-lg: 1.1rem;
+  --text-caption: 0.8rem;
+  --text-label: 0.78rem;
+  --text-card-title: 1.15rem;
+  --text-section-title: clamp(2rem, 4vw, 3rem);
+  --text-hero: clamp(2.9rem, 7vw, 5.35rem);
+
+  --z-base: 1;
+  --z-header: 20;
+  --z-floating: 12;
+  --z-backdrop: -1;
+}

@@ -1,0 +1,12 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = "Sections" } = Astro.props as Props;
+---
+
+<nav class="nav-pills" data-nav-root aria-label={label}>
+  <div class="nav-pills__highlight" data-nav-highlight></div>
+  <slot />
+</nav>

@@ -1,0 +1,37 @@
+---
+import { siteConfig } from "../../../config/site";
+import PhoneMockup from "../hero/PhoneMockup.astro";
+import ActionButton from "../ui/ActionButton.astro";
+import SectionShell from "../ui/SectionShell.astro";
+---
+
+<SectionShell id="main" className="hero-section">
+  <div class="hero-section__grid">
+    <div class="hero-section__copy" data-reveal>
+      <div class="hero-section__eyebrow">
+        <span class="hero-section__eyebrow-dot"></span>
+        <span>{siteConfig.socialProofLabel}</span>
+      </div>
+
+      <h1 class="hero-section__title">{siteConfig.tagline}</h1>
+      <p class="hero-section__body">
+        Voice of Self is a voice-first reflection app that helps you notice personal growth you
+        would otherwise miss.
+      </p>
+
+      <div class="hero-section__actions">
+        <ActionButton href={siteConfig.waitlistHref}>{siteConfig.ctas.primary}</ActionButton>
+        <ActionButton href="#why-it-matters" variant="secondary">
+          {siteConfig.ctas.whyItMatters}
+        </ActionButton>
+        <ActionButton href="#how-it-works" variant="secondary">
+          {siteConfig.ctas.secondary}
+        </ActionButton>
+      </div>
+    </div>
+
+    <div class="hero-section__visual" data-reveal>
+      <PhoneMockup />
+    </div>
+  </div>
+</SectionShell>

@@ -1,0 +1,46 @@
+---
+import IconSymbol from "../ui/IconSymbol.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import SectionShell from "../ui/SectionShell.astro";
+---
+
+<SectionShell tone="muted" className="product-preview-section" id="product-preview">
+  <div class="product-preview">
+    <div class="product-preview__copy">
+      <SectionHeading
+        eyebrow="Product preview"
+        title="Growth you can actually see."
+        body="When a worry quietly stops appearing in your reflections, Voice of Self catches it. Instead of that change going unnoticed, you get a clear, gentle signal that something has shifted."
+      />
+      <p class="product-preview__extra" data-reveal>
+        No charts. No streaks. Just honest evidence that you're not the same person you were three
+        months ago.
+      </p>
+    </div>
+
+    <article class="product-preview-card landing-surface" data-reveal>
+      <div class="product-preview-card__eyebrow">
+        <span class="product-preview-card__eyebrow-icon">
+          <IconSymbol name="check" size={10} />
+        </span>
+        <span>Resolved worry</span>
+      </div>
+
+      <h3 class="product-preview-card__title">Fear of disappointing everyone</h3>
+      <p class="product-preview-card__body">
+        Mentioned often in older reflections. Not present in recent entries. This may be something
+        that no longer takes up space in your head.
+      </p>
+
+      <div class="product-preview-card__meta">
+        <span>First mentioned: Nov 2025</span>
+        <span>Last mentioned: Jan 2026</span>
+        <span>8 weeks silent</span>
+      </div>
+
+      <div class="product-preview-card__divider"></div>
+
+      <p class="product-preview-card__footnote">Appeared in 12 reflections before resolving.</p>
+    </article>
+  </div>
+</SectionShell>

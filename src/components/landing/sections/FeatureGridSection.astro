@@ -1,0 +1,18 @@
+---
+import { features } from "./features.data";
+import FeatureCard from "../ui/FeatureCard.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import SectionShell from "../ui/SectionShell.astro";
+---
+
+<SectionShell className="feature-grid-section">
+  <SectionHeading
+    eyebrow="Core features"
+    title="Built around one powerful idea"
+    align="center"
+  />
+
+  <div class="feature-grid">
+    {features.map((feature) => <FeatureCard {...feature} />)}
+  </div>
+</SectionShell>

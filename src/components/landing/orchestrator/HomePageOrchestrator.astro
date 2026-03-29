@@ -1,0 +1,48 @@
+---
+import type { NavPillLink } from "../types";
+import LandingHeader from "../sections/LandingHeader.astro";
+import FaqTabSection from "../tabs/FaqTabSection.astro";
+import HowItWorksTabSection from "../tabs/HowItWorksTabSection.astro";
+import MainTabSection from "../tabs/MainTabSection.astro";
+import WhyItMattersTabSection from "../tabs/WhyItMattersTabSection.astro";
+
+const tabSections = [
+  {
+    label: "Main",
+    href: "#main",
+    sectionId: "main",
+    component: MainTabSection,
+  },
+  {
+    label: "Why it matters",
+    href: "#why-it-matters",
+    sectionId: "why-it-matters",
+    component: WhyItMattersTabSection,
+  },
+  {
+    label: "How it works",
+    href: "#how-it-works",
+    sectionId: "how-it-works",
+    component: HowItWorksTabSection,
+  },
+  {
+    label: "FAQ",
+    href: "#faq",
+    sectionId: "faq",
+    component: FaqTabSection,
+  },
+] as const;
+
+const navTabs: NavPillLink[] = tabSections.map(({ label, href, sectionId }) => ({
+  label,
+  href,
+  sectionId,
+}));
+---
+
+<LandingHeader tabs={navTabs} />
+
+{tabSections.map((tab) => {
+  const Component = tab.component;
+  return <Component />;
+})}

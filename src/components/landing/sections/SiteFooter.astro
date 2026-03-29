@@ -1,0 +1,17 @@
+---
+import { siteConfig } from "../../../config/site";
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <a class="site-footer__brand" href="#main">{siteConfig.name}</a>
+
+    <nav class="site-footer__links" aria-label="Legal">
+      {siteConfig.legalLinks.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+
+    <p class="site-footer__copy">{siteConfig.footerText}</p>
+  </div>
+</footer>

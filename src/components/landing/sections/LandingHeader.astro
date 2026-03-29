@@ -1,0 +1,35 @@
+---
+import { siteConfig } from "../../../config/site";
+import type { NavPillLink } from "../types";
+import ActionButton from "../ui/ActionButton.astro";
+import NavPillItem from "../ui/NavPillItem.astro";
+import NavPills from "../ui/NavPills.astro";
+
+interface Props {
+  tabs: NavPillLink[];
+}
+
+const { tabs } = Astro.props as Props;
+---
+
+<header class="landing-header" data-landing-header>
+  <div class="landing-header__bar">
+    <a class="landing-brand" href="#main">{siteConfig.name}</a>
+
+    <div class="landing-header__desktop-nav">
+      <NavPills label="Primary">
+        {tabs.map((item, index) => <NavPillItem {...item} active={index === 0} />)}
+      </NavPills>
+    </div>
+
+    <ActionButton href={siteConfig.waitlistHref} className="landing-header__cta">
+      {siteConfig.ctas.primary}
+    </ActionButton>
+  </div>
+
+  <div class="landing-header__mobile-nav">
+    <NavPills label="Sections">
+      {tabs.map((item, index) => <NavPillItem {...item} active={index === 0} />)}
+    </NavPills>
+  </div>
+</header>

@@ -1,31 +1,15 @@
 ---
+import "../styles/landing.css";
+import landingScript from "../scripts/landing/init.ts?url";
+import HomePageOrchestrator from "../components/landing/orchestrator/HomePageOrchestrator.astro";
+import { siteConfig } from "../config/site";
 import SiteLayout from "../layouts/SiteLayout.astro";
-
-const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-  ? import.meta.env.BASE_URL
-  : `${import.meta.env.BASE_URL}/`;
-const withBase = (path: string) => `${baseUrl}${path.replace(/^\/+/, "")}`;
+import SiteFooter from "../components/landing/sections/SiteFooter.astro";
 ---
 
-<SiteLayout
-  title="Voice of Self"
-  description="Voice of Self public site, privacy policy, and terms of service."
->
-  <section class="hero">
-    <p class="hero__eyebrow">Public Site</p>
-    <h1 class="hero__title">Voice of Self</h1>
-    <p class="hero__body">
-      A calm, deliberate home for the app&apos;s public legal pages today, with
-      room to grow into something richer later.
-    </p>
+<SiteLayout title={siteConfig.homeTitle} description={siteConfig.defaultDescription}>
+  <HomePageOrchestrator />
+  <SiteFooter />
 
-    <div class="hero__actions">
-      <a class="hero__button hero__button--primary" href={withBase("/privacy-policy/")}>
-        Privacy Policy
-      </a>
-      <a class="hero__button hero__button--secondary" href={withBase("/terms-of-service/")}>
-        Terms of Service
-      </a>
-    </div>
-  </section>
+  <script is:inline type="module" src={landingScript}></script>
 </SiteLayout>

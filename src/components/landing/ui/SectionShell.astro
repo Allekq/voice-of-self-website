@@ -1,0 +1,15 @@
+---
+interface Props {
+  id?: string;
+  tone?: "default" | "muted";
+  className?: string;
+}
+
+const { id, tone = "default", className } = Astro.props as Props;
+---
+
+<section id={id} class:list={["landing-section", tone === "muted" && "landing-section--muted", className]}>
+  <div class="landing-section__inner">
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  sectionId: string;
+  active?: boolean;
+}
+
+const { href, label, sectionId, active = false } = Astro.props as Props;
+---
+
+<a
+  href={href}
+  class:list={["nav-pill", active && "is-active"]}
+  data-nav-pill
+  data-section-id={sectionId}
+  aria-current={active ? "page" : undefined}
+>
+  <span class="nav-pill__glow" aria-hidden="true"></span>
+  <span>{label}</span>
+</a>
