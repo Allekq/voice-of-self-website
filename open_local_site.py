@@ -23,12 +23,12 @@ from urllib.request import urlopen
 REPO_ROOT = Path(__file__).resolve().parent
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 4321
-BASE_PATH = "/voice-of-self-website"
+DEFAULT_PAGE_PATH = "/"
 URL_PATTERN = re.compile(r"https?://[^\s]+")
 
 
 def build_default_url(host: str, port: int = DEFAULT_PORT) -> str:
-    return f"http://{host}:{port}{BASE_PATH}"
+    return f"http://{host}:{port}{DEFAULT_PAGE_PATH}"
 
 
 def detect_existing_server(host: str) -> str | None:
@@ -92,9 +92,6 @@ def wait_for_url_and_stream_output(process: subprocess.Popen[str], should_open_b
                 continue
 
             url = match.group(0).rstrip("/")
-            if BASE_PATH not in url:
-                continue
-
             open_browser(url, should_open_browser)
             opened_url = True
     except KeyboardInterrupt:

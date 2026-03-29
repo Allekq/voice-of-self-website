@@ -4,9 +4,9 @@ You can open the site locally before publishing it.
 
 ## Current local dev URL
 
-- Home: `http://127.0.0.1:4321/voice-of-self-website`
-- Privacy Policy: `http://127.0.0.1:4321/voice-of-self-website/privacy-policy/`
-- Terms of Service: `http://127.0.0.1:4321/voice-of-self-website/terms-of-service/`
+- Home: `http://127.0.0.1:4321/`
+- Privacy Policy: `http://127.0.0.1:4321/privacy-policy/`
+- Terms of Service: `http://127.0.0.1:4321/terms-of-service/`
 
 ## Start the local site yourself
 
@@ -38,9 +38,6 @@ That file is a tiny root-level entrypoint that launches the same local preview f
 
 ## Important note
 
-This repo uses the GitHub Pages base path `/voice-of-self-website`, so the local homepage is not just `/`.
-Use:
-
-`/voice-of-self-website`
+This repo now serves from the domain root, so the local homepage is just `/`.
 
 If port `4321` is already taken, Astro may choose another port and print the updated URL in the terminal.

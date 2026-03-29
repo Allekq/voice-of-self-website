@@ -1,6 +1,6 @@
 # Voice of Self Website
 
-Public GitHub Pages site for:
+Public marketing and legal site for:
 
 - landing page
 - privacy policy
@@ -20,13 +20,13 @@ npm run dev
 npm run build
 ```
 
-## Important if the repo name changes
+## Domain config
 
-If the GitHub repo slug changes, update:
+The production origin is centralized in:
 
-- `astro.config.mjs` (`base`)
-- `public/legal-manifest.json`
+- `site.config.mjs`
+- `ios_app/Core/Legal/TermsConfig.swift` in the sibling `closure-app` repo
 
 The expected production URL is:
 
-- `https://allekq.github.io/voice-of-self-website/`
+- `https://voiceofself.life/`

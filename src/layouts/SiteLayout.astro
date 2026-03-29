@@ -30,6 +30,7 @@ const description =
 const normalizedPathname = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(normalizedPathname, Astro.site ?? Astro.url).toString();
 const homeHref = withBase("/");
 const isHomePage = normalizedPathname === basePath;
 const resolvedPageType = isHomePage ? "home" : pageType === "auto" ? "legal" : pageType;
@@ -46,7 +47,16 @@ const title =
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0c1019" />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/png" href={withBase("/favicon.png")} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={isHomePage ? "website" : "article"} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <script is:inline>
       document.documentElement.classList.add("js");
     </script>

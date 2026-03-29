@@ -1,4 +1,9 @@
 import { withBase } from "../lib/paths";
+import {
+  legalDocuments,
+  siteDomain,
+  siteOrigin,
+} from "../../site.config.mjs";
 
 const contactEmail = "alekgameshelp2@gmail.com";
 const waitlistEmail = contactEmail;
@@ -20,6 +25,21 @@ const buildMailtoHref = (email: string, subject: string, body: string) => {
 const buildGmailComposeHref = (email: string, subject: string, body: string) =>
   `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
+const buildAbsoluteSiteHref = (path: string) => new URL(path, siteOrigin).toString();
+
+export const legalManifest = {
+  privacy: {
+    version: legalDocuments.privacy.version,
+    effectiveDate: legalDocuments.privacy.effectiveDate,
+    url: buildAbsoluteSiteHref(legalDocuments.privacy.path),
+  },
+  terms: {
+    version: legalDocuments.terms.version,
+    effectiveDate: legalDocuments.terms.effectiveDate,
+    url: buildAbsoluteSiteHref(legalDocuments.terms.path),
+  },
+} as const;
+
 export const siteConfig = {
   name: "Voice of Self",
   legalName: "Voice Of Self",
@@ -27,10 +47,13 @@ export const siteConfig = {
   defaultDescription:
     "Voice of Self is a voice-first reflection app that helps you notice personal growth you would otherwise miss.",
   tagline: "See which worries used to control you — but no longer do.",
+  origin: siteOrigin,
+  domain: siteDomain,
   contactEmail,
   waitlistEmail,
   homeHref: withBase("/"),
   waitlistGuideHref: withBase("/how-to-join-wish-list/"),
+  legalManifestHref: buildAbsoluteSiteHref("/legal-manifest.json"),
   waitlistMailtoHref: buildMailtoHref(waitlistEmail, waitlistSubject, waitlistBody),
   waitlistGmailHref: buildGmailComposeHref(waitlistEmail, waitlistSubject, waitlistBody),
   waitlistDraft: {
@@ -46,8 +69,8 @@ export const siteConfig = {
     legalSecondary: "Terms of Service",
   },
   legalLinks: [
-    { label: "Privacy Policy", href: withBase("/privacy-policy/") },
-    { label: "Terms of Service", href: withBase("/terms-of-service/") },
+    { label: "Privacy Policy", href: withBase(legalDocuments.privacy.path) },
+    { label: "Terms of Service", href: withBase(legalDocuments.terms.path) },
   ],
   footerText: `© ${new Date().getFullYear()} Voice of Self. All rights reserved.`,
   socialProofLabel: "Voice-first reflection",

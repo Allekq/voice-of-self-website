@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
+import { siteBasePath, siteOrigin } from "./site.config.mjs";
 
 export default defineConfig({
-  site: "https://allekq.github.io",
-  base: "/voice-of-self-website",
+  site: siteOrigin,
+  base: siteBasePath,
 });
