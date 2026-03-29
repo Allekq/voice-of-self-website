@@ -1,0 +1,21 @@
+---
+import type { FaqEntry } from "../types";
+import FaqItem from "./FaqItem.astro";
+
+interface Props {
+  items: FaqEntry[];
+}
+
+const { items } = Astro.props as Props;
+---
+
+<div class="faq-grid">
+  {items.map((entry, index) => (
+    <FaqItem
+      id={`faq-${index + 1}`}
+      question={entry.question}
+      answer={entry.answer}
+      defaultOpen={index === 0}
+    />
+  ))}
+</div>

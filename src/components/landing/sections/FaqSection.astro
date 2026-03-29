@@ -1,6 +1,6 @@
 ---
 import { faqEntries } from "./faq.data";
-import FaqItem from "../ui/FaqItem.astro";
+import FaqList from "../ui/FaqList.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
 import SectionShell from "../ui/SectionShell.astro";
 ---
@@ -12,14 +12,5 @@ import SectionShell from "../ui/SectionShell.astro";
     align="center"
   />
 
-  <div class="faq-grid">
-    {faqEntries.map((entry, index) => (
-      <FaqItem
-        id={`faq-${index + 1}`}
-        question={entry.question}
-        answer={entry.answer}
-        defaultOpen={index === 0}
-      />
-    ))}
-  </div>
+  <FaqList items={faqEntries} />
 </SectionShell>
