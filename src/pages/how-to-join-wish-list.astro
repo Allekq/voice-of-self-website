@@ -29,7 +29,7 @@ import "../styles/waitlist-guide.css";
       </div>
 
       <p class="waitlist-guide__note">
-        If those buttons do not open cleanly, copy the email address and the ready-made draft below.
+        If those buttons do not open cleanly, copy the email address and the short draft below.
       </p>
     </section>
 
@@ -57,14 +57,13 @@ import "../styles/waitlist-guide.css";
       </section>
 
       <section class="waitlist-guide__card landing-surface">
-        <p class="waitlist-guide__kicker">What helps most</p>
-        <h2 class="waitlist-guide__card-title">A little context makes the waitlist more useful.</h2>
+        <p class="waitlist-guide__kicker">Keep it simple</p>
+        <h2 class="waitlist-guide__card-title">Your name is enough. Everything else is optional.</h2>
 
-        <ul class="waitlist-guide__list">
-          {siteConfig.waitlistDraft.shareTips.map((tip) => (
-            <li>{tip}</li>
-          ))}
-        </ul>
+        <p class="waitlist-guide__body">
+          The draft is intentionally short so joining the waitlist feels low-friction. If you want,
+          you can send it with just your name and nothing more.
+        </p>
       </section>
     </div>
 
