@@ -103,18 +103,24 @@ const syncRootTargets = (state: MobileRootState, immediate = false) => {
 };
 
 export const setupMobileHowItWorks = () => {
-  const roots = Array.from(document.querySelectorAll<HTMLElement>("[data-steps-mobile]"));
+  const roots = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-step-showcase-mobile]"),
+  );
   if (!roots.length) {
     return;
   }
 
   const states = roots
     .map((root) => {
-      const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-mobile-step]"));
-      const nodes = Array.from(root.querySelectorAll<HTMLElement>("[data-mobile-step-node]"));
-      const line = root.querySelector<HTMLElement>("[data-mobile-line]");
-      const fill = root.querySelector<HTMLElement>("[data-mobile-fill]");
-      const progress = root.querySelector<HTMLElement>("[data-mobile-progress]");
+      const cards = Array.from(
+        root.querySelectorAll<HTMLElement>("[data-step-showcase-mobile-card]"),
+      );
+      const nodes = Array.from(
+        root.querySelectorAll<HTMLElement>("[data-step-showcase-mobile-node]"),
+      );
+      const line = root.querySelector<HTMLElement>("[data-step-showcase-mobile-line]");
+      const fill = root.querySelector<HTMLElement>("[data-step-showcase-mobile-fill]");
+      const progress = root.querySelector<HTMLElement>("[data-step-showcase-mobile-progress]");
 
       if (!cards.length || cards.length !== nodes.length || !line || !fill || !progress) {
         return null;

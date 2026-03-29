@@ -1,9 +1,8 @@
 ---
-import HowItWorksDesktop from "./how-it-works/HowItWorksDesktop.astro";
-import HowItWorksMobile from "./how-it-works/HowItWorksMobile.astro";
 import { steps } from "./how-it-works/steps.data";
 import SectionHeading from "../ui/SectionHeading.astro";
 import SectionShell from "../ui/SectionShell.astro";
+import StepShowcase from "../ui/step-showcase/StepShowcase.astro";
 ---
 
 <SectionShell id="how-it-works" className="steps-section">
@@ -13,6 +12,5 @@ import SectionShell from "../ui/SectionShell.astro";
     align="center"
   />
 
-  <HowItWorksDesktop steps={steps} />
-  <HowItWorksMobile steps={steps} />
+  <StepShowcase steps={steps} />
 </SectionShell>

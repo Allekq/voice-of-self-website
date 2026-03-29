@@ -1,0 +1,35 @@
+---
+import type { StepItem } from "../../types";
+
+interface Props {
+  steps: StepItem[];
+}
+
+const { steps } = Astro.props as Props;
+---
+
+<div class="steps-mobile" data-step-showcase-mobile data-reveal>
+  <div class="steps-mobile__track" aria-hidden="true">
+    <div class="steps-mobile__line" data-step-showcase-mobile-line></div>
+    <div class="steps-mobile__line-fill" data-step-showcase-mobile-fill></div>
+    <div class="steps-mobile__progress" data-step-showcase-mobile-progress></div>
+  </div>
+
+  <div class="steps-mobile__list">
+    {steps.map((step, index) => (
+      <article
+        class="step-card step-card--mobile"
+        data-step-showcase-mobile-card
+        data-step-index={index}
+      >
+        <div class="step-card__node step-card__node--mobile" data-step-showcase-mobile-node>
+          {index + 1}
+        </div>
+        <div class="step-card__content">
+          <h3 class="step-card__title">{step.title}</h3>
+          <p class="step-card__body">{step.description}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>

@@ -709,19 +709,58 @@
 }
 
 .feature-card {
+  overflow: hidden;
+  position: relative;
   display: grid;
   gap: var(--space-md);
   padding: 1.6rem;
   transition:
-    transform var(--motion-quick),
-    border-color var(--motion-quick),
+    transform var(--motion-standard),
+    border-color var(--motion-standard),
     box-shadow var(--motion-standard);
+}
+
+.feature-card::after {
+  border: 1px solid rgba(214, 180, 122, 0.28);
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(0.985);
+  transition:
+    opacity var(--motion-standard),
+    transform var(--motion-emphasis),
+    border-color var(--motion-standard);
 }
 
 .feature-card:hover {
   border-color: var(--color-accent-border-strong);
-  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.24);
-  transform: translateY(-2px);
+  box-shadow:
+    0 24px 46px rgba(0, 0, 0, 0.26),
+    0 0 0 1px rgba(214, 180, 122, 0.06);
+  transform: translateY(-0.45rem);
+}
+
+.feature-card:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.feature-card:hover .feature-card__icon {
+  background: rgba(214, 180, 122, 0.16);
+  box-shadow: 0 14px 24px rgba(214, 180, 122, 0.12);
+  transform: translateY(-0.18rem) scale(1.03);
+}
+
+.feature-card:hover .feature-card__title {
+  color: var(--color-text-strong);
+  transform: translateY(-0.08rem);
+}
+
+.feature-card:hover .feature-card__body {
+  color: var(--color-text);
 }
 
 .feature-card__icon {
@@ -732,6 +771,10 @@
   display: inline-flex;
   height: 2.8rem;
   justify-content: center;
+  transition:
+    transform var(--motion-emphasis),
+    background-color var(--motion-standard),
+    box-shadow var(--motion-standard);
   width: 2.8rem;
 }
 
@@ -739,12 +782,16 @@
   font-size: var(--text-card-title);
   font-weight: 700;
   margin: 0;
+  transition:
+    color var(--motion-standard),
+    transform var(--motion-standard);
 }
 
 .feature-card__body {
   color: var(--color-text-muted);
   line-height: 1.75;
   margin: 0;
+  transition: color var(--motion-standard);
 }
 
 .why-section__heading {
@@ -867,7 +914,6 @@
 .step-card {
   --step-activity: 0;
   position: relative;
-  transition: transform var(--motion-emphasis);
   z-index: 1;
 }
 
@@ -948,15 +994,23 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .step-card--desktop:hover {
-    transform: translateY(-0.3rem);
-  }
-
   .step-card--desktop:hover .step-card__node {
     box-shadow:
       0 16px 30px rgba(214, 180, 122, 0.22),
       0 0 0 1px rgba(214, 180, 122, 0.14);
     filter: brightness(1.04);
+  }
+
+  .step-card--desktop:hover .step-card__content {
+    transform: translateY(calc((var(--step-activity) * -0.2rem) - 0.28rem));
+  }
+
+  .step-card--desktop:hover .step-card__title {
+    color: var(--color-text-strong);
+  }
+
+  .step-card--desktop:hover .step-card__body {
+    color: var(--color-text);
   }
 
   .steps-desktop:hover .steps-desktop__progress {
@@ -1153,12 +1207,20 @@
   overflow: hidden;
   transform: translateY(-0.35rem) scaleY(0.98);
   transform-origin: top;
+  will-change: height, opacity, transform;
 }
 
-.faq-item[open] .faq-item__content {
+.faq-item:not(.is-enhanced)[open] .faq-item__content {
   height: auto;
   opacity: 1;
   transform: translateY(0) scaleY(1);
+}
+
+.faq-item.is-enhanced .faq-item__content {
+  transition:
+    height var(--motion-emphasis),
+    opacity var(--motion-standard),
+    transform var(--motion-standard);
 }
 
 .faq-item__panel {

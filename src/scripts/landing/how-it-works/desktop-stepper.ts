@@ -47,11 +47,11 @@ const applyProgress = (state: DesktopRootState, progressUnit: number) => {
 };
 
 const createState = (root: HTMLElement): DesktopRootState | null => {
-  const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-step-card]"));
-  const nodes = Array.from(root.querySelectorAll<HTMLElement>("[data-step-node]"));
-  const line = root.querySelector<HTMLElement>("[data-steps-line]");
-  const fill = root.querySelector<HTMLElement>("[data-steps-fill]");
-  const progress = root.querySelector<HTMLElement>("[data-steps-progress]");
+  const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-step-showcase-desktop-card]"));
+  const nodes = Array.from(root.querySelectorAll<HTMLElement>("[data-step-showcase-desktop-node]"));
+  const line = root.querySelector<HTMLElement>("[data-step-showcase-desktop-line]");
+  const fill = root.querySelector<HTMLElement>("[data-step-showcase-desktop-fill]");
+  const progress = root.querySelector<HTMLElement>("[data-step-showcase-desktop-progress]");
 
   if (!cards.length || cards.length !== nodes.length || !line || !fill || !progress) {
     return null;
@@ -71,7 +71,9 @@ const createState = (root: HTMLElement): DesktopRootState | null => {
 };
 
 export const setupDesktopHowItWorks = () => {
-  const roots = Array.from(document.querySelectorAll<HTMLElement>("[data-steps-desktop]"));
+  const roots = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-step-showcase-desktop]"),
+  );
   if (!roots.length) {
     return;
   }

@@ -2,13 +2,8 @@ interface FaqState {
   details: HTMLDetailsElement;
   summary: HTMLElement;
   content: HTMLElement;
-  animation: Animation | null;
+  transitionEndHandler: ((event: TransitionEvent) => void) | null;
 }
-
-const FAQ_TIMING = {
-  duration: 340,
-  easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-};
 
 const setOpenStyles = (content: HTMLElement) => {
   content.style.height = "auto";
@@ -22,105 +17,93 @@ const setClosedStyles = (content: HTMLElement) => {
   content.style.transform = "translateY(-0.35rem) scaleY(0.985)";
 };
 
-const cancelAnimation = (state: FaqState) => {
-  state.animation?.cancel();
-  state.animation = null;
+const clearTransitionHandler = (state: FaqState) => {
+  if (!state.transitionEndHandler) {
+    return;
+  }
+
+  state.content.removeEventListener("transitionend", state.transitionEndHandler);
+  state.transitionEndHandler = null;
 };
 
 const animateOpen = (state: FaqState) => {
   const { details, content } = state;
 
-  cancelAnimation(state);
+  clearTransitionHandler(state);
   details.open = true;
 
-  const startHeight = content.getBoundingClientRect().height;
   const endHeight = content.scrollHeight;
 
-  state.animation = content.animate(
-    [
-      {
-        height: `${startHeight}px`,
-        opacity: Number.parseFloat(getComputedStyle(content).opacity || "0").toString(),
-        transform: getComputedStyle(content).transform === "none"
-          ? "translateY(-0.35rem) scaleY(0.985)"
-          : getComputedStyle(content).transform,
-      },
-      {
-        height: `${endHeight}px`,
-        opacity: "1",
-        transform: "translateY(0) scaleY(1)",
-      },
-    ],
-    FAQ_TIMING,
-  );
+  setClosedStyles(content);
+  void content.offsetHeight;
 
-  content.style.height = `${endHeight}px`;
-  content.style.opacity = "1";
-  content.style.transform = "translateY(0) scaleY(1)";
+  state.transitionEndHandler = (event: TransitionEvent) => {
+    if (event.target !== content || event.propertyName !== "height") {
+      return;
+    }
 
-  state.animation.onfinish = () => {
+    clearTransitionHandler(state);
     setOpenStyles(content);
-    state.animation = null;
   };
+
+  content.addEventListener("transitionend", state.transitionEndHandler);
+
+  requestAnimationFrame(() => {
+    content.style.height = `${endHeight}px`;
+    content.style.opacity = "1";
+    content.style.transform = "translateY(0) scaleY(1)";
+  });
 };
 
 const animateClose = (state: FaqState) => {
   const { details, content } = state;
 
-  cancelAnimation(state);
+  clearTransitionHandler(state);
 
   const startHeight = content.getBoundingClientRect().height || content.scrollHeight;
 
-  state.animation = content.animate(
-    [
-      {
-        height: `${startHeight}px`,
-        opacity: Number.parseFloat(getComputedStyle(content).opacity || "1").toString(),
-        transform: getComputedStyle(content).transform === "none"
-          ? "translateY(0) scaleY(1)"
-          : getComputedStyle(content).transform,
-      },
-      {
-        height: "0px",
-        opacity: "0",
-        transform: "translateY(-0.35rem) scaleY(0.985)",
-      },
-    ],
-    FAQ_TIMING,
-  );
+  content.style.height = `${startHeight}px`;
+  content.style.opacity = "1";
+  content.style.transform = "translateY(0) scaleY(1)";
+  void content.offsetHeight;
 
-  setClosedStyles(content);
+  state.transitionEndHandler = (event: TransitionEvent) => {
+    if (event.target !== content || event.propertyName !== "height") {
+      return;
+    }
 
-  state.animation.onfinish = () => {
+    clearTransitionHandler(state);
     details.open = false;
-    state.animation = null;
+    setClosedStyles(content);
   };
+
+  content.addEventListener("transitionend", state.transitionEndHandler);
+
+  requestAnimationFrame(() => {
+    setClosedStyles(content);
+  });
 };
 
 export const setupFaqAccordion = () => {
-  if (!("animate" in HTMLElement.prototype)) {
-    return;
-  }
-
   const states: FaqState[] = Array.from(
     document.querySelectorAll<HTMLDetailsElement>("[data-faq-item]"),
   ).flatMap((details) => {
-      const summary = details.querySelector<HTMLElement>("[data-faq-trigger]");
-      const content = details.querySelector<HTMLElement>("[data-faq-content]");
+    const summary = details.querySelector<HTMLElement>("[data-faq-trigger]");
+    const content = details.querySelector<HTMLElement>("[data-faq-content]");
 
-      if (!summary || !content) {
-        return [];
-      }
+    if (!summary || !content) {
+      return [];
+    }
 
-      return [
-        {
-          details,
-          summary,
-          content,
-          animation: null,
-        },
-      ];
-    });
+    return [
+      {
+        details,
+        summary,
+        content,
+        transitionEndHandler: null,
+      },
+    ];
+  });
 
   if (!states.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return;
