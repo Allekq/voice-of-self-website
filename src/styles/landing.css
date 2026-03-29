@@ -433,10 +433,10 @@
   font-family: var(--font-serif);
   font-size: var(--text-hero);
   letter-spacing: -0.055em;
-  line-height: 1.04;
+  line-height: 1.08;
   margin: 0 0 var(--space-lg);
   max-width: 11ch;
-  padding-bottom: 0.08em;
+  padding-bottom: 0.14em;
   text-wrap: balance;
 }
 
@@ -801,8 +801,6 @@
 }
 
 .floating-feature-card {
-  --drift-x: 0px;
-  --drift-y: 0px;
   --hero-parallax-rotate-x: 0deg;
   --hero-parallax-rotate-y: 0deg;
   --hero-parallax-x: 0px;
@@ -811,22 +809,14 @@
   --orbit-offset-y: 0px;
   --orbit-rotate: 0deg;
   --orbit-scale: 1;
-  align-items: center;
-  background: rgba(18, 23, 38, 0.95);
-  border: 1px solid var(--color-accent-border);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-card);
-  color: var(--color-text);
   display: none;
-  gap: 0.8rem;
   max-width: 11.75rem;
   opacity: 1;
-  padding: 0.8rem 0.9rem;
   position: absolute;
   transform:
     translate3d(
-      calc(var(--drift-x) + var(--hero-parallax-x) + var(--orbit-offset-x)),
-      calc(var(--drift-y) + var(--hero-parallax-y) + var(--orbit-offset-y)),
+      calc(var(--hero-parallax-x) + var(--orbit-offset-x)),
+      calc(var(--hero-parallax-y) + var(--orbit-offset-y)),
       0
     )
     rotateX(var(--hero-parallax-rotate-x))
@@ -841,6 +831,24 @@
   will-change: transform, opacity;
   width: 100%;
   z-index: var(--z-floating);
+}
+
+.floating-feature-card__inner {
+  --drift-x: 0px;
+  --drift-y: 0px;
+  align-items: center;
+  background: rgba(18, 23, 38, 0.95);
+  border: 1px solid var(--color-accent-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+  display: flex;
+  gap: 0.8rem;
+  box-sizing: border-box;
+  padding: 0.8rem 0.9rem;
+  transform: translate3d(var(--drift-x), var(--drift-y), 0);
+  width: 100%;
+  will-change: transform;
 }
 
 .js .hero-section__visual .floating-feature-card {
@@ -1977,8 +1985,11 @@
 
   .floating-feature-card {
     display: flex;
-    gap: 0.58rem;
     max-width: 8.7rem;
+  }
+
+  .floating-feature-card__inner {
+    gap: 0.58rem;
     padding: 0.62rem 0.72rem;
   }
 
@@ -2132,8 +2143,11 @@
   }
 
   .floating-feature-card {
-    gap: 0.5rem;
     max-width: 7.45rem;
+  }
+
+  .floating-feature-card__inner {
+    gap: 0.5rem;
     padding: 0.55rem 0.6rem;
   }
 
@@ -2207,8 +2221,8 @@
   .hero-section__title {
     font-size: clamp(2.35rem, 14.2vw, 3.2rem);
     letter-spacing: -0.045em;
-    line-height: 0.98;
-    max-width: 8.8ch;
+    line-height: 1.04;
+    max-width: 9.4ch;
   }
 
   .hero-section__body {
@@ -2227,6 +2241,9 @@
 
   .floating-feature-card {
     max-width: 7rem;
+  }
+
+  .floating-feature-card__inner {
     padding: 0.48rem 0.54rem;
   }
 

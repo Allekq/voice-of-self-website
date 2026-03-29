@@ -27,6 +27,20 @@ interface RootState {
   targetY: number;
 }
 
+const syncPointerTargets = (
+  state: RootState,
+  clientX: number,
+  clientY: number,
+  strength = 1,
+) => {
+  const rect = state.root.getBoundingClientRect();
+  const localX = ((clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * 2;
+  const localY = ((clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * 2;
+
+  state.targetX = clamp(localX * strength, -1, 1);
+  state.targetY = clamp(localY * strength, -1, 1);
+};
+
 export const setupHeroParallax = () => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return;
@@ -128,20 +142,43 @@ export const setupHeroParallax = () => {
 
   states.forEach((state) => {
     state.root.addEventListener("pointermove", (event) => {
-      if (!finePointerQuery.matches) {
+      const isDirectTouch = event.pointerType === "touch" || event.pointerType === "pen";
+
+      if (!finePointerQuery.matches && !isDirectTouch) {
         return;
       }
 
-      const rect = state.root.getBoundingClientRect();
-      const localX = ((event.clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * 2;
-      const localY = ((event.clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * 2;
+      syncPointerTargets(state, event.clientX, event.clientY, isDirectTouch ? 0.62 : 1);
+      ensureAnimation();
+    });
 
-      state.targetX = clamp(localX, -1, 1);
-      state.targetY = clamp(localY, -1, 1);
+    state.root.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && !finePointerQuery.matches) {
+        return;
+      }
+
+      syncPointerTargets(
+        state,
+        event.clientX,
+        event.clientY,
+        event.pointerType === "touch" || event.pointerType === "pen" ? 0.62 : 1,
+      );
       ensureAnimation();
     });
 
     state.root.addEventListener("pointerleave", () => {
+      state.targetX = 0;
+      state.targetY = 0;
+      ensureAnimation();
+    });
+
+    state.root.addEventListener("pointerup", () => {
+      state.targetX = 0;
+      state.targetY = 0;
+      ensureAnimation();
+    });
+
+    state.root.addEventListener("pointercancel", () => {
       state.targetX = 0;
       state.targetY = 0;
       ensureAnimation();

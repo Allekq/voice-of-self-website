@@ -16,19 +16,23 @@ const { icon, title, subtitle, positionClass, drift, depth } = Astro.props as Pr
 
 <div
   class:list={["floating-feature-card", positionClass]}
-  data-noise-drift
   data-hero-parallax-layer
   data-hero-depth={depth}
-  data-drift-seed={drift.seed}
-  data-drift-amplitude-x={drift.amplitudeX}
-  data-drift-amplitude-y={drift.amplitudeY}
-  data-drift-speed={drift.speed}
 >
-  <div class="floating-feature-card__icon">
-    <IconSymbol name={icon} size={16} />
-  </div>
-  <div class="floating-feature-card__copy">
-    <p class="floating-feature-card__title">{title}</p>
-    <p class="floating-feature-card__subtitle">{subtitle}</p>
+  <div
+    class="floating-feature-card__inner"
+    data-noise-drift
+    data-drift-seed={drift.seed}
+    data-drift-amplitude-x={drift.amplitudeX}
+    data-drift-amplitude-y={drift.amplitudeY}
+    data-drift-speed={drift.speed}
+  >
+    <div class="floating-feature-card__icon">
+      <IconSymbol name={icon} size={16} />
+    </div>
+    <div class="floating-feature-card__copy">
+      <p class="floating-feature-card__title">{title}</p>
+      <p class="floating-feature-card__subtitle">{subtitle}</p>
+    </div>
   </div>
 </div>
