@@ -25,9 +25,6 @@ type WhyStageContext = {
   root: HTMLElement;
   stage: HTMLElement;
   stageFrame: HTMLElement;
-  timelineFill: HTMLElement | null;
-  timelineMarker: HTMLElement | null;
-  timelineScan: HTMLElement | null;
   visualTrack: HTMLElement;
   nativeAnimations: WhyNativeAnimation[];
 };
@@ -53,6 +50,14 @@ const isVisibleRoot = (element: HTMLElement) => {
   return rect.width > 0 && rect.height > 0;
 };
 
+const isActiveViewportRoot = (element: HTMLElement) => {
+  const rect = element.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || 1;
+  const viewportBuffer = viewportHeight * 0.32;
+
+  return rect.bottom > -viewportBuffer && rect.top < viewportHeight + viewportBuffer;
+};
+
 const getRelicSpan = (index: number) => {
   const current = whyItMattersRelics[index];
   const next = whyItMattersRelics[index + 1];
@@ -71,8 +76,8 @@ const getDesktopInsets = (viewportHeight: number): WhyTimelineInsets => ({
 });
 
 const getMobileInsets = (viewportHeight: number): WhyTimelineInsets => ({
-  bottomInset: clamp(viewportHeight * 0.12, 68, 104),
-  topInset: clamp(viewportHeight * 0.18, 108, 156),
+  bottomInset: clamp(viewportHeight * 0.1, 56, 88),
+  topInset: clamp(viewportHeight * 0.22, 132, 188),
 });
 
 const updateRelicCards = (stage: HTMLElement, progress: number) => {
@@ -104,20 +109,46 @@ const updateRelicCards = (stage: HTMLElement, progress: number) => {
   });
 };
 
+const getSolvedProgress = (progress: number) =>
+  whyItMattersRelics.reduce((total, relic, index) => {
+    const span = getRelicSpan(index);
+
+    return total + normalize(progress, relic.revealAt + span * 0.08, relic.revealAt + span * 0.74);
+  }, 0);
+
+const animateMetricValueChange = (element: HTMLElement) => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  element.getAnimations().forEach((animation) => animation.cancel());
+  element.animate(
+    [
+      { opacity: 0.38, transform: "translate3d(0, 0.32rem, 0) scale(0.92)" },
+      { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" },
+    ],
+    {
+      duration: 340,
+      easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+  );
+};
+
 const updateStageMetrics = (stage: HTMLElement, progress: number) => {
   const solvedCount = whyItMattersRelics.filter((relic, index) => {
     const span = getRelicSpan(index);
     return progress >= relic.revealAt + span * 0.6;
   }).length;
-  const anxietyBars = clamp(whyItMattersSolvedGoal - solvedCount, 1, whyItMattersSolvedGoal);
-  const preparedBars = clamp(solvedCount, 0, whyItMattersSolvedGoal);
+  const solvedProgress = clamp(getSolvedProgress(progress), 0, whyItMattersSolvedGoal);
+  const anxietyLevel = clamp(whyItMattersSolvedGoal - solvedProgress, 0.12, whyItMattersSolvedGoal);
+  const preparedLevel = clamp(solvedProgress, 0, whyItMattersSolvedGoal);
   const anxietyIndex = clamp(
-    Math.round((solvedCount / Math.max(whyItMattersSolvedGoal, 1)) * (whyItMattersAnxietyLabels.length - 1)),
+    Math.round((solvedProgress / Math.max(whyItMattersSolvedGoal, 1)) * (whyItMattersAnxietyLabels.length - 1)),
     0,
     whyItMattersAnxietyLabels.length - 1,
   );
   const preparedIndex = clamp(
-    Math.round((preparedBars / Math.max(whyItMattersSolvedGoal, 1)) * (whyItMattersPreparedLabels.length - 1)),
+    Math.round((preparedLevel / Math.max(whyItMattersSolvedGoal, 1)) * (whyItMattersPreparedLabels.length - 1)),
     0,
     whyItMattersPreparedLabels.length - 1,
   );
@@ -129,7 +160,12 @@ const updateStageMetrics = (stage: HTMLElement, progress: number) => {
   const preparedBarElements = Array.from(stage.querySelectorAll<HTMLElement>("[data-why-prepared-bar]"));
 
   if (solvedCountElement) {
-    solvedCountElement.textContent = String(solvedCount);
+    const nextCount = String(solvedCount);
+
+    if (solvedCountElement.textContent !== nextCount) {
+      solvedCountElement.textContent = nextCount;
+      animateMetricValueChange(solvedCountElement);
+    }
   }
 
   if (anxietyLabelElement) {
@@ -141,15 +177,19 @@ const updateStageMetrics = (stage: HTMLElement, progress: number) => {
   }
 
   anxietyBarElements.forEach((bar, index) => {
-    const isActive = index < anxietyBars;
+    const signalStrength = clamp(anxietyLevel - index, 0, 1);
+    const isActive = signalStrength > 0.03;
+
     bar.classList.toggle("is-active", isActive);
-    bar.style.setProperty("--signal-active", isActive ? "1" : "0");
+    bar.style.setProperty("--signal-active", signalStrength.toFixed(3));
   });
 
   preparedBarElements.forEach((bar, index) => {
-    const isActive = index < preparedBars;
+    const preparedStrength = clamp(preparedLevel - index, 0, 1);
+    const isActive = preparedStrength > 0.03;
+
     bar.classList.toggle("is-active", isActive);
-    bar.style.setProperty("--prepared-active", isActive ? "1" : "0");
+    bar.style.setProperty("--prepared-active", preparedStrength.toFixed(3));
   });
 };
 
@@ -168,6 +208,20 @@ const updateStageFrame = (visualTrack: HTMLElement, stageFrame: HTMLElement, pro
 
   stageFrame.style.setProperty("--why-panel-travel", `${travel.toFixed(2)}px`);
   stageFrame.style.setProperty("--why-panel-progress", progress.toFixed(3));
+};
+
+const getFrameTranslateY = (stageFrame: HTMLElement) => {
+  const transform = window.getComputedStyle(stageFrame).transform;
+
+  if (!transform || transform === "none") {
+    return 0;
+  }
+
+  try {
+    return new DOMMatrixReadOnly(transform).m42;
+  } catch {
+    return 0;
+  }
 };
 
 const getRootProgress = (root: HTMLElement) => {
@@ -198,11 +252,11 @@ const updateStageProgress = (
   reducedMotion = false,
 ) => {
   const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
-  const progress = reducedMotion
-    ? 0.92
-    : isPhoneViewport
-      ? getMobileProgress(visualTrack)
-      : getRootProgress(root);
+  const fallbackProgress = isPhoneViewport ? getMobileProgress(visualTrack) : getRootProgress(root);
+  const nativeTravel = getPanelTravel(visualTrack, stageFrame);
+  const nativeProgress =
+    nativeTravel > 0 ? clamp(getFrameTranslateY(stageFrame) / nativeTravel, 0, 1) : fallbackProgress;
+  const progress = reducedMotion ? 0.92 : supportsNativeWhyTimelines() ? nativeProgress : fallbackProgress;
 
   stage.style.setProperty("--why-progress", progress.toFixed(3));
   stage.classList.toggle("is-stage-active", progress > 0.04);
@@ -215,7 +269,6 @@ const updateStageProgress = (
 const clearNativeStageAnimations = (context: WhyStageContext) => {
   context.nativeAnimations.forEach((animation) => animation.cancel());
   context.nativeAnimations = [];
-  context.stage.classList.remove("has-native-scroll-motion");
 };
 
 const setupNativeStageAnimations = (context: WhyStageContext) => {
@@ -265,24 +318,6 @@ const setupNativeStageAnimations = (context: WhyStageContext) => {
     { transform: `translate3d(0, ${getPanelTravel(context.visualTrack, context.stageFrame).toFixed(2)}px, 0)` },
   ]);
 
-  if (context.timelineFill) {
-    animateWithTimeline(context.timelineFill, [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }]);
-  }
-
-  if (context.timelineMarker) {
-    animateWithTimeline(context.timelineMarker, [{ left: "0%" }, { left: "100%" }]);
-  }
-
-  if (context.timelineScan) {
-    animateWithTimeline(context.timelineScan, [
-      { opacity: 0.14, transform: "translateX(-12%)" },
-      { opacity: 0.56, transform: "translateX(142%)" },
-    ]);
-  }
-
-  if (context.nativeAnimations.length) {
-    context.stage.classList.add("has-native-scroll-motion");
-  }
 };
 
 export const setupWhyItMattersStage = () => {
@@ -292,9 +327,6 @@ export const setupWhyItMattersStage = () => {
     .map<WhyStageContext | null>((root) => {
       const stage = root.querySelector<HTMLElement>("[data-why-stage]");
       const stageFrame = root.querySelector<HTMLElement>("[data-why-stage-frame]");
-      const timelineFill = root.querySelector<HTMLElement>(".why-growth-stage__timeline-fill");
-      const timelineMarker = root.querySelector<HTMLElement>(".why-growth-stage__timeline-marker");
-      const timelineScan = root.querySelector<HTMLElement>(".why-growth-stage__scan");
       const visualTrack = root.querySelector<HTMLElement>("[data-why-visual-track]");
 
       if (!stage || !stageFrame || !visualTrack) {
@@ -305,9 +337,6 @@ export const setupWhyItMattersStage = () => {
         root,
         stage,
         stageFrame,
-        timelineFill,
-        timelineMarker,
-        timelineScan,
         visualTrack,
         nativeAnimations: [] as WhyNativeAnimation[],
       };
@@ -340,26 +369,29 @@ export const setupWhyItMattersStage = () => {
   });
 
   let frameId = 0;
-  let keepRenderingUntil = 0;
 
   const render = () => {
     frameId = 0;
+    let shouldKeepAnimating = false;
+
     stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) => {
       if (!isVisibleRoot(root)) {
         return;
       }
 
       updateStageProgress(root, stage, stageFrame, visualTrack);
+
+      if (isActiveViewportRoot(root)) {
+        shouldKeepAnimating = true;
+      }
     });
 
-    if (performance.now() < keepRenderingUntil) {
+    if (shouldKeepAnimating) {
       frameId = window.requestAnimationFrame(render);
     }
   };
 
-  const requestRender = (burstMs = 0) => {
-    keepRenderingUntil = Math.max(keepRenderingUntil, performance.now() + burstMs);
-
+  const requestRender = () => {
     if (frameId !== 0) {
       return;
     }
@@ -367,13 +399,11 @@ export const setupWhyItMattersStage = () => {
     frameId = window.requestAnimationFrame(render);
   };
 
-  const requestRenderBurst = () => requestRender(180);
+  requestRender();
 
-  requestRender(220);
-
-  window.addEventListener("scroll", requestRenderBurst, { passive: true });
-  window.addEventListener("touchmove", requestRenderBurst, { passive: true });
-  window.addEventListener("wheel", requestRenderBurst, { passive: true });
+  window.addEventListener("scroll", requestRender, { passive: true });
+  window.addEventListener("touchmove", requestRender, { passive: true });
+  window.addEventListener("wheel", requestRender, { passive: true });
   window.addEventListener("resize", () => {
     stageContexts.forEach((context) => {
       if (!isVisibleRoot(context.root)) {
@@ -384,6 +414,6 @@ export const setupWhyItMattersStage = () => {
       setupNativeStageAnimations(context);
     });
 
-    requestRender(260);
+    requestRender();
   });
 };

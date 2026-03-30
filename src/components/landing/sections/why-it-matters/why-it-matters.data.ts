@@ -110,19 +110,19 @@ export const whyItMattersStoryBeats: WhyItMattersBeat[] = [
 ];
 
 export const whyItMattersAnxietyLabels = [
-  "Flooded",
-  "On edge",
-  "Loosening",
-  "Settling",
-  "Quiet",
+  "Flooded and reactive",
+  "Still on guard",
+  "Starting to ease",
+  "Settling faster",
+  "Mostly calm",
 ] as const;
 
 export const whyItMattersPreparedLabels = [
-  "Bracing",
-  "Catching it",
-  "More ready",
-  "Steady",
-  "Prepared",
+  "Going in\nbraced",
+  "Catching it\nsooner",
+  "Knowing\nwhat helps",
+  "Feeling\nsteadier",
+  "Ready when\nneeded",
 ] as const;
 
 export const whyItMattersSolvedGoal = whyItMattersRelics.length;
