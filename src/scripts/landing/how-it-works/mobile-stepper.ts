@@ -197,5 +197,7 @@ export const setupMobileHowItWorks = () => {
 
   runSync(true);
   window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("touchmove", schedule, { passive: true });
+  window.addEventListener("wheel", schedule, { passive: true });
   window.addEventListener("resize", schedule);
 };

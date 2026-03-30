@@ -153,14 +153,18 @@ const updateStageMetrics = (stage: HTMLElement, progress: number) => {
   });
 };
 
-const updateStageFrame = (visualTrack: HTMLElement, stageFrame: HTMLElement, progress: number) => {
+const getPanelTravel = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
   const visualHeight = visualTrack.getBoundingClientRect().height;
   const frameHeight = stageFrame.getBoundingClientRect().height;
   const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
   const frameTop = Number.parseFloat(window.getComputedStyle(stageFrame).top) || 0;
-  const travel = isPhoneViewport
+  return isPhoneViewport
     ? Math.max(visualHeight - frameHeight - frameTop, 0)
     : Math.max(visualHeight - frameHeight, 0);
+};
+
+const updateStageFrame = (visualTrack: HTMLElement, stageFrame: HTMLElement, progress: number) => {
+  const travel = getPanelTravel(visualTrack, stageFrame);
 
   stageFrame.style.setProperty("--why-panel-travel", `${travel.toFixed(2)}px`);
   stageFrame.style.setProperty("--why-panel-progress", progress.toFixed(3));
@@ -250,6 +254,11 @@ const setupNativeStageAnimations = (context: WhyStageContext) => {
 
     context.nativeAnimations.push(animation);
   };
+
+  animateWithTimeline(context.stageFrame, [
+    { transform: "translate3d(0, 0, 0)" },
+    { transform: `translate3d(0, ${getPanelTravel(context.visualTrack, context.stageFrame).toFixed(2)}px, 0)` },
+  ]);
 
   if (context.timelineFill) {
     animateWithTimeline(context.timelineFill, [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }]);
