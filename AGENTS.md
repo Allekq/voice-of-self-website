@@ -41,6 +41,7 @@ Closure is a privacy-first iOS reflection app built with SwiftUI.
 - Keep base-path-safe links and asset helpers in `src/lib/paths.ts`. Use `withBase()` for internal paths.
 - Keep tokens in `src/styles/tokens.css`, shared landing styles in `src/styles/landing.css`, and app-wide/base/legal styling in `src/styles/global.css`.
 - Keep repeated section content close to the owning section in colocated `*.data.ts` files. Do not create one giant homepage content registry.
+- Name landing components by responsibility, not by vague buckets. If a file is desktop-only, mobile-only, or shared across layouts, say that explicitly in the filename, such as `DesktopShowcase`, `MobileShowcase`, or `SharedContent`. Avoid ambiguous names like `Copy`, `Stuff`, `Helpers`, or `Temp` unless the file is genuinely that generic.
 
 ## Code Cleanliness Rules
 
