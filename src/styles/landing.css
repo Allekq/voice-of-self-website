@@ -1370,10 +1370,10 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.03),
     0 24px 44px rgba(0, 0, 0, 0.24);
   display: grid;
-  gap: var(--space-sm);
-  min-height: clamp(23rem, 34vw, 26rem);
+  gap: var(--space-md);
+  min-height: clamp(26rem, 39vw, 29rem);
   overflow: hidden;
-  padding: clamp(1.05rem, 2.5vw, 1.32rem);
+  padding: clamp(1.12rem, 2.8vw, 1.42rem);
   position: relative;
   transform:
     perspective(1400px)
@@ -1472,7 +1472,7 @@
 
 .why-growth-stage__deck {
   border-radius: calc(var(--radius-lg) - 0.1rem);
-  min-height: clamp(12rem, 18vw, 13.5rem);
+  min-height: clamp(15rem, 24vw, 17rem);
   overflow: hidden;
   position: relative;
 }
@@ -1531,6 +1531,7 @@
   --relic-pop: 0;
   --relic-retire: 0;
   --relic-strike: 0;
+  --relic-title: 0;
   --relic-top: 0%;
   --relic-width: clamp(13rem, 48%, 16rem);
   backdrop-filter: blur(16px);
@@ -1611,7 +1612,12 @@
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.14em;
+  opacity: var(--relic-title);
   text-transform: uppercase;
+  transform: translateY(calc((1 - var(--relic-title)) * -0.28rem));
+  transition:
+    opacity var(--motion-standard),
+    transform var(--motion-standard);
 }
 
 .why-relic-card__label {
@@ -1625,7 +1631,7 @@
 .why-relic-card__worry {
   color: rgba(245, 239, 230, 0.82);
   font-size: 0.88rem;
-  line-height: 1.42;
+  line-height: 1.46;
   text-decoration-line: line-through;
   text-decoration-color: rgba(207, 100, 87, calc(var(--relic-strike) * 0.92));
   text-decoration-skip-ink: none;
@@ -1663,8 +1669,8 @@
 
 .why-relic-card__growth {
   color: var(--color-text-strong);
-  font-size: 0.84rem;
-  line-height: 1.42;
+  font-size: 0.86rem;
+  line-height: 1.46;
 }
 
 .why-growth-stage__timeline {
@@ -2817,7 +2823,7 @@
   }
 
   .why-showcase__visual {
-    min-height: clamp(26rem, 88vh, 36rem);
+    min-height: clamp(29rem, 92vh, 40rem);
     order: -1;
   }
 
@@ -2940,7 +2946,7 @@
   }
 
   .why-showcase__visual {
-    min-height: clamp(23rem, 84vh, 31rem);
+    min-height: clamp(25rem, 88vh, 34rem);
   }
 
   .why-story-beat {
@@ -2956,8 +2962,8 @@
   }
 
   .why-growth-stage {
-    min-height: 20.15rem;
-    padding: 0.98rem;
+    min-height: 22.4rem;
+    padding: 1rem;
   }
 
   .why-growth-stage__labels,
@@ -2967,7 +2973,7 @@
   }
 
   .why-growth-stage__deck {
-    min-height: 11.6rem;
+    min-height: 13.4rem;
   }
 
   .why-relic-card {
@@ -3096,16 +3102,16 @@
   }
 
   .why-showcase__visual {
-    min-height: clamp(22rem, 82vh, 28rem);
+    min-height: clamp(24rem, 86vh, 31rem);
   }
 
   .why-growth-stage {
-    min-height: 18.9rem;
-    padding: 0.9rem;
+    min-height: 21rem;
+    padding: 0.94rem;
   }
 
   .why-growth-stage__deck {
-    min-height: 11rem;
+    min-height: 12.2rem;
   }
 
   .why-relic-card {

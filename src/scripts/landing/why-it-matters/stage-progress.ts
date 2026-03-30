@@ -10,8 +10,6 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 const normalize = (value: number, start: number, end: number) =>
   clamp((value - start) / Math.max(end - start, 0.001), 0, 1);
 
-const easeOut = (value: number) => 1 - Math.pow(1 - value, 1.22);
-
 const updateRelicCards = (stage: HTMLElement, progress: number) => {
   const cards = Array.from(stage.querySelectorAll<HTMLElement>("[data-why-relic]"));
 
@@ -23,14 +21,16 @@ const updateRelicCards = (stage: HTMLElement, progress: number) => {
     }
 
     const revealAt = relic.revealAt;
-    const softenAt = whyItMattersRelics[index + 2]?.revealAt ?? 1.08;
-    const pop = normalize(progress, revealAt - 0.05, revealAt + 0.06);
-    const strike = normalize(progress, revealAt + 0.03, revealAt + 0.14);
-    const growth = normalize(progress, revealAt + 0.11, revealAt + 0.24);
-    const retire = normalize(progress, softenAt + 0.03, softenAt + 0.18);
-    const opacity = pop === 0 ? 0 : clamp(0.32 + pop * 0.68 - retire * 0.38, 0, 1);
+    const title = normalize(progress, revealAt + 0.12, revealAt + 0.24);
+    const softenAt = (whyItMattersRelics[index + 2]?.revealAt ?? 1.1) + 0.06;
+    const pop = normalize(progress, revealAt - 0.04, revealAt + 0.05);
+    const strike = normalize(progress, revealAt + 0.08, revealAt + 0.22);
+    const growth = normalize(progress, revealAt + 0.18, revealAt + 0.36);
+    const retire = normalize(progress, softenAt, softenAt + 0.18);
+    const opacity = pop === 0 ? 0 : clamp(0.24 + pop * 0.76 - retire * 0.32, 0, 1);
 
     card.style.setProperty("--relic-pop", pop.toFixed(3));
+    card.style.setProperty("--relic-title", title.toFixed(3));
     card.style.setProperty("--relic-strike", strike.toFixed(3));
     card.style.setProperty("--relic-growth", growth.toFixed(3));
     card.style.setProperty("--relic-retire", retire.toFixed(3));
@@ -90,15 +90,16 @@ const updateStageFrame = (visualTrack: HTMLElement, stageFrame: HTMLElement, pro
   const travel = Math.max(visualHeight - frameHeight, 0);
 
   stageFrame.style.setProperty("--why-panel-travel", `${travel.toFixed(2)}px`);
-  stageFrame.style.setProperty("--why-panel-progress", easeOut(progress).toFixed(3));
+  stageFrame.style.setProperty("--why-panel-progress", progress.toFixed(3));
 };
 
-const getRootProgress = (root: HTMLElement, stageFrame: HTMLElement) => {
+const getRootProgress = (root: HTMLElement) => {
   const rect = root.getBoundingClientRect();
   const viewportHeight = window.innerHeight || 1;
-  const stageHeight = stageFrame.getBoundingClientRect().height;
-  const topInset = clamp(viewportHeight * 0.12, 56, 112);
-  const travel = Math.max(rect.height - stageHeight, viewportHeight * 0.52);
+  const topInset = clamp(viewportHeight * 0.11, 48, 88);
+  const bottomInset = clamp(viewportHeight * 0.08, 28, 56);
+  const endTop = viewportHeight - bottomInset - rect.height;
+  const travel = Math.max(topInset - endTop, viewportHeight * 0.58);
 
   return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
 };
@@ -110,7 +111,7 @@ const updateStageProgress = (
   visualTrack: HTMLElement,
   reducedMotion = false,
 ) => {
-  const progress = reducedMotion ? 0.92 : getRootProgress(root, stageFrame);
+  const progress = reducedMotion ? 0.92 : getRootProgress(root);
 
   stage.style.setProperty("--why-progress", progress.toFixed(3));
   stage.classList.toggle("is-stage-active", progress > 0.04);
