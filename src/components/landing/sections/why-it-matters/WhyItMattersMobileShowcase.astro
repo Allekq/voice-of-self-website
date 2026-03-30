@@ -3,16 +3,18 @@ import WhyItMattersStage from "./WhyItMattersStage.astro";
 import WhyItMattersSharedContent from "./WhyItMattersSharedContent.astro";
 ---
 
-<div class="why-showcase why-showcase--mobile-stage landing-surface" data-reveal data-why-progress-root>
-  <div class="why-showcase__visual" data-why-visual-track>
-    <div class="why-showcase__visual-frame" data-why-stage-frame>
-      <WhyItMattersStage />
+<div class="why-mobile-flow">
+  <div class="why-showcase why-mobile-stage landing-surface" data-reveal data-why-progress-root>
+    <div class="why-showcase__visual" data-why-visual-track>
+      <div class="why-showcase__visual-frame" data-why-stage-frame>
+        <WhyItMattersStage />
+      </div>
     </div>
   </div>
-</div>
 
-<div class="why-showcase why-showcase--mobile-copy landing-surface" data-reveal>
-  <div class="why-showcase__copy">
-    <WhyItMattersSharedContent />
+  <div class="why-showcase why-mobile-copy landing-surface" data-reveal>
+    <div class="why-showcase__copy">
+      <WhyItMattersSharedContent />
+    </div>
   </div>
 </div>

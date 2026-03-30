@@ -1136,8 +1136,7 @@
   position: relative;
 }
 
-.why-showcase--mobile-stage,
-.why-showcase--mobile-copy {
+.why-mobile-flow {
   display: none;
 }
 
@@ -2937,47 +2936,43 @@
     width: min(100%, 20.5rem);
   }
 
-  .why-showcase--desktop {
+  .why-desktop-flow {
     display: none;
   }
 
-  .why-showcase--mobile-stage,
-  .why-showcase--mobile-copy {
+  .why-mobile-flow {
     display: grid;
-    grid-template-columns: 1fr;
-    overflow: visible;
-    padding: 1.35rem;
+    gap: var(--space-lg);
   }
 
-  .why-showcase--mobile-copy {
-    margin-top: var(--space-lg);
+  .why-mobile-stage,
+  .why-mobile-copy {
+    overflow: visible;
+    padding: 1.35rem;
   }
 
   .why-showcase__title {
     font-size: clamp(1.7rem, 7.4vw, 2.2rem);
   }
 
-  .why-showcase--mobile-stage .why-showcase__visual {
-    min-height: max(112rem, 430vh);
-    margin-bottom: var(--space-lg);
+  .why-mobile-stage .why-showcase__visual {
+    min-height: max(62rem, 255vh);
   }
 
-  .why-showcase--mobile-stage .why-showcase__visual-frame {
-    position: sticky;
-    top: clamp(4.6rem, 10vw, 5.45rem);
-    transform: none;
+  .why-mobile-stage .why-showcase__visual-frame {
+    top: clamp(2.35rem, 8vw, 3.1rem);
   }
 
   .why-showcase__copy {
     margin-top: 0;
   }
 
-  .why-showcase--mobile-copy .why-showcase__copy {
+  .why-mobile-copy .why-showcase__copy {
     gap: var(--space-lg);
     padding-block: 0;
   }
 
-  .why-showcase--mobile-copy .why-showcase__intro {
+  .why-mobile-copy .why-showcase__intro {
     min-height: 0;
   }
 
@@ -3157,8 +3152,8 @@
     width: min(100%, 19.4rem);
   }
 
-  .why-showcase--mobile-stage,
-  .why-showcase--mobile-copy {
+  .why-mobile-stage,
+  .why-mobile-copy {
     padding: 1.2rem;
   }
 
@@ -3166,12 +3161,12 @@
     font-size: 1rem;
   }
 
-  .why-showcase--mobile-stage .why-showcase__visual {
-    min-height: max(104rem, 445vh);
+  .why-mobile-stage .why-showcase__visual {
+    min-height: max(56rem, 270vh);
   }
 
-  .why-showcase--mobile-stage .why-showcase__visual-frame {
-    top: clamp(4.45rem, 11vw, 5.1rem);
+  .why-mobile-stage .why-showcase__visual-frame {
+    top: clamp(2rem, 9vw, 2.7rem);
   }
 
   .why-growth-stage {

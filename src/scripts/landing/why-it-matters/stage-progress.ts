@@ -114,7 +114,11 @@ const updateStageMetrics = (stage: HTMLElement, progress: number) => {
 const updateStageFrame = (visualTrack: HTMLElement, stageFrame: HTMLElement, progress: number) => {
   const visualHeight = visualTrack.getBoundingClientRect().height;
   const frameHeight = stageFrame.getBoundingClientRect().height;
-  const travel = Math.max(visualHeight - frameHeight, 0);
+  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+  const frameTop = Number.parseFloat(window.getComputedStyle(stageFrame).top) || 0;
+  const travel = isPhoneViewport
+    ? Math.max(visualHeight - frameHeight - frameTop, 0)
+    : Math.max(visualHeight - frameHeight, 0);
 
   stageFrame.style.setProperty("--why-panel-travel", `${travel.toFixed(2)}px`);
   stageFrame.style.setProperty("--why-panel-progress", progress.toFixed(3));
@@ -131,13 +135,13 @@ const getRootProgress = (root: HTMLElement) => {
   return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
 };
 
-const getMobileProgress = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
+const getMobileProgress = (visualTrack: HTMLElement) => {
   const rect = visualTrack.getBoundingClientRect();
   const viewportHeight = window.innerHeight || 1;
-  const frameHeight = stageFrame.getBoundingClientRect().height;
-  const topInset = clamp(viewportHeight * 0.12, 68, 104);
-  const stickyTravel = Math.max(rect.height - frameHeight - topInset, 1);
-  const travel = Math.max(stickyTravel * 0.9, viewportHeight * 3.2);
+  const topInset = clamp(viewportHeight * 0.18, 108, 156);
+  const bottomInset = clamp(viewportHeight * 0.12, 68, 104);
+  const endTop = viewportHeight - bottomInset - rect.height;
+  const travel = Math.max(topInset - endTop, viewportHeight * 1.8);
 
   return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
 };
@@ -153,7 +157,7 @@ const updateStageProgress = (
   const progress = reducedMotion
     ? 0.92
     : isPhoneViewport
-      ? getMobileProgress(visualTrack, stageFrame)
+      ? getMobileProgress(visualTrack)
       : getRootProgress(root);
 
   stage.style.setProperty("--why-progress", progress.toFixed(3));
