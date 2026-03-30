@@ -1457,22 +1457,17 @@
 
 .why-growth-stage__labels {
   color: var(--color-text-dim);
-  display: grid;
-  gap: var(--space-sm);
-  grid-template-columns: auto 1fr auto;
+  margin: 0;
+  text-align: center;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.why-growth-stage__labels span:nth-child(2) {
-  text-align: center;
-}
-
 .why-growth-stage__deck {
   border-radius: calc(var(--radius-lg) - 0.1rem);
-  min-height: clamp(15rem, 24vw, 17rem);
+  min-height: clamp(16.25rem, 25vw, 18rem);
   overflow: hidden;
   position: relative;
 }
@@ -2973,7 +2968,7 @@
   }
 
   .why-growth-stage__deck {
-    min-height: 13.4rem;
+    min-height: 14.8rem;
   }
 
   .why-relic-card {
@@ -3111,7 +3106,7 @@
   }
 
   .why-growth-stage__deck {
-    min-height: 12.2rem;
+    min-height: 13.6rem;
   }
 
   .why-relic-card {

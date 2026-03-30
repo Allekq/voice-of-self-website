@@ -10,6 +10,18 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 const normalize = (value: number, start: number, end: number) =>
   clamp((value - start) / Math.max(end - start, 0.001), 0, 1);
 
+const getRelicSpan = (index: number) => {
+  const current = whyItMattersRelics[index];
+  const next = whyItMattersRelics[index + 1];
+
+  if (!current) {
+    return 0.18;
+  }
+
+  const span = next ? next.revealAt - current.revealAt : 1 - current.revealAt;
+  return Math.max(span, 0.16);
+};
+
 const updateRelicCards = (stage: HTMLElement, progress: number) => {
   const cards = Array.from(stage.querySelectorAll<HTMLElement>("[data-why-relic]"));
 
@@ -21,11 +33,12 @@ const updateRelicCards = (stage: HTMLElement, progress: number) => {
     }
 
     const revealAt = relic.revealAt;
-    const title = normalize(progress, revealAt + 0.12, revealAt + 0.24);
+    const span = getRelicSpan(index);
+    const title = normalize(progress, revealAt + span * 0.1, revealAt + span * 0.28);
     const softenAt = (whyItMattersRelics[index + 2]?.revealAt ?? 1.1) + 0.06;
-    const pop = normalize(progress, revealAt - 0.04, revealAt + 0.05);
-    const strike = normalize(progress, revealAt + 0.08, revealAt + 0.22);
-    const growth = normalize(progress, revealAt + 0.18, revealAt + 0.36);
+    const pop = normalize(progress, revealAt - span * 0.12, revealAt + span * 0.16);
+    const strike = normalize(progress, revealAt + span * 0.08, revealAt + span * 0.38);
+    const growth = normalize(progress, revealAt + span * 0.22, revealAt + span * 0.58);
     const retire = normalize(progress, softenAt, softenAt + 0.18);
     const opacity = pop === 0 ? 0 : clamp(0.24 + pop * 0.76 - retire * 0.32, 0, 1);
 
@@ -39,7 +52,10 @@ const updateRelicCards = (stage: HTMLElement, progress: number) => {
 };
 
 const updateStageMetrics = (stage: HTMLElement, progress: number) => {
-  const solvedCount = whyItMattersRelics.filter((relic) => progress >= relic.revealAt + 0.02).length;
+  const solvedCount = whyItMattersRelics.filter((relic, index) => {
+    const span = getRelicSpan(index);
+    return progress >= relic.revealAt + span * 0.6;
+  }).length;
   const anxietyBars = clamp(whyItMattersSolvedGoal - solvedCount, 1, whyItMattersSolvedGoal);
   const preparedBars = clamp(solvedCount, 0, whyItMattersSolvedGoal);
   const anxietyIndex = clamp(
