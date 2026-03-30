@@ -1,4 +1,5 @@
 import { clamp, lerp } from "./shared";
+import { getStableViewportHeight } from "../shared/stable-viewport";
 
 interface MobileRootState {
   root: HTMLElement;
@@ -24,7 +25,7 @@ const resolveContinuousProgress = (centers: Array<{ viewportY: number; rootY: nu
     return { progressUnit: 0, progressY: centers[0]?.rootY ?? 0 };
   }
 
-  const targetY = window.innerHeight / 2;
+  const targetY = getStableViewportHeight() / 2;
   const lastIndex = centers.length - 1;
 
   if (targetY <= centers[0].viewportY) {
@@ -196,9 +197,7 @@ export const setupMobileHowItWorks = () => {
   };
 
   runSync(true);
-  window.addEventListener("touchstart", schedule, { passive: true });
   window.addEventListener("scroll", schedule, { passive: true });
-  window.addEventListener("touchmove", schedule, { passive: true });
-  window.addEventListener("wheel", schedule, { passive: true });
   window.addEventListener("resize", schedule);
+  window.visualViewport?.addEventListener("resize", schedule);
 };

@@ -110,11 +110,11 @@ export const whyItMattersStoryBeats: WhyItMattersBeat[] = [
 ];
 
 export const whyItMattersAnxietyLabels = [
-  "Flooded and reactive",
-  "Still on guard",
-  "Starting to ease",
-  "Settling faster",
-  "Mostly calm",
+  "Flooded and\nreactive",
+  "Still on\nguard",
+  "Starting to\nease",
+  "Settling\nfaster",
+  "Mostly\ncalm",
 ] as const;
 
 export const whyItMattersPreparedLabels = [

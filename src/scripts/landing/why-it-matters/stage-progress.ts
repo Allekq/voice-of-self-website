@@ -4,6 +4,7 @@ import {
   whyItMattersRelics,
   whyItMattersSolvedGoal,
 } from "../../../components/landing/sections/why-it-matters/why-it-matters.data";
+import { getStableViewportHeight } from "../shared/stable-viewport";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
@@ -48,14 +49,6 @@ const isVisibleRoot = (element: HTMLElement) => {
 
   const rect = element.getBoundingClientRect();
   return rect.width > 0 && rect.height > 0;
-};
-
-const isActiveViewportRoot = (element: HTMLElement) => {
-  const rect = element.getBoundingClientRect();
-  const viewportHeight = window.innerHeight || 1;
-  const viewportBuffer = viewportHeight * 0.32;
-
-  return rect.bottom > -viewportBuffer && rect.top < viewportHeight + viewportBuffer;
 };
 
 const getRelicSpan = (index: number) => {
@@ -226,7 +219,7 @@ const getFrameTranslateY = (stageFrame: HTMLElement) => {
 
 const getRootProgress = (root: HTMLElement) => {
   const rect = root.getBoundingClientRect();
-  const viewportHeight = window.innerHeight || 1;
+  const viewportHeight = getStableViewportHeight();
   const { topInset, bottomInset } = getDesktopInsets(viewportHeight);
   const endTop = viewportHeight - bottomInset - rect.height;
   const travel = Math.max(topInset - endTop, viewportHeight * 0.58);
@@ -236,7 +229,7 @@ const getRootProgress = (root: HTMLElement) => {
 
 const getMobileProgress = (visualTrack: HTMLElement) => {
   const rect = visualTrack.getBoundingClientRect();
-  const viewportHeight = window.innerHeight || 1;
+  const viewportHeight = getStableViewportHeight();
   const { topInset, bottomInset } = getMobileInsets(viewportHeight);
   const endTop = viewportHeight - bottomInset - rect.height;
   const travel = Math.max(topInset - endTop, viewportHeight * 1.8);
@@ -278,7 +271,7 @@ const setupNativeStageAnimations = (context: WhyStageContext) => {
     return;
   }
 
-  const viewportHeight = window.innerHeight || 1;
+  const viewportHeight = getStableViewportHeight();
   const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
   const subject = isPhoneViewport ? context.visualTrack : context.root;
   const { topInset, bottomInset } = isPhoneViewport
@@ -372,7 +365,6 @@ export const setupWhyItMattersStage = () => {
 
   const render = () => {
     frameId = 0;
-    let shouldKeepAnimating = false;
 
     stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) => {
       if (!isVisibleRoot(root)) {
@@ -380,15 +372,7 @@ export const setupWhyItMattersStage = () => {
       }
 
       updateStageProgress(root, stage, stageFrame, visualTrack);
-
-      if (isActiveViewportRoot(root)) {
-        shouldKeepAnimating = true;
-      }
     });
-
-    if (shouldKeepAnimating) {
-      frameId = window.requestAnimationFrame(render);
-    }
   };
 
   const requestRender = () => {
@@ -402,9 +386,7 @@ export const setupWhyItMattersStage = () => {
   requestRender();
 
   window.addEventListener("scroll", requestRender, { passive: true });
-  window.addEventListener("touchmove", requestRender, { passive: true });
-  window.addEventListener("wheel", requestRender, { passive: true });
-  window.addEventListener("resize", () => {
+  const handleResize = () => {
     stageContexts.forEach((context) => {
       if (!isVisibleRoot(context.root)) {
         clearNativeStageAnimations(context);
@@ -415,5 +397,8 @@ export const setupWhyItMattersStage = () => {
     });
 
     requestRender();
-  });
+  };
+
+  window.addEventListener("resize", handleResize);
+  window.visualViewport?.addEventListener("resize", handleResize);
 };
