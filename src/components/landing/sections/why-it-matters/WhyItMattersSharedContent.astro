@@ -1,6 +1,7 @@
 ---
-import IconSymbol from "../../ui/IconSymbol.astro";
 import WhyStoryBeat from "./WhyStoryBeat.astro";
+import WhyResolvedWorryCard from "./WhyResolvedWorryCard.astro";
+import IconSymbol from "../../ui/IconSymbol.astro";
 import { whyItMattersStoryBeats } from "./why-it-matters.data";
 ---
 
@@ -13,6 +14,10 @@ import { whyItMattersStoryBeats } from "./why-it-matters.data";
     A relic is Voice of Self&apos;s durable record of meaningful growth, awarded when your
     reflection shows that something actually improved, shifted, or was followed through on.
   </p>
+  <p class="why-showcase__body">
+    No charts. No streaks. Just honest evidence that something real changed before it slips past
+    you.
+  </p>
   <p class="why-showcase__body why-showcase__body--strong">
     That matters because most progress stays quiet: a passed exam, a first pull-up, a calmer
     conversation, or the return of work-life balance before you even realize it counts.
@@ -21,8 +26,16 @@ import { whyItMattersStoryBeats } from "./why-it-matters.data";
 
 <div class="why-story-list">
   {whyItMattersStoryBeats.map((beat, index) => (
-    <WhyStoryBeat beat={beat} index={index + 1} />
+    <WhyStoryBeat
+      beat={beat}
+      index={index + 1}
+      isFeatured={index === whyItMattersStoryBeats.length - 1}
+    />
   ))}
+</div>
+
+<div class="why-showcase__highlight">
+  <WhyResolvedWorryCard />
 </div>
 
 <ul class="why-showcase__list">

@@ -4,13 +4,14 @@ import type { WhyItMattersBeat } from "./why-it-matters.data";
 interface Props {
   beat: WhyItMattersBeat;
   index: number;
+  isFeatured?: boolean;
 }
 
-const { beat, index } = Astro.props as Props;
+const { beat, index, isFeatured = false } = Astro.props as Props;
 const formattedIndex = String(index).padStart(2, "0");
 ---
 
-<article class="why-story-beat">
+<article class:list={["why-story-beat", isFeatured && "why-story-beat--featured"]} data-surface-depth>
   <div class="why-story-beat__index">{formattedIndex}</div>
   <div class="why-story-beat__copy">
     <p class="why-story-beat__eyebrow">{beat.eyebrow}</p>

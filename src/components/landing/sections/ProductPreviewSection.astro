@@ -1,5 +1,5 @@
 ---
-import IconSymbol from "../ui/IconSymbol.astro";
+import WhyResolvedWorryCard from "./why-it-matters/WhyResolvedWorryCard.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
 import SectionShell from "../ui/SectionShell.astro";
 ---
@@ -18,29 +18,6 @@ import SectionShell from "../ui/SectionShell.astro";
       </p>
     </div>
 
-    <article class="product-preview-card landing-surface" data-reveal data-surface-depth>
-      <div class="product-preview-card__eyebrow">
-        <span class="product-preview-card__eyebrow-icon">
-          <IconSymbol name="check" size={10} />
-        </span>
-        <span>Resolved worry</span>
-      </div>
-
-      <h3 class="product-preview-card__title">Fear of disappointing everyone</h3>
-      <p class="product-preview-card__body">
-        Mentioned often in older reflections. Not present in recent entries. This may be something
-        that no longer takes up space in your head.
-      </p>
-
-      <div class="product-preview-card__meta">
-        <span>First mentioned: Nov 2025</span>
-        <span>Last mentioned: Jan 2026</span>
-        <span>8 weeks silent</span>
-      </div>
-
-      <div class="product-preview-card__divider"></div>
-
-      <p class="product-preview-card__footnote">Appeared in 12 reflections before resolving.</p>
-    </article>
+    <WhyResolvedWorryCard />
   </div>
 </SectionShell>
