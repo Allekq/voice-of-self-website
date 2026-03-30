@@ -243,12 +243,17 @@ const setupNativeStageAnimations = (context: WhyStageContext) => {
     subject,
   });
 
-  const animateWithTimeline = (element: Element, keyframes: Keyframe[] | PropertyIndexedKeyframes) => {
+  const animateWithTimeline = (
+    element: Element,
+    keyframes: Keyframe[] | PropertyIndexedKeyframes,
+    rangeStart = "contain 0%",
+    rangeEnd = "contain 100%",
+  ) => {
     const animation = element.animate(keyframes, {
       fill: "both",
       easing: "linear",
-      rangeEnd: "exit 100%",
-      rangeStart: "entry 0%",
+      rangeEnd,
+      rangeStart,
       timeline,
     } as KeyframeAnimationOptions & { rangeEnd: string; rangeStart: string; timeline: unknown }) as WhyNativeAnimation;
 
