@@ -10,6 +10,38 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 const normalize = (value: number, start: number, end: number) =>
   clamp((value - start) / Math.max(end - start, 0.001), 0, 1);
 
+type WhyNativeAnimation = Animation & {
+  rangeEnd?: string;
+  rangeStart?: string;
+  timeline?: unknown;
+};
+
+type WhyTimelineInsets = {
+  bottomInset: number;
+  topInset: number;
+};
+
+type WhyStageContext = {
+  root: HTMLElement;
+  stage: HTMLElement;
+  stageFrame: HTMLElement;
+  timelineFill: HTMLElement | null;
+  timelineMarker: HTMLElement | null;
+  timelineScan: HTMLElement | null;
+  visualTrack: HTMLElement;
+  nativeAnimations: WhyNativeAnimation[];
+};
+
+const getViewTimelineCtor = () =>
+  (window as Window & { ViewTimeline?: new (options?: Record<string, unknown>) => unknown }).ViewTimeline;
+
+const supportsNativeWhyTimelines = () =>
+  typeof window !== "undefined" &&
+  typeof HTMLElement !== "undefined" &&
+  typeof Element !== "undefined" &&
+  typeof Element.prototype.animate === "function" &&
+  typeof getViewTimelineCtor() === "function";
+
 const isVisibleRoot = (element: HTMLElement) => {
   const styles = window.getComputedStyle(element);
 
@@ -32,6 +64,16 @@ const getRelicSpan = (index: number) => {
   const span = next ? next.revealAt - current.revealAt : 1 - current.revealAt;
   return Math.max(span, 0.16);
 };
+
+const getDesktopInsets = (viewportHeight: number): WhyTimelineInsets => ({
+  bottomInset: clamp(viewportHeight * 0.08, 28, 56),
+  topInset: clamp(viewportHeight * 0.11, 48, 88),
+});
+
+const getMobileInsets = (viewportHeight: number): WhyTimelineInsets => ({
+  bottomInset: clamp(viewportHeight * 0.12, 68, 104),
+  topInset: clamp(viewportHeight * 0.18, 108, 156),
+});
 
 const updateRelicCards = (stage: HTMLElement, progress: number) => {
   const cards = Array.from(stage.querySelectorAll<HTMLElement>("[data-why-relic]"));
@@ -127,8 +169,7 @@ const updateStageFrame = (visualTrack: HTMLElement, stageFrame: HTMLElement, pro
 const getRootProgress = (root: HTMLElement) => {
   const rect = root.getBoundingClientRect();
   const viewportHeight = window.innerHeight || 1;
-  const topInset = clamp(viewportHeight * 0.11, 48, 88);
-  const bottomInset = clamp(viewportHeight * 0.08, 28, 56);
+  const { topInset, bottomInset } = getDesktopInsets(viewportHeight);
   const endTop = viewportHeight - bottomInset - rect.height;
   const travel = Math.max(topInset - endTop, viewportHeight * 0.58);
 
@@ -138,8 +179,7 @@ const getRootProgress = (root: HTMLElement) => {
 const getMobileProgress = (visualTrack: HTMLElement) => {
   const rect = visualTrack.getBoundingClientRect();
   const viewportHeight = window.innerHeight || 1;
-  const topInset = clamp(viewportHeight * 0.18, 108, 156);
-  const bottomInset = clamp(viewportHeight * 0.12, 68, 104);
+  const { topInset, bottomInset } = getMobileInsets(viewportHeight);
   const endTop = viewportHeight - bottomInset - rect.height;
   const travel = Math.max(topInset - endTop, viewportHeight * 1.8);
 
@@ -168,31 +208,97 @@ const updateStageProgress = (
   updateStageMetrics(stage, progress);
 };
 
+const clearNativeStageAnimations = (context: WhyStageContext) => {
+  context.nativeAnimations.forEach((animation) => animation.cancel());
+  context.nativeAnimations = [];
+  context.stage.classList.remove("has-native-scroll-motion");
+};
+
+const setupNativeStageAnimations = (context: WhyStageContext) => {
+  clearNativeStageAnimations(context);
+
+  if (!supportsNativeWhyTimelines()) {
+    return;
+  }
+
+  const viewportHeight = window.innerHeight || 1;
+  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+  const subject = isPhoneViewport ? context.visualTrack : context.root;
+  const { topInset, bottomInset } = isPhoneViewport
+    ? getMobileInsets(viewportHeight)
+    : getDesktopInsets(viewportHeight);
+  const ViewTimelineCtor = getViewTimelineCtor();
+
+  if (!ViewTimelineCtor) {
+    return;
+  }
+
+  const timeline = new ViewTimelineCtor({
+    axis: "block",
+    inset: `${topInset}px ${bottomInset}px`,
+    subject,
+  });
+
+  const animateWithTimeline = (element: Element, keyframes: Keyframe[] | PropertyIndexedKeyframes) => {
+    const animation = element.animate(keyframes, {
+      fill: "both",
+      easing: "linear",
+      rangeEnd: "exit 100%",
+      rangeStart: "entry 0%",
+      timeline,
+    } as KeyframeAnimationOptions & { rangeEnd: string; rangeStart: string; timeline: unknown }) as WhyNativeAnimation;
+
+    context.nativeAnimations.push(animation);
+  };
+
+  if (context.timelineFill) {
+    animateWithTimeline(context.timelineFill, [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }]);
+  }
+
+  if (context.timelineMarker) {
+    animateWithTimeline(context.timelineMarker, [{ left: "0%" }, { left: "100%" }]);
+  }
+
+  if (context.timelineScan) {
+    animateWithTimeline(context.timelineScan, [
+      { opacity: 0.14, transform: "translateX(-12%)" },
+      { opacity: 0.56, transform: "translateX(142%)" },
+    ]);
+  }
+
+  if (context.nativeAnimations.length) {
+    context.stage.classList.add("has-native-scroll-motion");
+  }
+};
+
 export const setupWhyItMattersStage = () => {
   const roots = Array.from(document.querySelectorAll<HTMLElement>("[data-why-progress-root]"));
 
   const stageContexts = roots
-    .map((root) => {
+    .map<WhyStageContext | null>((root) => {
       const stage = root.querySelector<HTMLElement>("[data-why-stage]");
       const stageFrame = root.querySelector<HTMLElement>("[data-why-stage-frame]");
+      const timelineFill = root.querySelector<HTMLElement>(".why-growth-stage__timeline-fill");
+      const timelineMarker = root.querySelector<HTMLElement>(".why-growth-stage__timeline-marker");
+      const timelineScan = root.querySelector<HTMLElement>(".why-growth-stage__scan");
       const visualTrack = root.querySelector<HTMLElement>("[data-why-visual-track]");
 
       if (!stage || !stageFrame || !visualTrack) {
         return null;
       }
 
-      return { root, stage, stageFrame, visualTrack };
+      return {
+        root,
+        stage,
+        stageFrame,
+        timelineFill,
+        timelineMarker,
+        timelineScan,
+        visualTrack,
+        nativeAnimations: [] as WhyNativeAnimation[],
+      };
     })
-    .filter(
-      (
-        context,
-      ): context is {
-        root: HTMLElement;
-        stage: HTMLElement;
-        stageFrame: HTMLElement;
-        visualTrack: HTMLElement;
-      } => context !== null,
-    );
+    .filter((context): context is WhyStageContext => context !== null);
 
   if (!stageContexts.length) {
     return;
@@ -211,7 +317,16 @@ export const setupWhyItMattersStage = () => {
     return;
   }
 
+  stageContexts.forEach((context) => {
+    if (!isVisibleRoot(context.root)) {
+      return;
+    }
+
+    setupNativeStageAnimations(context);
+  });
+
   let frameId = 0;
+  let keepRenderingUntil = 0;
 
   const render = () => {
     frameId = 0;
@@ -222,9 +337,15 @@ export const setupWhyItMattersStage = () => {
 
       updateStageProgress(root, stage, stageFrame, visualTrack);
     });
+
+    if (performance.now() < keepRenderingUntil) {
+      frameId = window.requestAnimationFrame(render);
+    }
   };
 
-  const requestRender = () => {
+  const requestRender = (burstMs = 0) => {
+    keepRenderingUntil = Math.max(keepRenderingUntil, performance.now() + burstMs);
+
     if (frameId !== 0) {
       return;
     }
@@ -232,8 +353,23 @@ export const setupWhyItMattersStage = () => {
     frameId = window.requestAnimationFrame(render);
   };
 
-  requestRender();
+  const requestRenderBurst = () => requestRender(180);
 
-  window.addEventListener("scroll", requestRender, { passive: true });
-  window.addEventListener("resize", requestRender);
+  requestRender(220);
+
+  window.addEventListener("scroll", requestRenderBurst, { passive: true });
+  window.addEventListener("touchmove", requestRenderBurst, { passive: true });
+  window.addEventListener("wheel", requestRenderBurst, { passive: true });
+  window.addEventListener("resize", () => {
+    stageContexts.forEach((context) => {
+      if (!isVisibleRoot(context.root)) {
+        clearNativeStageAnimations(context);
+        return;
+      }
+
+      setupNativeStageAnimations(context);
+    });
+
+    requestRender(260);
+  });
 };
