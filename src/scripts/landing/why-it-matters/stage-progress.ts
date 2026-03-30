@@ -10,6 +10,17 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 const normalize = (value: number, start: number, end: number) =>
   clamp((value - start) / Math.max(end - start, 0.001), 0, 1);
 
+const isVisibleRoot = (element: HTMLElement) => {
+  const styles = window.getComputedStyle(element);
+
+  if (styles.display === "none" || styles.visibility === "hidden") {
+    return false;
+  }
+
+  const rect = element.getBoundingClientRect();
+  return rect.width > 0 && rect.height > 0;
+};
+
 const getRelicSpan = (index: number) => {
   const current = whyItMattersRelics[index];
   const next = whyItMattersRelics[index + 1];
@@ -186,9 +197,13 @@ export const setupWhyItMattersStage = () => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (reducedMotion) {
-    stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) =>
-      updateStageProgress(root, stage, stageFrame, visualTrack, true),
-    );
+    stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) => {
+      if (!isVisibleRoot(root)) {
+        return;
+      }
+
+      updateStageProgress(root, stage, stageFrame, visualTrack, true);
+    });
     return;
   }
 
@@ -196,9 +211,13 @@ export const setupWhyItMattersStage = () => {
 
   const render = () => {
     frameId = 0;
-    stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) =>
-      updateStageProgress(root, stage, stageFrame, visualTrack),
-    );
+    stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) => {
+      if (!isVisibleRoot(root)) {
+        return;
+      }
+
+      updateStageProgress(root, stage, stageFrame, visualTrack);
+    });
   };
 
   const requestRender = () => {
