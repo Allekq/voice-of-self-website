@@ -125,10 +125,8 @@ const getMobileProgress = (visualTrack: HTMLElement, stageFrame: HTMLElement) =>
   const viewportHeight = window.innerHeight || 1;
   const frameHeight = stageFrame.getBoundingClientRect().height;
   const topInset = clamp(viewportHeight * 0.12, 68, 104);
-  const travel = Math.max(
-    rect.height - Math.min(frameHeight, viewportHeight * 0.7),
-    viewportHeight * 0.82,
-  );
+  const stickyTravel = Math.max(rect.height - frameHeight - topInset, 1);
+  const travel = Math.max(stickyTravel * 0.9, viewportHeight * 3.2);
 
   return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
 };
