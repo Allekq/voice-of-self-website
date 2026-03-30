@@ -120,6 +120,19 @@ const getRootProgress = (root: HTMLElement) => {
   return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
 };
 
+const getMobileProgress = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
+  const rect = visualTrack.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || 1;
+  const frameHeight = stageFrame.getBoundingClientRect().height;
+  const topInset = clamp(viewportHeight * 0.12, 68, 104);
+  const travel = Math.max(
+    rect.height - Math.min(frameHeight, viewportHeight * 0.7),
+    viewportHeight * 0.82,
+  );
+
+  return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
+};
+
 const updateStageProgress = (
   root: HTMLElement,
   stage: HTMLElement,
@@ -127,7 +140,12 @@ const updateStageProgress = (
   visualTrack: HTMLElement,
   reducedMotion = false,
 ) => {
-  const progress = reducedMotion ? 0.92 : getRootProgress(root);
+  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+  const progress = reducedMotion
+    ? 0.92
+    : isPhoneViewport
+      ? getMobileProgress(visualTrack, stageFrame)
+      : getRootProgress(root);
 
   stage.style.setProperty("--why-progress", progress.toFixed(3));
   stage.classList.toggle("is-stage-active", progress > 0.04);
