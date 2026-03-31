@@ -7,6 +7,7 @@ import {
 
 const contactEmail = "alekgameshelp2@gmail.com";
 const waitlistEmail = contactEmail;
+const supportEmail = contactEmail;
 const waitlistSubject = "Voice of Self waitlist";
 const waitlistDraftLines = [
   "Hi, I'm [your name].",
@@ -17,6 +18,23 @@ const waitlistDraftLines = [
   "",
 ];
 const waitlistBody = waitlistDraftLines.join("\r\n");
+const supportSubject = "Voice of Self support";
+const supportDraftLines = [
+  "Hi, I'm [your name].",
+  "",
+  "I need help with Voice of Self.",
+  "",
+  "What happened:",
+  "[brief description]",
+  "",
+  "What I expected instead:",
+  "[brief description]",
+  "",
+  "Device and iOS version (optional):",
+  "[example: iPhone 15 Pro, iOS 18.4]",
+  "",
+];
+const supportBody = supportDraftLines.join("\r\n");
 
 const buildMailtoHref = (email: string, subject: string, body: string) => {
   return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -51,15 +69,24 @@ export const siteConfig = {
   domain: siteDomain,
   contactEmail,
   waitlistEmail,
+  supportEmail,
   homeHref: withBase("/"),
   waitlistGuideHref: withBase("/how-to-join-wish-list/"),
+  supportHref: withBase("/support/"),
   legalManifestHref: buildAbsoluteSiteHref("/legal-manifest.json"),
   waitlistMailtoHref: buildMailtoHref(waitlistEmail, waitlistSubject, waitlistBody),
   waitlistGmailHref: buildGmailComposeHref(waitlistEmail, waitlistSubject, waitlistBody),
+  supportMailtoHref: buildMailtoHref(supportEmail, supportSubject, supportBody),
+  supportGmailHref: buildGmailComposeHref(supportEmail, supportSubject, supportBody),
   waitlistDraft: {
     subject: waitlistSubject,
     body: waitlistBody,
     lines: waitlistDraftLines,
+  },
+  supportDraft: {
+    subject: supportSubject,
+    body: supportBody,
+    lines: supportDraftLines,
   },
   ctas: {
     primary: "Join the waitlist",

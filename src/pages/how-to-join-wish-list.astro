@@ -9,33 +9,35 @@ import "../styles/waitlist-guide.css";
 
 <SiteLayout
   title="How to join the waitlist"
-  description="A browser-safe guide for joining the Voice of Self waitlist."
+  description="A simple guide for joining the Voice of Self waitlist."
   pageType="content"
 >
   <div class="waitlist-guide">
     <section class="waitlist-guide__hero landing-surface">
-      <p class="waitlist-guide__eyebrow">Desktop join options</p>
+      <p class="waitlist-guide__eyebrow">Join the waitlist</p>
       <h1 class="waitlist-guide__title">Join the Voice of Self waitlist from any browser.</h1>
       <p class="waitlist-guide__lead">
-        On phones and tablets, the main waitlist button usually opens an email draft right away. On
-        desktop browsers, Gmail in the browser is the default because system mail handling varies,
-        and this page keeps both options plus a copy-ready fallback.
+        The easiest way to join is to open a draft and send a quick email. This page gives you the
+        default email option, a browser-based fallback, and a copy-ready version if you would
+        rather paste it yourself.
       </p>
 
       <div class="waitlist-guide__actions">
-        <ActionButton href={siteConfig.waitlistGmailHref}>Open Gmail in browser</ActionButton>
-        <ActionButton href={siteConfig.waitlistMailtoHref} variant="secondary">
+        <ActionButton href={siteConfig.waitlistMailtoHref}>
           Open your email app
+        </ActionButton>
+        <ActionButton href={siteConfig.waitlistGmailHref} variant="secondary">
+          Open Gmail in browser
         </ActionButton>
       </div>
 
       <p class="waitlist-guide__note">
-        Gmail is the most reliable desktop path. If you prefer Apple Mail or another client, try
-        your email app instead.
+        If your email app opens cleanly, that is the simplest way to join.
       </p>
 
       <p class="waitlist-guide__note">
-        If those options do not open cleanly, copy the email address and the short draft below.
+        If either option does not open the way you expect, copy the email address and the short
+        draft below.
       </p>
     </section>
 
@@ -59,8 +61,8 @@ import "../styles/waitlist-guide.css";
         </div>
 
         <p class="waitlist-guide__body">
-          The Gmail button above opens a prefilled compose window in the browser instead of relying
-          on your system mail settings.
+          The email app button uses the usual draft flow first. The Gmail option is here if you
+          would rather finish the message in your browser.
         </p>
       </section>
 

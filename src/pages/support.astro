@@ -1,0 +1,94 @@
+---
+import SiteFooter from "../components/landing/sections/SiteFooter.astro";
+import ActionButton from "../components/landing/ui/ActionButton.astro";
+import { siteConfig } from "../config/site";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/landing.css";
+import "../styles/waitlist-guide.css";
+---
+
+<SiteLayout
+  title="Support"
+  description="Simple email-based support for Voice of Self."
+  pageType="content"
+>
+  <div class="waitlist-guide">
+    <section class="waitlist-guide__hero landing-surface">
+      <p class="waitlist-guide__eyebrow">Support</p>
+      <h1 class="waitlist-guide__title">Need help? Email me directly.</h1>
+      <p class="waitlist-guide__lead">
+        Support for Voice of Self is simple for now. Send an email, describe what went wrong, and
+        include a little context if you can. The buttons below open a ready-made draft so you can
+        send it quickly.
+      </p>
+
+      <div class="waitlist-guide__actions">
+        <ActionButton href={siteConfig.supportGmailHref}>Open Gmail in browser</ActionButton>
+        <ActionButton href={siteConfig.supportMailtoHref} variant="secondary">
+          Open your email app
+        </ActionButton>
+      </div>
+
+      <p class="waitlist-guide__note">
+        If those options do not open cleanly, copy the support email and template below.
+      </p>
+    </section>
+
+    <div class="waitlist-guide__grid">
+      <section class="waitlist-guide__card landing-surface">
+        <div class="waitlist-guide__card-head">
+          <div class="waitlist-guide__detail waitlist-guide__detail--email">
+            <p class="waitlist-guide__detail-label">Send it to</p>
+            <p class="waitlist-guide__detail-value waitlist-guide__detail-value--email">
+              {siteConfig.supportEmail}
+            </p>
+          </div>
+          <button class="waitlist-guide__copy" type="button" data-copy-value={siteConfig.supportEmail}>
+            Copy email
+          </button>
+        </div>
+
+        <div class="waitlist-guide__detail">
+          <p class="waitlist-guide__detail-label">Suggested subject</p>
+          <p class="waitlist-guide__pill">{siteConfig.supportDraft.subject}</p>
+        </div>
+
+        <p class="waitlist-guide__body">
+          Email is the support channel for now. A short description is enough, and extra device
+          details are helpful if you have them.
+        </p>
+      </section>
+
+      <section class="waitlist-guide__card landing-surface">
+        <p class="waitlist-guide__kicker">What to include</p>
+        <h2 class="waitlist-guide__card-title">A quick note is enough to get started.</h2>
+
+        <ul class="waitlist-guide__list">
+          <li>What you were trying to do.</li>
+          <li>What happened instead.</li>
+          <li>Your device and iOS version, if you know them.</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="waitlist-guide__card landing-surface">
+      <div class="waitlist-guide__card-head">
+        <div>
+          <p class="waitlist-guide__kicker">Ready-made draft</p>
+          <h2 class="waitlist-guide__card-title">Send this as-is or edit it first.</h2>
+        </div>
+        <button class="waitlist-guide__copy" type="button" data-copy-value={siteConfig.supportDraft.body}>
+          Copy draft
+        </button>
+      </div>
+
+      <pre class="waitlist-guide__template">{siteConfig.supportDraft.body}</pre>
+    </section>
+  </div>
+
+  <SiteFooter />
+
+  <script>
+    import "../scripts/waitlist-guide/copy-buttons";
+  </script>
+</SiteLayout>
