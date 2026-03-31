@@ -24,6 +24,9 @@ export interface FeatureItem {
 export interface StepItem {
   title: string;
   description: string;
+  imageSrc: string;
+  imageAlt: string;
+  imageTone: "gold" | "blue" | "coral";
 }
 
 export interface DriftConfig {

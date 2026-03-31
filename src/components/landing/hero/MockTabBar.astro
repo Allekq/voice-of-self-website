@@ -1,18 +1,27 @@
 ---
+import type { IconName } from "../types";
 import IconSymbol from "../ui/IconSymbol.astro";
+
+interface MockTabBarItem {
+  icon: IconName;
+  label: string;
+}
+
+interface Props {
+  items: readonly MockTabBarItem[];
+  activeLabel?: string;
+}
+
+const { items, activeLabel } = Astro.props as Props;
 ---
 
 <div class="mock-tab-bar">
-  <div class="mock-tab-bar__item">
-    <IconSymbol name="orbit" size={14} />
-    <span>Present</span>
-  </div>
-  <div class="mock-tab-bar__item">
-    <IconSymbol name="clock" size={14} />
-    <span>Past</span>
-  </div>
-  <div class="mock-tab-bar__item mock-tab-bar__item--active">
-    <IconSymbol name="star" size={14} />
-    <span>Relics</span>
-  </div>
+  {
+    items.map((item) => (
+      <div class:list={["mock-tab-bar__item", item.label === activeLabel && "mock-tab-bar__item--active"]}>
+        <IconSymbol name={item.icon} size={14} />
+        <span>{item.label}</span>
+      </div>
+    ))
+  }
 </div>

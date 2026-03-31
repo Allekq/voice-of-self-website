@@ -1,0 +1,22 @@
+---
+import type { StepItem } from "../../types";
+
+interface Props {
+  step: StepItem;
+}
+
+const { step } = Astro.props as Props;
+---
+
+<div class:list={["step-card__media", `step-card__media--${step.imageTone}`]}>
+  <img
+    class="step-card__image"
+    src={step.imageSrc}
+    alt={step.imageAlt}
+    width="1024"
+    height="1536"
+    sizes="(min-width: 62rem) 18rem, (min-width: 40rem) 42vw, calc(100vw - 7rem)"
+    loading="lazy"
+    decoding="async"
+  />
+</div>

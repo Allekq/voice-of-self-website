@@ -1,5 +1,6 @@
 ---
 import type { StepItem } from "../../types";
+import StepShowcaseIllustration from "./StepShowcaseIllustration.astro";
 
 interface Props {
   steps: StepItem[];
@@ -24,8 +25,11 @@ const { steps } = Astro.props as Props;
       >
         <div class="step-card__node" data-step-showcase-desktop-node>{index + 1}</div>
         <div class="step-card__content">
-          <h3 class="step-card__title">{step.title}</h3>
-          <p class="step-card__body">{step.description}</p>
+          <StepShowcaseIllustration step={step} />
+          <div class="step-card__copy">
+            <h3 class="step-card__title">{step.title}</h3>
+            <p class="step-card__body">{step.description}</p>
+          </div>
         </div>
       </article>
     ))}

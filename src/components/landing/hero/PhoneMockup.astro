@@ -4,27 +4,31 @@ import AnimatedPhoneBackdrop from "../ui/AnimatedPhoneBackdrop.astro";
 import FloatingFeatureCard from "./FloatingFeatureCard.astro";
 import MockPhoneFrame from "./MockPhoneFrame.astro";
 import MockTabBar from "./MockTabBar.astro";
-import RecordButtonMock from "./RecordButtonMock.astro";
-import RelicPreviewCard from "./RelicPreviewCard.astro";
+
+const tabItems = [
+  { icon: "orbit", label: "Present" },
+  { icon: "clock", label: "Past" },
+  { icon: "sparkle", label: "Relics" },
+] as const;
 ---
 
 <div class="phone-mockup" data-hero-parallax-root>
   <FloatingFeatureCard
     icon="mic"
     title="Voice reflection"
-    subtitle="Speak, don't type"
+    subtitle="Capture it in the moment"
     positionClass="floating-feature-card--top-left"
   />
   <FloatingFeatureCard
     icon="wave"
-    title="Recurring patterns"
-    subtitle="Worries that return"
+    title="Patterns surfaced"
+    subtitle="Analysis turns noise into signals"
     positionClass="floating-feature-card--bottom-left"
   />
   <FloatingFeatureCard
     icon="check"
-    title="Resolved worries"
-    subtitle="No longer in your head"
+    title="Growth preserved"
+    subtitle="Meaningful progress becomes relics"
     positionClass="floating-feature-card--right"
   />
 
@@ -40,6 +44,21 @@ import RelicPreviewCard from "./RelicPreviewCard.astro";
         <AnimatedPhoneBackdrop className="phone-screen__backdrop" />
 
         <div class="phone-screen__content">
+          <div class="phone-screen__status-bar" aria-hidden="true">
+            <span class="phone-screen__status-time">23:24</span>
+            <div class="phone-screen__status-icons">
+              <span class="phone-screen__status-signal">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+              <span class="phone-screen__status-battery">
+                <span></span>
+              </span>
+            </div>
+          </div>
+
           <div class="phone-screen__top">
             <div class="phone-screen__toolbar">
               <div class="phone-screen__settings">
@@ -49,38 +68,58 @@ import RelicPreviewCard from "./RelicPreviewCard.astro";
 
             <div class="phone-screen__heading">
               <span class="phone-screen__heading-icon">
-                <IconSymbol name="star" size={14} />
+                <IconSymbol name="orbit" size={14} />
               </span>
-              <h3>Your Relics</h3>
+              <h3>Present</h3>
             </div>
             <p class="phone-screen__subcopy">
-              Worries that once weighed on you, now resolved and transformed into wisdom.
+              Capture what&apos;s on your mind right now
             </p>
 
-            <div class="phone-screen__cards">
-              <RelicPreviewCard
-                title="Fear of being behind"
-                dateLabel="Mar 9"
-                summary="Limited progress causing anxiety about falling behind peers."
-                insight="Consistent effort has begun to close the gap. No longer a daily worry."
-              />
-              <RelicPreviewCard
-                title="Work-life balance"
-                dateLabel="Mar 9"
-                summary="Overworking and missing personal time."
-                compact={true}
-              />
+            <div class="phone-screen__analysis">
+              <div class="phone-screen__analysis-copy">
+                <h4>Analysis Completed</h4>
+                <p>Your newest relic is ready.</p>
+              </div>
+
+              <article class="phone-insight-card phone-insight-card--summary">
+                <p class="phone-insight-card__eyebrow">Today&apos;s Reflection</p>
+                <p class="phone-insight-card__body">
+                  You kept turning the pressure around licensing into a study rhythm you can
+                  actually trust, and that steadiness is starting to show.
+                </p>
+              </article>
+
+              <article class="phone-insight-card phone-insight-card--relic">
+                <div class="phone-insight-card__header">
+                  <div class="phone-insight-card__title-block">
+                    <p class="phone-insight-card__title">Found Your Summit Rhythm</p>
+                  </div>
+                  <div class="phone-insight-card__meta">
+                    <p class="phone-insight-card__date">Mar 19</p>
+                    <span class="phone-insight-card__badge">New</span>
+                  </div>
+                </div>
+
+                <p class="phone-insight-card__worry">
+                  Feeling pulled in every direction by exam prep and the fear of falling behind.
+                </p>
+
+                <div class="phone-insight-card__growth">
+                  <p>
+                    You are building calm, repeatable preparation instead of letting pressure set
+                    the pace.
+                  </p>
+                </div>
+              </article>
             </div>
           </div>
 
-          <div class="phone-screen__divider"></div>
-
           <div class="phone-screen__bottom">
-            <p class="phone-screen__prompt">What's on your mind</p>
-            <RecordButtonMock />
-          </div>
+            <div class="phone-screen__done" aria-hidden="true"><span>Done</span></div>
 
-          <MockTabBar />
+            <MockTabBar items={tabItems} activeLabel="Present" />
+          </div>
         </div>
       </div>
     </MockPhoneFrame>
