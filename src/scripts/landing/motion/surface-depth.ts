@@ -121,6 +121,10 @@ export const setupSurfaceDepth = () => {
     return;
   }
 
+  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+    return;
+  }
+
   const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
   const surfaces = Array.from(document.querySelectorAll<HTMLElement>("[data-surface-depth]"));
 

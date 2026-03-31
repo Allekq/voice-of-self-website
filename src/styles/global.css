@@ -14,6 +14,7 @@ body {
   margin: 0;
   min-height: 100%;
   min-height: 100vh;
+  min-height: 100svh;
   position: relative;
   overflow-x: hidden;
   background:
@@ -121,6 +122,7 @@ svg {
   margin: 0 auto;
   max-width: var(--container-wide);
   min-height: 100vh;
+  min-height: 100svh;
   padding: 2rem var(--section-pad-x) 3rem;
   position: relative;
   width: 100%;
@@ -219,5 +221,29 @@ svg {
 
   .legal-article {
     padding: 1.6rem 1rem;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .site-backdrop {
+    position: absolute;
+  }
+
+  .site-backdrop__orb {
+    animation: none;
+  }
+
+  .site-header__home-link,
+  .legal-article {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .site-header__home-link {
+    background: rgba(11, 17, 28, 0.82);
+  }
+
+  .legal-article {
+    background: rgba(9, 15, 27, 0.92);
   }
 }

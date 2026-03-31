@@ -4,7 +4,10 @@ import {
   whyItMattersRelics,
   whyItMattersSolvedGoal,
 } from "../../../components/landing/sections/why-it-matters/why-it-matters.data";
-import { getStableViewportHeight } from "../shared/stable-viewport";
+import {
+  createCoarseViewportResizeGuard,
+  getStableViewportHeight,
+} from "../shared/stable-viewport";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
@@ -341,6 +344,7 @@ export const setupWhyItMattersStage = () => {
   }
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ignoreResize = createCoarseViewportResizeGuard();
 
   if (reducedMotion) {
     stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) => {
@@ -399,6 +403,11 @@ export const setupWhyItMattersStage = () => {
     requestRender();
   };
 
-  window.addEventListener("resize", handleResize);
-  window.visualViewport?.addEventListener("resize", handleResize);
+  window.addEventListener("resize", () => {
+    if (ignoreResize()) {
+      return;
+    }
+
+    handleResize();
+  });
 };

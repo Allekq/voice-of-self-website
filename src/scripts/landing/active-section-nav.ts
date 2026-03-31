@@ -1,3 +1,5 @@
+import { createCoarseViewportResizeGuard } from "./shared/stable-viewport";
+
 const getScrollPosition = () => window.scrollY + 180;
 
 export const setupActiveSectionNav = () => {
@@ -11,18 +13,28 @@ export const setupActiveSectionNav = () => {
       return;
     }
 
-    const setActive = (pill: HTMLElement | undefined) => {
+    let activePill: HTMLElement | null = null;
+    let frameId = 0;
+    let shouldForceSync = false;
+    const ignoreResize = createCoarseViewportResizeGuard();
+
+    const setActive = (pill: HTMLElement | undefined, force = false) => {
       if (!pill) {
         return;
       }
 
+      if (!force && activePill === pill) {
+        return;
+      }
+
+      activePill = pill;
       pills.forEach((item) => item.classList.toggle("is-active", item === pill));
 
       highlight.style.width = `${pill.offsetWidth}px`;
       highlight.style.transform = `translateX(${pill.offsetLeft}px)`;
     };
 
-    const syncFromScroll = () => {
+    const syncFromScroll = (force = false) => {
       const scrollY = getScrollPosition();
       let active = pills[0];
 
@@ -35,15 +47,33 @@ export const setupActiveSectionNav = () => {
         }
       });
 
-      setActive(active);
+      setActive(active, force);
+      frameId = 0;
+      shouldForceSync = false;
+    };
+
+    const requestSync = (force = false) => {
+      shouldForceSync ||= force;
+
+      if (frameId !== 0) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(() => syncFromScroll(shouldForceSync));
     };
 
     pills.forEach((pill) => {
       pill.addEventListener("click", () => setActive(pill));
     });
 
-    syncFromScroll();
-    window.addEventListener("resize", syncFromScroll);
-    window.addEventListener("scroll", syncFromScroll, { passive: true });
+    syncFromScroll(true);
+    window.addEventListener("resize", () => {
+      if (ignoreResize()) {
+        return;
+      }
+
+      requestSync(true);
+    });
+    window.addEventListener("scroll", () => requestSync(), { passive: true });
   });
 };

@@ -3444,3 +3444,35 @@
     transition: none;
   }
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .landing-surface,
+  .landing-header__bar,
+  .landing-header__mobile-nav,
+  .why-relic-card {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .landing-surface {
+    background:
+      linear-gradient(180deg, rgba(26, 31, 48, 0.98), rgba(16, 20, 33, 0.98)),
+      rgba(20, 25, 40, 0.96);
+  }
+
+  .landing-header__bar,
+  .landing-header__mobile-nav {
+    background: rgba(10, 16, 27, 0.88);
+  }
+
+  .landing-header.is-scrolled .landing-header__bar,
+  .landing-header.is-scrolled .landing-header__mobile-nav {
+    background: rgba(8, 14, 24, 0.94);
+  }
+
+  .why-relic-card {
+    background:
+      linear-gradient(180deg, rgba(18, 24, 38, 0.98), rgba(10, 14, 24, 0.96)),
+      rgba(13, 17, 28, 0.94);
+  }
+}

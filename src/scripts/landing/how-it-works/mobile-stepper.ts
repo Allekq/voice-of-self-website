@@ -1,5 +1,8 @@
 import { clamp, lerp } from "./shared";
-import { getStableViewportHeight } from "../shared/stable-viewport";
+import {
+  createCoarseViewportResizeGuard,
+  getStableViewportHeight,
+} from "../shared/stable-viewport";
 
 interface MobileRootState {
   root: HTMLElement;
@@ -146,6 +149,7 @@ export const setupMobileHowItWorks = () => {
 
   let syncFrameId = 0;
   let animationFrameId = 0;
+  const ignoreResize = createCoarseViewportResizeGuard();
 
   const animate = () => {
     let keepAnimating = false;
@@ -198,6 +202,11 @@ export const setupMobileHowItWorks = () => {
 
   runSync(true);
   window.addEventListener("scroll", schedule, { passive: true });
-  window.addEventListener("resize", schedule);
-  window.visualViewport?.addEventListener("resize", schedule);
+  window.addEventListener("resize", () => {
+    if (ignoreResize()) {
+      return;
+    }
+
+    runSync(true);
+  });
 };

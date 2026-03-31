@@ -1,3 +1,5 @@
+import { createCoarseViewportResizeGuard } from "./shared/stable-viewport";
+
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
@@ -9,6 +11,7 @@ export const setupStickyHeader = () => {
   }
 
   let frameId = 0;
+  const ignoreResize = createCoarseViewportResizeGuard();
 
   const sync = () => {
     const progress = clamp(window.scrollY / 140, 0, 1);
@@ -28,5 +31,11 @@ export const setupStickyHeader = () => {
 
   sync();
   window.addEventListener("scroll", requestSync, { passive: true });
-  window.addEventListener("resize", requestSync);
+  window.addEventListener("resize", () => {
+    if (ignoreResize()) {
+      return;
+    }
+
+    requestSync();
+  });
 };

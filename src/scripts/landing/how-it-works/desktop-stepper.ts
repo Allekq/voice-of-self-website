@@ -1,3 +1,5 @@
+import { createCoarseViewportResizeGuard } from "../shared/stable-viewport";
+
 import { clamp, lerp } from "./shared";
 
 interface DesktopRootState {
@@ -83,6 +85,7 @@ export const setupDesktopHowItWorks = () => {
     .filter((state): state is DesktopRootState => state !== null);
 
   let frameId = 0;
+  const ignoreResize = createCoarseViewportResizeGuard();
 
   const tick = () => {
     let keepAnimating = false;
@@ -148,5 +151,11 @@ export const setupDesktopHowItWorks = () => {
     });
   });
 
-  window.addEventListener("resize", syncGeometry);
+  window.addEventListener("resize", () => {
+    if (ignoreResize()) {
+      return;
+    }
+
+    syncGeometry();
+  });
 };

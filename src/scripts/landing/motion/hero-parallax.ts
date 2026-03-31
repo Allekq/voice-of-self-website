@@ -1,3 +1,8 @@
+import {
+  createCoarseViewportResizeGuard,
+  getStableViewportHeight,
+} from "../shared/stable-viewport";
+
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
@@ -54,7 +59,12 @@ export const setupHeroParallax = () => {
     return;
   }
 
+  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+    return;
+  }
+
   const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const ignoreResize = createCoarseViewportResizeGuard();
 
   const states = Array.from(document.querySelectorAll<HTMLElement>("[data-hero-parallax-root]"))
     .map<RootState | null>((root) => {
@@ -136,7 +146,7 @@ export const setupHeroParallax = () => {
   };
 
   const syncScroll = () => {
-    const viewportHeight = Math.max(window.innerHeight, 1);
+    const viewportHeight = Math.max(getStableViewportHeight(), 1);
     const viewportCenter = viewportHeight / 2;
 
     states.forEach((state) => {
@@ -246,7 +256,13 @@ export const setupHeroParallax = () => {
 
   syncScroll();
   window.addEventListener("scroll", syncScroll, { passive: true });
-  window.addEventListener("resize", syncScroll);
+  window.addEventListener("resize", () => {
+    if (ignoreResize()) {
+      return;
+    }
+
+    syncScroll();
+  });
   window.addEventListener(
     "pagehide",
     () => {
