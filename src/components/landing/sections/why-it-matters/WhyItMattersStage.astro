@@ -5,8 +5,11 @@ import {
   whyItMattersRelics,
   whyItMattersSolvedGoal,
 } from "./why-it-matters.data";
+import { withBase } from "../../../../lib/paths";
 import WhyRelicCard from "./WhyRelicCard.astro";
 import WhyStageMetric from "./WhyStageMetric.astro";
+
+const stressImageSrc = withBase("/images/why-it-matters/stress-silhouette.png");
 ---
 
 <div class="why-growth-stage" aria-hidden="true" data-why-stage>
@@ -17,7 +20,18 @@ import WhyStageMetric from "./WhyStageMetric.astro";
 
   <div class="why-growth-stage__deck">
     <div class="why-growth-stage__deck-backdrop"></div>
+    <div class="why-growth-stage__stress-image-shell">
+      <img
+        class="why-growth-stage__stress-image"
+        src={stressImageSrc}
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+        loading="eager"
+      />
+    </div>
     <div class="why-growth-stage__scan"></div>
+    <div class="why-growth-stage__entry-shimmer"></div>
 
     {whyItMattersRelics.map((relic) => <WhyRelicCard relic={relic} />)}
   </div>

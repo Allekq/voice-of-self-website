@@ -1544,6 +1544,28 @@
   position: absolute;
 }
 
+.why-growth-stage__stress-image-shell {
+  align-items: flex-end;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  opacity: calc(0.9 - (var(--why-progress) * 0.32));
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.why-growth-stage__stress-image {
+  display: block;
+  filter: saturate(0.98) contrast(1.04) drop-shadow(0 18px 34px rgba(3, 7, 14, 0.2));
+  height: calc(100% + 1rem);
+  max-width: none;
+  transform: translateY(calc((1 - var(--why-progress)) * 0.26rem))
+    scale(calc(1.01 - (var(--why-progress) * 0.02)));
+  user-select: none;
+  width: auto;
+}
+
 .why-growth-stage__deck-backdrop::before {
   background-image:
     linear-gradient(rgba(245, 239, 230, 0.035) 1px, transparent 1px),
@@ -1572,7 +1594,26 @@
   pointer-events: none;
   position: absolute;
   transform: translateX(calc((var(--why-progress) * 120%) - 60%));
-  z-index: 1;
+  z-index: 2;
+}
+
+.why-growth-stage__entry-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(214, 180, 122, 0.08) 42%,
+    rgba(255, 255, 255, 0.34) 50%,
+    rgba(142, 207, 243, 0.12) 58%,
+    transparent 72%,
+    transparent 100%
+  );
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-120%);
+  z-index: 2;
 }
 
 .why-relic-card {
@@ -1618,7 +1659,7 @@
     scale(calc(0.92 + (var(--relic-pop) * 0.08) - (var(--relic-retire) * 0.05)));
   transform-origin: top left;
   width: min(var(--relic-width), calc(100% - 0.8rem));
-  z-index: 2;
+  z-index: 3;
   filter: blur(calc(var(--relic-retire) * 4px));
 }
 
@@ -1923,6 +1964,10 @@
 .js .why-growth-stage.is-stage-active .why-growth-stage__prepared-bar.is-active::after {
   animation: why-stage-bar-drift 2.6s ease-in-out infinite;
   animation-delay: calc(var(--prepared-index) * -160ms);
+}
+
+.js .why-showcase[data-reveal].is-visible .why-growth-stage__entry-shimmer {
+  animation: preview-scan 1250ms ease-out 220ms 1 both;
 }
 
 .steps-desktop {
@@ -3129,6 +3174,10 @@
     min-height: 14.8rem;
   }
 
+  .why-growth-stage__stress-image {
+    height: calc(100% + 0.9rem);
+  }
+
   .why-relic-card {
     gap: 0.48rem;
     padding: 0.66rem 0.7rem 0.72rem;
@@ -3304,6 +3353,10 @@
     min-height: 13.8rem;
   }
 
+  .why-growth-stage__stress-image {
+    height: calc(100% + 0.78rem);
+  }
+
   .why-relic-card {
     gap: 0.42rem;
     padding: 0.62rem 0.64rem 0.68rem;
@@ -3416,6 +3469,7 @@
   .why-growth-stage,
   .why-growth-stage::after,
   .why-growth-stage__scan,
+  .why-growth-stage__entry-shimmer,
   .why-relic-card,
   .why-relic-card::before,
   .why-relic-card__growth-panel,
