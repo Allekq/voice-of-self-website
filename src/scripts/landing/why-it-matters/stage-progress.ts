@@ -72,7 +72,7 @@ const getDesktopInsets = (viewportHeight: number): WhyTimelineInsets => ({
 });
 
 const getMobileInsets = (viewportHeight: number): WhyTimelineInsets => ({
-  bottomInset: clamp(viewportHeight * 0.04, 16, 40),
+  bottomInset: clamp(viewportHeight * 0.015, 8, 16),
   topInset: clamp(
     Math.max(
       (document.querySelector<HTMLElement>("[data-landing-header]")?.getBoundingClientRect().height ?? 0) +
@@ -238,13 +238,30 @@ const getRootProgress = (root: HTMLElement) => {
   return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
 };
 
-const getMobileProgress = (visualTrack: HTMLElement) => {
+const syncMobileStickyLayout = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
+  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+
+  if (!isPhoneViewport) {
+    stageFrame.style.removeProperty("--why-mobile-bottom-inset");
+    visualTrack.style.removeProperty("--why-mobile-panel-height");
+    return;
+  }
+
+  const viewportHeight = getStableViewportHeight();
+  const { bottomInset } = getMobileInsets(viewportHeight);
+  const frameHeight = stageFrame.getBoundingClientRect().height;
+
+  stageFrame.style.setProperty("--why-mobile-bottom-inset", `${bottomInset.toFixed(2)}px`);
+  visualTrack.style.setProperty("--why-mobile-panel-height", `${frameHeight.toFixed(2)}px`);
+};
+
+const getMobileProgress = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
   const rect = visualTrack.getBoundingClientRect();
   const viewportHeight = getStableViewportHeight();
-  const { topInset, bottomInset } = getMobileInsets(viewportHeight);
-  const startTop = viewportHeight - bottomInset;
-  const endTop = topInset - rect.height;
-  const travel = Math.max(startTop - endTop, 1);
+  const { bottomInset } = getMobileInsets(viewportHeight);
+  const frameHeight = stageFrame.getBoundingClientRect().height;
+  const startTop = viewportHeight - bottomInset - frameHeight;
+  const travel = Math.max(rect.height - frameHeight, 1);
 
   return clamp((startTop - rect.top) / travel, 0, 1);
 };
@@ -257,7 +274,9 @@ const updateStageProgress = (
   reducedMotion = false,
 ) => {
   const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
-  const fallbackProgress = isPhoneViewport ? getMobileProgress(visualTrack) : getRootProgress(root);
+  syncMobileStickyLayout(visualTrack, stageFrame);
+
+  const fallbackProgress = isPhoneViewport ? getMobileProgress(visualTrack, stageFrame) : getRootProgress(root);
   const nativeTravel = getPanelTravel(visualTrack, stageFrame);
   const nativeProgress =
     nativeTravel > 0 ? clamp(getFrameTranslateY(stageFrame) / nativeTravel, 0, 1) : fallbackProgress;
