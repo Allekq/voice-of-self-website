@@ -80,3 +80,4 @@ Closure is a privacy-first iOS reflection app built with SwiftUI.
 - Repo-local skill/source guides live under `skills/`.
 - Use `skills/landing-page-workflow/` for landing-page structure, motion, and modularity work.
 - Use `skills/legal-update-sync/` for privacy-policy / terms coordination work.
+- Use `skills/user-provided-images/` when a site change needs a new image asset and the user may want to create or provide the image directly.

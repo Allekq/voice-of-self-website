@@ -23,11 +23,11 @@ const { tabs } = Astro.props as Props;
     </div>
 
     <WaitlistButton className="landing-header__cta" />
-  </div>
 
-  <div class="landing-header__mobile-nav">
-    <NavPills label="Sections">
-      {tabs.map((item, index) => <NavPillItem {...item} active={index === 0} />)}
-    </NavPills>
+    <div class="landing-header__mobile-nav">
+      <NavPills label="Sections">
+        {tabs.map((item, index) => <NavPillItem {...item} active={index === 0} />)}
+      </NavPills>
+    </div>
   </div>
 </header>
