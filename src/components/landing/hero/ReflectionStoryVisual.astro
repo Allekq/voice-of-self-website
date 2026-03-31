@@ -1,0 +1,66 @@
+---
+import { withBase } from "../../../lib/paths";
+import FloatingFeatureCard from "./FloatingFeatureCard.astro";
+
+const storyLayers = [
+  {
+    src: withBase("/images/main/reflection-story-woman.png"),
+    className: "reflection-story-visual__image--woman",
+  },
+  {
+    src: withBase("/images/main/reflection-story-man.png"),
+    className: "reflection-story-visual__image--man",
+  },
+] as const;
+---
+
+<div
+  class="reflection-story-visual"
+  data-reflection-story-root
+  data-reflection-story-mode="controlled"
+  data-reflection-story-state="woman"
+>
+  <FloatingFeatureCard
+    icon="mic"
+    title="Voice reflection"
+    subtitle="Capture it in the moment"
+    positionClass="floating-feature-card--top-left"
+  />
+  <FloatingFeatureCard
+    icon="wave"
+    title="Patterns surfaced"
+    subtitle="Analysis turns noise into signals"
+    positionClass="floating-feature-card--bottom-left"
+  />
+  <FloatingFeatureCard
+    icon="check"
+    title="Growth preserved"
+    subtitle="Meaningful progress becomes relics"
+    positionClass="floating-feature-card--right"
+  />
+
+  <button
+    type="button"
+    class="reflection-story-visual__stage"
+    data-reflection-story-toggle
+    aria-label="Show the masculine reflection story"
+    title="Swap between reflection stories"
+  >
+    <div
+      class="reflection-story-visual__art"
+      aria-hidden="true"
+    >
+      {storyLayers.map(({ src, className }) => (
+        <img
+          class:list={["reflection-story-visual__image", className]}
+          src={src}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      ))}
+    </div>
+  </button>
+</div>

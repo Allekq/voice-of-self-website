@@ -72,8 +72,16 @@ const getDesktopInsets = (viewportHeight: number): WhyTimelineInsets => ({
 });
 
 const getMobileInsets = (viewportHeight: number): WhyTimelineInsets => ({
-  bottomInset: clamp(viewportHeight * 0.1, 56, 88),
-  topInset: clamp(viewportHeight * 0.22, 132, 188),
+  bottomInset: clamp(viewportHeight * 0.04, 16, 40),
+  topInset: clamp(
+    Math.max(
+      (document.querySelector<HTMLElement>("[data-landing-header]")?.getBoundingClientRect().height ?? 0) +
+        20,
+      viewportHeight * 0.18,
+    ),
+    116,
+    220,
+  ),
 });
 
 const updateRelicCards = (stage: HTMLElement, progress: number) => {
@@ -234,10 +242,11 @@ const getMobileProgress = (visualTrack: HTMLElement) => {
   const rect = visualTrack.getBoundingClientRect();
   const viewportHeight = getStableViewportHeight();
   const { topInset, bottomInset } = getMobileInsets(viewportHeight);
-  const endTop = viewportHeight - bottomInset - rect.height;
-  const travel = Math.max(topInset - endTop, viewportHeight * 1.8);
+  const startTop = viewportHeight - bottomInset;
+  const endTop = topInset - rect.height;
+  const travel = Math.max(startTop - endTop, 1);
 
-  return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
+  return clamp((startTop - rect.top) / travel, 0, 1);
 };
 
 const updateStageProgress = (
@@ -252,7 +261,13 @@ const updateStageProgress = (
   const nativeTravel = getPanelTravel(visualTrack, stageFrame);
   const nativeProgress =
     nativeTravel > 0 ? clamp(getFrameTranslateY(stageFrame) / nativeTravel, 0, 1) : fallbackProgress;
-  const progress = reducedMotion ? 0.92 : supportsNativeWhyTimelines() ? nativeProgress : fallbackProgress;
+  const progress = reducedMotion
+    ? 0.92
+    : isPhoneViewport
+      ? fallbackProgress
+      : supportsNativeWhyTimelines()
+        ? nativeProgress
+        : fallbackProgress;
 
   stage.style.setProperty("--why-progress", progress.toFixed(3));
   stage.classList.toggle("is-stage-active", progress > 0.04);
@@ -276,6 +291,11 @@ const setupNativeStageAnimations = (context: WhyStageContext) => {
 
   const viewportHeight = getStableViewportHeight();
   const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+
+  if (isPhoneViewport) {
+    return;
+  }
+
   const subject = isPhoneViewport ? context.visualTrack : context.root;
   const { topInset, bottomInset } = isPhoneViewport
     ? getMobileInsets(viewportHeight)

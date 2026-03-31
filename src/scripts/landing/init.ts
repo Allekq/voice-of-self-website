@@ -5,6 +5,7 @@ import { setupMobileHowItWorks } from "./how-it-works/mobile-stepper";
 import { setupNoiseDrift } from "./motion/apply-drift";
 import { setupHeroParallax } from "./motion/hero-parallax";
 import { setupSurfaceDepth } from "./motion/surface-depth";
+import { setupReflectionStoryToggle } from "./reflection-story-toggle";
 import { setupRevealOnScroll } from "./reveal-on-scroll";
 import { setupStickyHeader } from "./sticky-header";
 import { setupWaitlistCtas } from "./waitlist-cta";
@@ -25,6 +26,7 @@ const boot = () => {
   safeSetup("faq-accordion", setupFaqAccordion);
   safeSetup("noise-drift", setupNoiseDrift);
   safeSetup("hero-parallax", setupHeroParallax);
+  safeSetup("reflection-story-toggle", setupReflectionStoryToggle);
   safeSetup("surface-depth", setupSurfaceDepth);
   safeSetup("desktop-stepper", setupDesktopHowItWorks);
   safeSetup("mobile-stepper", setupMobileHowItWorks);
