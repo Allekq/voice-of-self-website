@@ -82,7 +82,7 @@ const getHeaderSafeInset = () => {
 };
 
 const getMobileInsets = (viewportHeight: number): WhyTimelineInsets => ({
-  bottomInset: clamp(viewportHeight * 0.015, 8, 16),
+  bottomInset: clamp(viewportHeight * 0.2, 96, 176),
   topInset: clamp(
     Math.max(
       getHeaderSafeInset(),
