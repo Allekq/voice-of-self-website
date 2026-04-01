@@ -71,16 +71,25 @@ const getDesktopInsets = (viewportHeight: number): WhyTimelineInsets => ({
   topInset: clamp(viewportHeight * 0.11, 48, 88),
 });
 
+const getHeaderSafeInset = () => {
+  const headerRect = document.querySelector<HTMLElement>("[data-landing-header]")?.getBoundingClientRect();
+
+  if (!headerRect) {
+    return 0;
+  }
+
+  return headerRect.bottom + 16;
+};
+
 const getMobileInsets = (viewportHeight: number): WhyTimelineInsets => ({
   bottomInset: clamp(viewportHeight * 0.015, 8, 16),
   topInset: clamp(
     Math.max(
-      (document.querySelector<HTMLElement>("[data-landing-header]")?.getBoundingClientRect().height ?? 0) +
-        20,
+      getHeaderSafeInset(),
       viewportHeight * 0.18,
     ),
-    116,
-    220,
+    112,
+    240,
   ),
 });
 
@@ -242,25 +251,30 @@ const syncMobileStickyLayout = (visualTrack: HTMLElement, stageFrame: HTMLElemen
   const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
 
   if (!isPhoneViewport) {
-    stageFrame.style.removeProperty("--why-mobile-bottom-inset");
+    stageFrame.style.removeProperty("--why-mobile-sticky-top");
     visualTrack.style.removeProperty("--why-mobile-panel-height");
+    visualTrack.style.removeProperty("--why-mobile-track-span");
     return;
   }
 
   const viewportHeight = getStableViewportHeight();
-  const { bottomInset } = getMobileInsets(viewportHeight);
+  const { bottomInset, topInset } = getMobileInsets(viewportHeight);
   const frameHeight = stageFrame.getBoundingClientRect().height;
+  const stickyTop = clamp(viewportHeight - bottomInset - frameHeight, topInset, viewportHeight - frameHeight);
+  const trackSpan = clamp(viewportHeight * 0.72, 240, 440);
 
-  stageFrame.style.setProperty("--why-mobile-bottom-inset", `${bottomInset.toFixed(2)}px`);
+  stageFrame.style.setProperty("--why-mobile-sticky-top", `${stickyTop.toFixed(2)}px`);
   visualTrack.style.setProperty("--why-mobile-panel-height", `${frameHeight.toFixed(2)}px`);
+  visualTrack.style.setProperty("--why-mobile-track-span", `${trackSpan.toFixed(2)}px`);
 };
 
 const getMobileProgress = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
   const rect = visualTrack.getBoundingClientRect();
   const viewportHeight = getStableViewportHeight();
-  const { bottomInset } = getMobileInsets(viewportHeight);
+  const { bottomInset, topInset } = getMobileInsets(viewportHeight);
   const frameHeight = stageFrame.getBoundingClientRect().height;
-  const startTop = viewportHeight - bottomInset - frameHeight;
+  const stickyTop = clamp(viewportHeight - bottomInset - frameHeight, topInset, viewportHeight - frameHeight);
+  const startTop = stickyTop;
   const travel = Math.max(rect.height - frameHeight, 1);
 
   return clamp((startTop - rect.top) / travel, 0, 1);
