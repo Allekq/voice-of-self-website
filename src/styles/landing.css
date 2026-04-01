@@ -3610,6 +3610,12 @@
     padding-block: 0;
   }
 
+  .js .why-mobile-copy.is-visible .why-showcase__copy > :nth-child(1),
+  .js .why-mobile-copy.is-visible .why-showcase__copy > :nth-child(2),
+  .js .why-mobile-copy.is-visible .why-showcase__copy > :nth-child(3) {
+    transition-delay: 0ms;
+  }
+
   .why-mobile-copy .why-showcase__intro {
     min-height: 0;
   }
