@@ -6,8 +6,8 @@ description: Voice of Self privacy policy.
 
 # Voice Of Self Privacy Policy
 
-Effective Date: 2026-03-28  
-Version: 1.1.1
+Effective Date: 2026-03-31  
+Version: 1.1.2
 
 Voice Of Self (also referred to in some parts of the product as "Closure") is
 provided by Aleksander Jałtuszyk ("Developer", "we", "us", or "our").
@@ -49,7 +49,11 @@ If you use account mode or paid plans, we may process:
 - Subscription and entitlement status managed through RevenueCat and Apple
 - Customer and event records synced by the RevenueCat Firebase extension
 - Numeric usage and accounting records tied to your account, such as token
-  counts, total calls, and derived processing cost
+  counts, workflow labels, total calls, per-request processing duration, and
+  derived processing cost
+- Aggregate internal analytics derived from those usage records, such as
+  workflow-level averages and transcript-size buckets used for operational
+  monitoring
 - Manual entitlement overrides or extra usage grants if we apply them to your
   account
 
@@ -175,7 +179,7 @@ to remove:
 - RevenueCat extension event records associated with your user
 - Manual entitlement overrides
 - Extra usage grants
-- Usage records and usage-event records tied to your account
+- Usage records and workflow-tagged usage-event records tied to your account
 - User-owned Cloud Storage objects stored under the app's user prefix
 
 Deleting your account does not remove journals, transcripts, or recordings that

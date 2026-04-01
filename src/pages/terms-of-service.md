@@ -6,14 +6,20 @@ description: Voice of Self terms of service.
 
 # Voice Of Self Terms Of Service
 
-Effective Date: 2026-03-28  
-Version: 1.1.1
+Effective Date: 2026-04-01  
+Version: 1.1.2
 
 These Terms of Service govern your use of Voice Of Self (also referred to in
 some parts of the product as "Closure"), provided by Aleksander Jałtuszyk
 ("Developer", "we", "us", or "our").
 
 Contact: alekgameshelp2@gmail.com
+
+These Terms of Service govern your use of the services and features we provide
+through Voice Of Self. If you download the app through Apple's App Store and no
+custom end user license agreement is presented there, your license to the app
+is also subject to Apple's [Licensed Application End User License
+Agreement](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/).
 
 ## 1. Eligibility
 

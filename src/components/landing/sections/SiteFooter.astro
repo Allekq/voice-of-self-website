@@ -9,7 +9,13 @@ import { siteConfig } from "../../../config/site";
     <nav class="site-footer__links" aria-label="Footer">
       <a href={siteConfig.supportHref}>Support</a>
       {siteConfig.legalLinks.map((link) => (
-        <a href={link.href}>{link.label}</a>
+        <a
+          href={link.href}
+          target={link.external ? "_blank" : undefined}
+          rel={link.external ? "noreferrer" : undefined}
+        >
+          {link.label}
+        </a>
       ))}
     </nav>
 

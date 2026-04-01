@@ -44,6 +44,8 @@ const buildGmailComposeHref = (email: string, subject: string, body: string) =>
   `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
 const buildAbsoluteSiteHref = (path: string) => new URL(path, siteOrigin).toString();
+const appleStandardEulaHref =
+  "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
 
 export const legalManifest = {
   privacy: {
@@ -60,7 +62,7 @@ export const legalManifest = {
 
 export const siteConfig = {
   name: "Voice of Self",
-  legalName: "Voice Of Self",
+  legalName: "Aleksander Jałtuszyk",
   homeTitle: "Voice of Self",
   defaultDescription:
     "Voice of Self is a voice-first reflection app that helps you notice personal growth you would otherwise miss.",
@@ -98,8 +100,9 @@ export const siteConfig = {
   legalLinks: [
     { label: "Privacy Policy", href: withBase(legalDocuments.privacy.path) },
     { label: "Terms of Service", href: withBase(legalDocuments.terms.path) },
+    { label: "App Store Terms of Use", href: appleStandardEulaHref, external: true },
   ],
-  footerText: `© ${new Date().getFullYear()} Voice of Self. All rights reserved.`,
+  footerText: `© ${new Date().getFullYear()} Aleksander Jałtuszyk. All rights reserved.`,
   socialProofLabel: "Voice-first reflection",
 };
 
