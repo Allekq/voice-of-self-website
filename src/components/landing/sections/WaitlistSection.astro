@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../../../config/site";
+import ActionButton from "../ui/ActionButton.astro";
 import WaitlistButton from "../ui/WaitlistButton.astro";
 import SectionShell from "../ui/SectionShell.astro";
 ---
@@ -12,12 +13,13 @@ import SectionShell from "../ui/SectionShell.astro";
     </p>
     <div class="waitlist-callout__actions">
       <WaitlistButton />
+      <ActionButton href={siteConfig.waitlistGuideHref} variant="secondary">
+        How to Join the Waitlist
+      </ActionButton>
     </div>
     <p class="waitlist-callout__caption">
-      On phones and tablets, this opens an email draft right away. On desktop browsers, it opens
-      Gmail in the browser by default. Prefer another mail app or manual copy? Use the <a
-        href={siteConfig.waitlistGuideHref}>quick join guide</a>. The waitlist stays static: no
-      account, no backend, no hidden signup flow.
+      Want to see the alternate routes too? The guide page also includes the email options. Need
+      help instead? <a href={siteConfig.supportHref}>Support stays email-first</a>.
     </p>
   </div>
 </SectionShell>

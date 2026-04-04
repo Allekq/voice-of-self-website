@@ -9,7 +9,6 @@ export interface WhyItMattersRelic {
   title: string;
   top: string;
   width: string;
-  worry: string;
 }
 
 export interface WhyItMattersBeat {
@@ -30,7 +29,6 @@ export const whyItMattersRelics: WhyItMattersRelic[] = [
     title: "Exam Felt Lighter",
     top: "4%",
     width: "clamp(13.9rem, 50%, 17.2rem)",
-    worry: "I was sure I would freeze and prove I was not ready.",
   },
   {
     accent: "gold",
@@ -43,7 +41,6 @@ export const whyItMattersRelics: WhyItMattersRelic[] = [
     title: "First Pull-Up",
     top: "0%",
     width: "clamp(13.75rem, 49%, 17rem)",
-    worry: "I kept treating strength like proof that I was behind.",
   },
   {
     accent: "blue",
@@ -56,7 +53,6 @@ export const whyItMattersRelics: WhyItMattersRelic[] = [
     title: "Work-Life Balance",
     top: "15%",
     width: "clamp(14rem, 51%, 17.35rem)",
-    worry: "If I stop working for a moment, everything will fall behind.",
   },
   {
     accent: "coral",
@@ -69,7 +65,6 @@ export const whyItMattersRelics: WhyItMattersRelic[] = [
     title: "Morning Started Softer",
     top: "9%",
     width: "clamp(13.65rem, 48%, 16.8rem)",
-    worry: "I wake up braced because something bad is probably about to happen.",
   },
   {
     accent: "gold",
@@ -82,30 +77,29 @@ export const whyItMattersRelics: WhyItMattersRelic[] = [
     title: "Said What I Needed",
     top: "18%",
     width: "clamp(13.8rem, 50%, 17.05rem)",
-    worry: "If I say what I need, I will make the conversation worse and regret it all night.",
   },
 ];
 
 export const whyItMattersStoryBeats: WhyItMattersBeat[] = [
   {
     eyebrow: "Relic logic",
-    title: "A relic is awarded when your reflection shows something actually improved or was followed through on.",
-    body: "It is not a compliment. It is the app's durable record that a meaningful shift happened in real life.",
+    title: "A relic appears when something actually changed.",
+    body: "It is proof you can point to.",
   },
   {
     eyebrow: "Worry first",
-    title: "The old worry appears first so you can see exactly what the growth is answering.",
-    body: "That keeps the breakthrough grounded in context instead of floating around like generic motivation.",
+    title: "A relic shows something that used to come up.",
+    body: "And that it no longer does.",
   },
   {
     eyebrow: "Proof of change",
-    title: "Then the relic stamps in the step that really happened: passed exam, first pull-up, work-life balance.",
-    body: "The point is visible follow-through, not just describing how you wish you felt.",
+    title: "The relic shows what actually changed.",
+    body: "Not just how you felt, but what happened.",
   },
   {
     eyebrow: "Durable record",
-    title: "Over time the relics become a readable archive of meaningful growth you would have missed otherwise.",
-    body: "That is what makes quiet progress believable: you can see where you were, what shifted, and what stayed true after the moment passed.",
+    title: "Over time, you see more of these.",
+    body: "They show how things changed.",
   },
 ];
 

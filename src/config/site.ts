@@ -35,6 +35,8 @@ const supportDraftLines = [
   "",
 ];
 const supportBody = supportDraftLines.join("\r\n");
+const waitlistFormHref = "https://tally.so/r/VLYx7g";
+const waitlistFormConfigured = !waitlistFormHref.includes("REPLACE_WITH_YOUR_TALLY_FORM_ID");
 
 const buildMailtoHref = (email: string, subject: string, body: string) => {
   return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -76,6 +78,8 @@ export const siteConfig = {
   waitlistGuideHref: withBase("/how-to-join-wish-list/"),
   supportHref: withBase("/support/"),
   legalManifestHref: buildAbsoluteSiteHref("/legal-manifest.json"),
+  waitlistFormHref,
+  waitlistFormConfigured,
   waitlistMailtoHref: buildMailtoHref(waitlistEmail, waitlistSubject, waitlistBody),
   waitlistGmailHref: buildGmailComposeHref(waitlistEmail, waitlistSubject, waitlistBody),
   supportMailtoHref: buildMailtoHref(supportEmail, supportSubject, supportBody),

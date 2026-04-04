@@ -19,7 +19,7 @@ export const faqEntries: FaqEntry[] = [
   {
     question: "Is my data private?",
     answer:
-      "Yes. Voice of Self is built around a local-first approach. The public site itself stores nothing about you, and the app is designed so your reflections stay under your control by default.",
+      "Yes. Voice of Self is built around a local-first approach, and the app is designed so your reflections stay under your control by default. If you choose to use the waitlist or support email, we only receive the information you send through those channels.",
   },
   {
     question: "Who is Voice of Self for?",
@@ -29,6 +29,6 @@ export const faqEntries: FaqEntry[] = [
   {
     question: "When will it launch?",
     answer:
-      "The MVP is still being shaped. If you want early access, the waitlist link simply opens an email so you can raise your hand without creating an account on the site.",
+      "The MVP is still being shaped. If you want early access, the waitlist page gives you the current signup option plus email alternatives without requiring an account on the site.",
   },
 ];

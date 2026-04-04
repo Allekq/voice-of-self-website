@@ -6,8 +6,8 @@ description: Voice of Self privacy policy.
 
 # Voice Of Self Privacy Policy
 
-Effective Date: 2026-03-31  
-Version: 1.1.2
+Effective Date: 2026-04-04  
+Version: 1.1.4
 
 Voice Of Self (also referred to in some parts of the product as "Closure") is
 provided by Aleksander Jałtuszyk ("Developer", "we", "us", or "our").
@@ -16,9 +16,11 @@ Contact: alekgameshelp2@gmail.com
 
 ## 1. What this app is
 
-Voice Of Self is a local-first voice journal and AI-assisted reflection app.
-Most journal content stays on your device. Some features send data off-device
-when you choose account, subscription, transcription, or AI-connected flows.
+Voice Of Self includes a local-first voice journal and AI-assisted reflection
+app, plus a public website used for legal pages, support entry points, and the
+waitlist. Most journal content stays on your device. Some features send data
+off-device when you choose account, subscription, transcription, AI-connected
+flows, or the website waitlist form.
 
 ## 2. Data we process
 
@@ -59,6 +61,19 @@ If you use account mode or paid plans, we may process:
 
 We do not store your transcript text or AI response content in those backend
 usage/accounting records.
+
+### 2.4 Website waitlist and contact submissions
+
+If you join the waitlist on the public website or contact us through website
+channels, we may process:
+
+- Your email address
+- Your name or nickname if you provide one
+- Any optional note you submit with the form or email
+- Basic submission metadata such as the submission time and source page
+
+Website waitlist submissions may be collected through Tally, and direct email
+submissions may be handled through the mail provider you use to send them.
 
 ## 3. When data leaves your device
 
@@ -109,6 +124,13 @@ The current `.vos` export and import flow is local. We do not upload those
 files to our servers. If you store or share an export through another app or
 cloud service, that destination handles the file under its own policies.
 
+### 3.8 Website waitlist form and email contact
+
+If you submit the website waitlist form, the information you enter is sent to
+Tally so we can manage waitlist interest and outreach. If you choose to join by
+email instead, the information you send is delivered through your email
+provider and ours.
+
 ## 4. How we use data
 
 We use data to:
@@ -117,8 +139,10 @@ We use data to:
 - Provide managed AI access and enforce account usage limits
 - Sync subscription access and entitlement state
 - Operate live questions and related AI-assisted features
+- Track waitlist interest and contact people who asked to hear about early access
 - Provide support, safety, moderation, fraud/security, billing, account, and
-  legal/policy communications to the registered email address
+  legal/policy communications to the registered email address or website
+  contact email
 
 We do not sell personal data and we do not use your registered email address
 for giveaway or other promotional marketing without a separate consent flow.
@@ -132,6 +156,7 @@ The app relies on third parties including:
 - Apple for Sign in with Apple, App Store billing, DeviceCheck / App Attest,
   and speech services that may be involved in transcription
 - AI providers you select or the app uses for managed account-mode analysis
+- Tally for the public website waitlist form
 
 Their handling of data is governed by their own terms and privacy policies.
 
@@ -168,6 +193,12 @@ re-transcription.
 Backend-linked account records may remain until you delete your account or we
 remove them for support, moderation, or legal reasons.
 
+### 7.4 Website waitlist data
+
+Website waitlist submissions may remain until we no longer need them for
+waitlist outreach, product updates tied to that signup, support follow-up, or
+related legal/business recordkeeping, unless you ask us to delete them sooner.
+
 ## 8. In-app account deletion
 
 The app includes an in-app delete-account flow. When completed, it is intended
@@ -191,7 +222,8 @@ automatically cancel an App Store subscription.
 Depending on where you live, you may have rights to access, correct, delete, or
 object to certain personal-data processing. Since most journal content is stored
 locally on your device, you already control much of that data directly. For
-backend-linked account data requests, contact us at the email above.
+backend-linked account data requests or website waitlist deletion requests,
+contact us at the email above.
 
 ## 10. Children
 

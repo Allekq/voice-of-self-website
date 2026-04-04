@@ -8,22 +8,22 @@ import "../styles/waitlist-guide.css";
 ---
 
 <SiteLayout
-  title="How to join the waitlist"
-  description="A simple guide for joining the Voice of Self waitlist."
+  title="How to Join the Waitlist"
+  description="Choose how you want to join the Voice of Self waitlist."
   pageType="content"
 >
   <div class="waitlist-guide">
     <section class="waitlist-guide__hero landing-surface">
-      <p class="waitlist-guide__eyebrow">Join the waitlist</p>
-      <h1 class="waitlist-guide__title">Join the Voice of Self waitlist from any browser.</h1>
+      <p class="waitlist-guide__eyebrow">How to join</p>
+      <h1 class="waitlist-guide__title">Choose the waitlist method that feels easiest.</h1>
       <p class="waitlist-guide__lead">
-        The easiest way to join is to open a draft and send a quick email. This page gives you the
-        default email option, a browser-based fallback, and a copy-ready version if you would
-        rather paste it yourself.
+        Use whichever option feels simplest. The waitlist page keeps the current signup route and
+        the email options in one place.
       </p>
 
       <div class="waitlist-guide__actions">
-        <ActionButton href={siteConfig.waitlistMailtoHref}>
+        <ActionButton href={siteConfig.waitlistFormHref}>Join the waitlist</ActionButton>
+        <ActionButton href={siteConfig.waitlistMailtoHref} variant="secondary">
           Open your email app
         </ActionButton>
         <ActionButton href={siteConfig.waitlistGmailHref} variant="secondary">
@@ -32,69 +32,10 @@ import "../styles/waitlist-guide.css";
       </div>
 
       <p class="waitlist-guide__note">
-        If your email app opens cleanly, that is the simplest way to join.
+        Email fallback goes to <strong>{siteConfig.waitlistEmail}</strong>.
       </p>
-
-      <p class="waitlist-guide__note">
-        If either option does not open the way you expect, copy the email address and the short
-        draft below.
-      </p>
-    </section>
-
-    <div class="waitlist-guide__grid">
-      <section class="waitlist-guide__card landing-surface">
-        <div class="waitlist-guide__card-head">
-          <div class="waitlist-guide__detail waitlist-guide__detail--email">
-            <p class="waitlist-guide__detail-label">Send it to</p>
-            <p class="waitlist-guide__detail-value waitlist-guide__detail-value--email">
-              {siteConfig.waitlistEmail}
-            </p>
-          </div>
-          <button class="waitlist-guide__copy" type="button" data-copy-value={siteConfig.waitlistEmail}>
-            Copy email
-          </button>
-        </div>
-
-        <div class="waitlist-guide__detail">
-          <p class="waitlist-guide__detail-label">Suggested subject</p>
-          <p class="waitlist-guide__pill">{siteConfig.waitlistDraft.subject}</p>
-        </div>
-
-        <p class="waitlist-guide__body">
-          The email app button uses the usual draft flow first. The Gmail option is here if you
-          would rather finish the message in your browser.
-        </p>
-      </section>
-
-      <section class="waitlist-guide__card landing-surface">
-        <p class="waitlist-guide__kicker">Keep it simple</p>
-        <h2 class="waitlist-guide__card-title">Your name is enough. Everything else is optional.</h2>
-
-        <p class="waitlist-guide__body">
-          The draft is intentionally short so joining the waitlist feels low-friction. If you want,
-          you can send it with just your name and nothing more.
-        </p>
-      </section>
-    </div>
-
-    <section class="waitlist-guide__card landing-surface">
-      <div class="waitlist-guide__card-head">
-        <div>
-          <p class="waitlist-guide__kicker">Ready-made draft</p>
-          <h2 class="waitlist-guide__card-title">Send this as-is or personalize it.</h2>
-        </div>
-        <button class="waitlist-guide__copy" type="button" data-copy-value={siteConfig.waitlistDraft.body}>
-          Copy draft
-        </button>
-      </div>
-
-      <pre class="waitlist-guide__template">{siteConfig.waitlistDraft.body}</pre>
     </section>
   </div>
 
   <SiteFooter />
-
-  <script>
-    import "../scripts/waitlist-guide/copy-buttons";
-  </script>
 </SiteLayout>

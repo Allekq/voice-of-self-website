@@ -93,6 +93,23 @@ const getMobileInsets = (viewportHeight: number): WhyTimelineInsets => ({
   ),
 });
 
+const syncDesktopTrackLayout = (root: HTMLElement, visualTrack: HTMLElement, stageFrame: HTMLElement) => {
+  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+
+  if (isPhoneViewport) {
+    visualTrack.style.removeProperty("--why-desktop-track-min-height");
+    return;
+  }
+
+  const viewportHeight = getStableViewportHeight();
+  const copyHeight = root.querySelector<HTMLElement>(".why-showcase__copy")?.getBoundingClientRect().height ?? 0;
+  const frameHeight = stageFrame.getBoundingClientRect().height;
+  const desktopTrackSpan = clamp(viewportHeight * 0.18, 112, 220);
+  const trackHeight = Math.max(copyHeight, frameHeight + desktopTrackSpan);
+
+  visualTrack.style.setProperty("--why-desktop-track-min-height", `${trackHeight.toFixed(2)}px`);
+};
+
 const updateRelicCards = (stage: HTMLElement, progress: number) => {
   const cards = Array.from(stage.querySelectorAll<HTMLElement>("[data-why-relic]"));
 
@@ -108,14 +125,12 @@ const updateRelicCards = (stage: HTMLElement, progress: number) => {
     const title = normalize(progress, revealAt + span * 0.1, revealAt + span * 0.28);
     const softenAt = (whyItMattersRelics[index + 2]?.revealAt ?? 1.1) + 0.06;
     const pop = normalize(progress, revealAt - span * 0.12, revealAt + span * 0.16);
-    const strike = normalize(progress, revealAt + span * 0.08, revealAt + span * 0.38);
     const growth = normalize(progress, revealAt + span * 0.22, revealAt + span * 0.58);
     const retire = normalize(progress, softenAt, softenAt + 0.18);
     const opacity = pop === 0 ? 0 : clamp(0.24 + pop * 0.76 - retire * 0.32, 0, 1);
 
     card.style.setProperty("--relic-pop", pop.toFixed(3));
     card.style.setProperty("--relic-title", title.toFixed(3));
-    card.style.setProperty("--relic-strike", strike.toFixed(3));
     card.style.setProperty("--relic-growth", growth.toFixed(3));
     card.style.setProperty("--relic-retire", retire.toFixed(3));
     card.style.setProperty("--relic-opacity", opacity.toFixed(3));
@@ -288,6 +303,7 @@ const updateStageProgress = (
   reducedMotion = false,
 ) => {
   const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+  syncDesktopTrackLayout(root, visualTrack, stageFrame);
   syncMobileStickyLayout(visualTrack, stageFrame);
 
   const fallbackProgress = isPhoneViewport ? getMobileProgress(visualTrack, stageFrame) : getRootProgress(root);
@@ -328,6 +344,8 @@ const setupNativeStageAnimations = (context: WhyStageContext) => {
   if (isPhoneViewport) {
     return;
   }
+
+  syncDesktopTrackLayout(context.root, context.visualTrack, context.stageFrame);
 
   const subject = isPhoneViewport ? context.visualTrack : context.root;
   const { topInset, bottomInset } = isPhoneViewport

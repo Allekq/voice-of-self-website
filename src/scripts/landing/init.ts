@@ -8,7 +8,6 @@ import { setupSurfaceDepth } from "./motion/surface-depth";
 import { setupReflectionStoryToggle } from "./reflection-story-toggle";
 import { setupRevealOnScroll } from "./reveal-on-scroll";
 import { setupStickyHeader } from "./sticky-header";
-import { setupWaitlistCtas } from "./waitlist-cta";
 import { setupWhyItMattersStage } from "./why-it-matters/stage-progress";
 
 const safeSetup = (label: string, setup: () => void) => {
@@ -31,7 +30,6 @@ const boot = () => {
   safeSetup("desktop-stepper", setupDesktopHowItWorks);
   safeSetup("mobile-stepper", setupMobileHowItWorks);
   safeSetup("why-it-matters-stage", setupWhyItMattersStage);
-  safeSetup("waitlist-cta", setupWaitlistCtas);
 };
 
 if (document.readyState === "loading") {
