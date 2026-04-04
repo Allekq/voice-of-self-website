@@ -71,9 +71,12 @@ Closure is a privacy-first iOS reflection app built with SwiftUI.
 ## Legal Update Flow
 
 - Treat privacy-policy and terms updates as one controlled cross-repo workflow, even when the public website is the user-facing source.
+- If a task edits `src/pages/privacy-policy.md` or `src/pages/terms-of-service.md`, or changes data collection, retention, deletion, account handling, subscription/access, AI routing, waitlist/support handling, or other legal-facing product behavior, open `skills/legal-update-sync/CHECKLIST.md` before making edits or declaring the task done.
 - Before changing legal text here, check `/Users/alekj/Documents/GitHub/closure-app/external/legal/` and its publishing docs so the website copy and the app repo's local legal representation stay aligned.
-- When legal text changes, keep the mirrored document in `closure-app` updated too, and bump only the affected document version in the corresponding `legal-manifest.json`.
+- When legal text changes, keep the mirrored document in `closure-app` updated too, bump only the affected document version and effective date in `site.config.mjs`, and keep `/Users/alekj/Documents/GitHub/closure-app/external/legal/legal-manifest.json` aligned.
+- Do not edit generated `dist/legal-manifest.json` directly.
 - If the task changes collected data, retention, deletion, account behavior, or other legal-facing product behavior, make sure the legal docs are updated as part of the same change.
+- If a change likely affects legal disclosures but legal edits are out of scope, pause and ask the user whether the legal docs should be updated now. If the runtime supports approval-gated commands, use the reminder prompt described in `skills/legal-update-sync/CHECKLIST.md` so the user has to acknowledge the follow-up.
 
 ## Repo Skill Sources
 

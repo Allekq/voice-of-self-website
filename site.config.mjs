@@ -4,13 +4,13 @@ export const siteBasePath = "/";
 
 export const legalDocuments = {
   privacy: {
-    version: "1.1.4",
+    version: "1.2.2",
     effectiveDate: "2026-04-04",
     path: "/privacy-policy/",
   },
   terms: {
-    version: "1.1.2",
-    effectiveDate: "2026-04-01",
+    version: "1.2.2",
+    effectiveDate: "2026-04-05",
     path: "/terms-of-service/",
   },
 };

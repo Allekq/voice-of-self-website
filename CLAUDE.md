@@ -78,7 +78,10 @@ If a change makes the code harder to find, harder to rename, or harder to reuse,
 ## Legal Workflow
 
 - If privacy-policy or terms text changes here, check `/Users/alekj/Documents/GitHub/closure-app/external/legal/` and keep the mirrored legal representation aligned.
+- If a task edits `src/pages/privacy-policy.md` or `src/pages/terms-of-service.md`, or changes data collection, retention, deletion, account handling, subscription/access, AI routing, waitlist/support behavior, or other legal-facing claims, read `skills/legal-update-sync/CHECKLIST.md` before finishing the task.
+- Update version and effective-date changes in `site.config.mjs`, not in generated `dist/legal-manifest.json`.
 - If data collection, deletion, retention, account, or subscription behavior changes, legal text likely needs updating in the same task.
+- If the task probably requires a legal update but legal edits are not being made in the same pass, stop and ask the user whether the legal docs should be updated now. If the runtime supports approval-gated commands, prefer using the reminder prompt documented in `skills/legal-update-sync/CHECKLIST.md`.
 
 ## Validation Checklist
 

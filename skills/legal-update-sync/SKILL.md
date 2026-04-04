@@ -1,28 +1,24 @@
----
 name: legal-update-sync
-description: Use when updating privacy-policy or terms content for the Voice of Self website so the public website copy stays aligned with the mirrored legal representation in the main app repository.
+description: Use when editing website legal pages or when a product or website change could affect privacy-policy or terms disclosures, so the website and mirrored app legal copy stay aligned.
 ---
 
 # Legal Update Sync
 
-Use this skill when changing legal text or any product behavior that affects legal claims.
+Use this skill when changing legal text or any product or website behavior that
+could affect privacy, retention, deletion, account, subscription, AI, waitlist,
+support, or other legal-facing claims.
 
-## Core workflow
+## Required reads
 
-1. Read `AGENTS.md` and `CLAUDE.md` first.
-2. Treat website legal changes as a cross-repo update, not a website-only edit.
-3. Check the mirrored legal source in `/Users/alekj/Documents/GitHub/closure-app/external/legal/`.
-4. Keep the website copy and the app repo's local legal representation aligned.
-5. If the change affects only one legal document, bump only the affected document version in the corresponding `legal-manifest.json`.
-6. If the task changes collected data, retention, deletion, account handling, or subscription/access behavior, ensure legal text is updated as part of the same task.
+- `AGENTS.md`
+- `CLAUDE.md`
+- `skills/legal-update-sync/CHECKLIST.md`
 
-## Validation
+`CHECKLIST.md` is the canonical workflow and reminder source for this skill.
 
-- Run `npm run check`.
-- Run `npm run build`.
-- Verify both `/privacy-policy/` and `/terms-of-service/` still build and route correctly.
+## Core rule
 
-## Quality bar
-
-- Do not make silent legal-only edits without checking the mirrored app-repo representation.
-- Do not leave the website and app legal copies out of sync.
+Do not finish a task that likely changed legal disclosures while leaving the
+legal docs stale. Follow the checklist, keep the mirrored `closure-app` copy
+aligned, and use the checklist's blocking-question / reminder rule when legal
+follow-up is required.
