@@ -14,12 +14,14 @@ interface Props {
   frontmatter?: Frontmatter;
   pageType?: "auto" | "content" | "legal";
   articleClassName?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   frontmatter,
   pageType = "auto",
   articleClassName,
+  structuredData,
 } = Astro.props as Props;
 const pageTitle = Astro.props.title ?? frontmatter?.title ?? siteConfig.homeTitle;
 const description =
@@ -38,6 +40,41 @@ const title =
   isHomePage || pageTitle.includes(siteConfig.name)
     ? pageTitle
     : `${pageTitle} | ${siteConfig.name}`;
+const organizationId = `${siteConfig.origin}#organization`;
+const websiteId = `${siteConfig.origin}#website`;
+const imageUrl = siteConfig.defaultSocialImageUrl;
+const resolvedStructuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": organizationId,
+    name: siteConfig.name,
+    legalName: siteConfig.legalName,
+    url: siteConfig.origin,
+    logo: siteConfig.logoImageUrl,
+    email: siteConfig.contactEmail,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: siteConfig.supportEmail,
+        url: new URL(siteConfig.supportHref, siteConfig.origin).toString(),
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": websiteId,
+    name: siteConfig.name,
+    url: siteConfig.origin,
+    description: siteConfig.defaultDescription,
+    publisher: {
+      "@id": organizationId,
+    },
+  },
+  ...(structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : []),
+];
 ---
 
 <!doctype html>
@@ -54,9 +91,16 @@ const title =
     <meta property="og:description" content={description} />
     <meta property="og:type" content={isHomePage ? "website" : "article"} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+    <link rel="alternate" type="text/plain" title="LLM context" href={withBase("/llms.txt")} />
+    {resolvedStructuredData.map((entry) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(entry)} />
+    ))}
     <script is:inline>
       document.documentElement.classList.add("js");
     </script>

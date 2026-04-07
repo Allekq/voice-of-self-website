@@ -24,7 +24,7 @@ export const faqEntries: FaqEntry[] = [
   {
     question: "Who is Voice of Self for?",
     answer:
-      "It is for people who want a calmer, more honest relationship with their own progress. Especially anyone who feels like they should be further along but rarely stops to notice how far they have already come.",
+      "It is for people who feel stuck, behind, or unsure whether they are really progressing. Especially anyone who wants a calmer, more honest relationship with their own progress and rarely stops to notice how far they have already come.",
   },
   {
     question: "When will it launch?",

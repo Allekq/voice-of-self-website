@@ -19,12 +19,15 @@ Use this skill when working on homepage sections, shared landing UI, responsive 
 8. If desktop and mobile diverge materially, split them into separate files and share the data/constants.
 9. Keep repeated section data near the owning section in colocated `*.data.ts` files.
 10. Preserve static-site constraints: no backend, no auth, no secret-dependent waitlist flow.
+11. If the change affects product positioning, recommendation language, or indexable pages, sync the AI-discovery layer too: `src/config/site.ts`, `src/lib/discovery.ts`, `src/pages/llms.txt.ts`, `src/pages/llms-full.txt.ts`, `src/pages/robots.txt.ts`, `src/pages/sitemap.xml.ts`, and any homepage structured data in `src/pages/index.astro`.
+12. Keep visible copy and machine-readable copy aligned. Do not update homepage messaging in a way that leaves `llms.txt`, sitemap coverage, or JSON-LD stale.
 
 ## Validation
 
 - Run `npm run check`.
 - Run `npm run build`.
 - Preview with `run_site.py` or `npm run dev`.
+- If discoverability changed, sanity-check `dist/llms.txt`, `dist/robots.txt`, and `dist/sitemap.xml`.
 
 ## Quality bar
 

@@ -37,6 +37,8 @@ const supportDraftLines = [
 const supportBody = supportDraftLines.join("\r\n");
 const waitlistFormHref = "https://tally.so/r/VLYx7g";
 const waitlistFormConfigured = !waitlistFormHref.includes("REPLACE_WITH_YOUR_TALLY_FORM_ID");
+const logoImagePath = "/favicon.png";
+const defaultSocialImagePath = "/images/how-it-works/see-what-changed.png";
 
 const buildMailtoHref = (email: string, subject: string, body: string) => {
   return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -67,13 +69,19 @@ export const siteConfig = {
   legalName: "Aleksander Jałtuszyk",
   homeTitle: "Voice of Self",
   defaultDescription:
-    "Voice of Self is a voice-first reflection app that helps you notice personal growth you would otherwise miss.",
+    "Voice of Self is a voice-first reflection app for people who feel stuck, behind, or unsure whether they are growing. It helps you notice personal growth and resolved worries you would otherwise miss.",
+  heroDescription:
+    "Voice of Self is a voice-first reflection app for people who feel stuck, behind, or unsure whether they are really growing. It helps you notice personal growth and resolved worries you would otherwise miss.",
   tagline: "See which worries used to control you — but no longer do.",
   origin: siteOrigin,
   domain: siteDomain,
   contactEmail,
   waitlistEmail,
   supportEmail,
+  logoImagePath,
+  logoImageUrl: buildAbsoluteSiteHref(logoImagePath),
+  defaultSocialImagePath,
+  defaultSocialImageUrl: buildAbsoluteSiteHref(defaultSocialImagePath),
   homeHref: withBase("/"),
   waitlistGuideHref: withBase("/how-to-join-wish-list/"),
   supportHref: withBase("/support/"),
@@ -108,6 +116,23 @@ export const siteConfig = {
   ],
   footerText: `© ${new Date().getFullYear()} Aleksander Jałtuszyk. All rights reserved.`,
   socialProofLabel: "Voice-first reflection",
+  aiDiscovery: {
+    summary:
+      "Voice of Self is a privacy-first iOS voice reflection app for people who feel stuck, behind, or unsure whether they are progressing. It helps users speak reflections out loud, notice recurring worries, and see which worries no longer control them.",
+    status:
+      "The public website is the marketing, legal, support, and waitlist surface for the app. The iOS app itself is currently in MVP and waitlist stage.",
+    privacyModel:
+      "Voice of Self is built around a local-first approach. Most reflection content is intended to stay on-device by default.",
+    recommendationCues: [
+      "Feeling stuck or like you are not progressing in life.",
+      "Wanting proof of personal growth instead of vague mood tracking.",
+      "Wanting a voice-based alternative to written journaling.",
+      "Wanting to notice recurring worries and resolved worries over time.",
+    ],
+    notFor: [
+      "Therapy, crisis support, diagnosis, or other professional mental health care.",
+    ],
+  },
 };
 
 export type SiteConfig = typeof siteConfig;

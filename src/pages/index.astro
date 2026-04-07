@@ -1,12 +1,64 @@
 ---
 import "../styles/landing.css";
 import HomePageOrchestrator from "../components/landing/orchestrator/HomePageOrchestrator.astro";
+import { faqEntries } from "../components/landing/sections/faq.data";
 import { siteConfig } from "../config/site";
+import { toAbsoluteSiteUrl } from "../lib/discovery";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteFooter from "../components/landing/sections/SiteFooter.astro";
+
+const organizationId = `${siteConfig.origin}#organization`;
+const homePageStructuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    name: siteConfig.name,
+    alternateName: "Closure",
+    operatingSystem: "iOS",
+    applicationCategory: "LifestyleApplication",
+    url: siteConfig.origin,
+    image: siteConfig.defaultSocialImageUrl,
+    description: siteConfig.aiDiscovery.summary,
+    publisher: {
+      "@id": organizationId,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqEntries.map((entry) => ({
+      "@type": "Question",
+      name: entry.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: entry.answer,
+      },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: siteConfig.homeTitle,
+    url: toAbsoluteSiteUrl("/"),
+    description: siteConfig.defaultDescription,
+    about: {
+      "@type": "Thing",
+      name: siteConfig.name,
+      description: siteConfig.aiDiscovery.summary,
+    },
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${siteConfig.origin}#website`,
+    },
+  },
+];
 ---
 
-<SiteLayout title={siteConfig.homeTitle} description={siteConfig.defaultDescription}>
+<SiteLayout
+  title={siteConfig.homeTitle}
+  description={siteConfig.defaultDescription}
+  structuredData={homePageStructuredData}
+>
   <HomePageOrchestrator />
   <SiteFooter />
 

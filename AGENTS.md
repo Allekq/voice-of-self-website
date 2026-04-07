@@ -68,6 +68,18 @@ Closure is a privacy-first iOS reflection app built with SwiftUI.
 - Use `run_site.py` for a one-click local preview, or `npm run dev` if you are working from the terminal.
 - Manually sanity-check desktop, tablet, and phone layouts when changing structure, motion, spacing, or navigation.
 
+## AI Discoverability Maintenance
+
+- Keep the site-level discovery files aligned with the real product and page structure:
+  `src/pages/llms.txt.ts`, `src/pages/llms-full.txt.ts`, `src/pages/robots.txt.ts`, and `src/pages/sitemap.xml.ts`.
+- Keep shared discovery URLs and page lists in `src/lib/discovery.ts`.
+- Keep shared product positioning, recommendation cues, and AI-facing summary copy in `src/config/site.ts` under `siteConfig.aiDiscovery`.
+- Keep global SEO and JSON-LD wiring in `src/layouts/SiteLayout.astro`, and keep homepage-specific structured data in `src/pages/index.astro`.
+- If you add, remove, rename, or substantially repurpose an indexable page, update `src/lib/discovery.ts` so the sitemap and `llms.txt` outputs stay current.
+- If you change product positioning, target audience, recommendation language, privacy claims, waitlist/support flows, or launch stage, update the visible homepage copy and the AI-discovery metadata together so they do not drift.
+- Keep `robots.txt` crawl-friendly by default. Do not block search or LLM search crawlers unless the user explicitly asks for that policy change.
+- After discoverability-affecting changes, verify the generated outputs in `dist/llms.txt`, `dist/robots.txt`, and `dist/sitemap.xml` after `npm run build`.
+
 ## Legal Update Flow
 
 - Treat privacy-policy and terms updates as one controlled cross-repo workflow, even when the public website is the user-facing source.

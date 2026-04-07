@@ -137,6 +137,12 @@ const updateRelicCards = (stage: HTMLElement, progress: number) => {
   });
 };
 
+const getSolvedCount = (progress: number) =>
+  whyItMattersRelics.filter((relic, index) => {
+    const span = getRelicSpan(index);
+    return progress >= relic.revealAt + span * 0.6;
+  }).length;
+
 const getSolvedProgress = (progress: number) =>
   whyItMattersRelics.reduce((total, relic, index) => {
     const span = getRelicSpan(index);
@@ -163,10 +169,7 @@ const animateMetricValueChange = (element: HTMLElement) => {
 };
 
 const updateStageMetrics = (stage: HTMLElement, progress: number) => {
-  const solvedCount = whyItMattersRelics.filter((relic, index) => {
-    const span = getRelicSpan(index);
-    return progress >= relic.revealAt + span * 0.6;
-  }).length;
+  const solvedCount = getSolvedCount(progress);
   const solvedProgress = clamp(getSolvedProgress(progress), 0, whyItMattersSolvedGoal);
   const anxietyLevel = clamp(whyItMattersSolvedGoal - solvedProgress, 0.12, whyItMattersSolvedGoal);
   const preparedLevel = clamp(solvedProgress, 0, whyItMattersSolvedGoal);
@@ -221,6 +224,18 @@ const updateStageMetrics = (stage: HTMLElement, progress: number) => {
   });
 };
 
+const getCurrentProgress = (context: WhyStageContext) => {
+  const stageProgress = Number.parseFloat(context.stage.style.getPropertyValue("--why-progress"));
+
+  if (Number.isFinite(stageProgress)) {
+    return clamp(stageProgress, 0, 1);
+  }
+
+  return window.matchMedia("(max-width: 47.99rem)").matches
+    ? getMobileProgress(context.visualTrack, context.stageFrame)
+    : getRootProgress(context.root);
+};
+
 const getPanelTravel = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
   const visualHeight = visualTrack.getBoundingClientRect().height;
   const frameHeight = stageFrame.getBoundingClientRect().height;
@@ -236,6 +251,19 @@ const updateStageFrame = (visualTrack: HTMLElement, stageFrame: HTMLElement, pro
 
   stageFrame.style.setProperty("--why-panel-travel", `${travel.toFixed(2)}px`);
   stageFrame.style.setProperty("--why-panel-progress", progress.toFixed(3));
+};
+
+const updateScrollSlider = (stage: HTMLElement, progress: number) => {
+  const slider = stage.querySelector<HTMLElement>("[data-why-scroll-slider]");
+
+  if (!slider || slider.getAttribute("role") !== "slider") {
+    return;
+  }
+
+  const solvedCount = getSolvedCount(progress);
+
+  slider.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+  slider.setAttribute("aria-valuetext", `${solvedCount} of ${whyItMattersSolvedGoal} worries resolved`);
 };
 
 const getFrameTranslateY = (stageFrame: HTMLElement) => {
@@ -324,6 +352,173 @@ const updateStageProgress = (
   updateStageFrame(visualTrack, stageFrame, progress);
   updateRelicCards(stage, progress);
   updateStageMetrics(stage, progress);
+  updateScrollSlider(stage, progress);
+};
+
+const getClampedWindowScrollTarget = (target: number) => {
+  const documentHeight = Math.max(
+    document.documentElement.scrollHeight,
+    document.body?.scrollHeight ?? 0,
+  );
+  const maxScroll = Math.max(documentHeight - window.innerHeight, 0);
+
+  return clamp(target, 0, maxScroll);
+};
+
+const getDesktopScrollTarget = (root: HTMLElement, progress: number) => {
+  const viewportHeight = getStableViewportHeight();
+  const { topInset, bottomInset } = getDesktopInsets(viewportHeight);
+  const rect = root.getBoundingClientRect();
+  const absoluteTop = rect.top + window.scrollY;
+  const endTop = viewportHeight - bottomInset - rect.height;
+  const travel = Math.max(topInset - endTop, viewportHeight * 0.58);
+  const targetTop = topInset - clamp(progress, 0, 1) * travel;
+
+  return getClampedWindowScrollTarget(absoluteTop - targetTop);
+};
+
+const getMobileScrollTarget = (visualTrack: HTMLElement, stageFrame: HTMLElement, progress: number) => {
+  const viewportHeight = getStableViewportHeight();
+  const { bottomInset, topInset } = getMobileInsets(viewportHeight);
+  const rect = visualTrack.getBoundingClientRect();
+  const absoluteTop = rect.top + window.scrollY;
+  const frameHeight = stageFrame.getBoundingClientRect().height;
+  const stickyTop = clamp(viewportHeight - bottomInset - frameHeight, topInset, viewportHeight - frameHeight);
+  const travel = Math.max(rect.height - frameHeight, 1);
+  const targetTop = stickyTop - clamp(progress, 0, 1) * travel;
+
+  return getClampedWindowScrollTarget(absoluteTop - targetTop);
+};
+
+const scrollStageToProgress = (context: WhyStageContext, progress: number) => {
+  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
+
+  syncDesktopTrackLayout(context.root, context.visualTrack, context.stageFrame);
+  syncMobileStickyLayout(context.visualTrack, context.stageFrame);
+
+  const target = isPhoneViewport
+    ? getMobileScrollTarget(context.visualTrack, context.stageFrame, progress)
+    : getDesktopScrollTarget(context.root, progress);
+
+  window.scrollTo({
+    behavior: "auto",
+    top: target,
+  });
+};
+
+const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) => {
+  const slider = context.stage.querySelector<HTMLElement>("[data-why-scroll-slider]");
+
+  if (!slider || slider.dataset.whyScrollEnhanced === "true") {
+    return;
+  }
+
+  context.stage.removeAttribute("aria-hidden");
+  slider.dataset.whyScrollEnhanced = "true";
+  slider.setAttribute("role", "slider");
+  slider.setAttribute("tabindex", "0");
+  slider.setAttribute("aria-label", "Relic timeline. Drag to scroll through this story.");
+  slider.setAttribute("aria-orientation", "horizontal");
+  slider.setAttribute("aria-valuemin", "0");
+  slider.setAttribute("aria-valuemax", "100");
+  updateScrollSlider(context.stage, getCurrentProgress(context));
+
+  let activePointerId: number | null = null;
+
+  const getProgressFromClientX = (clientX: number) => {
+    const rect = slider.getBoundingClientRect();
+    return clamp((clientX - rect.left) / Math.max(rect.width, 1), 0, 1);
+  };
+
+  const commitProgress = (nextProgress: number) => {
+    scrollStageToProgress(context, nextProgress);
+    requestRender();
+  };
+
+  const releasePointer = (pointerId?: number) => {
+    if (pointerId !== undefined && activePointerId !== pointerId) {
+      return;
+    }
+
+    if (activePointerId !== null && slider.hasPointerCapture(activePointerId)) {
+      slider.releasePointerCapture(activePointerId);
+    }
+
+    activePointerId = null;
+    slider.classList.remove("is-dragging");
+  };
+
+  slider.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+
+    activePointerId = event.pointerId;
+    slider.classList.add("is-dragging");
+    slider.setPointerCapture(event.pointerId);
+    event.preventDefault();
+    commitProgress(getProgressFromClientX(event.clientX));
+  });
+
+  slider.addEventListener("pointermove", (event) => {
+    if (activePointerId !== event.pointerId) {
+      return;
+    }
+
+    event.preventDefault();
+    commitProgress(getProgressFromClientX(event.clientX));
+  });
+
+  slider.addEventListener("pointerup", (event) => {
+    releasePointer(event.pointerId);
+  });
+
+  slider.addEventListener("pointercancel", (event) => {
+    releasePointer(event.pointerId);
+  });
+
+  slider.addEventListener("lostpointercapture", () => {
+    releasePointer();
+  });
+
+  slider.addEventListener("keydown", (event) => {
+    const step = event.shiftKey ? 0.16 : 0.08;
+    const currentProgress = getCurrentProgress(context);
+
+    let nextProgress: number | null = null;
+
+    switch (event.key) {
+      case "ArrowLeft":
+      case "ArrowDown":
+        nextProgress = currentProgress - step;
+        break;
+      case "ArrowRight":
+      case "ArrowUp":
+        nextProgress = currentProgress + step;
+        break;
+      case "PageDown":
+        nextProgress = currentProgress + 0.2;
+        break;
+      case "PageUp":
+        nextProgress = currentProgress - 0.2;
+        break;
+      case "Home":
+        nextProgress = 0;
+        break;
+      case "End":
+        nextProgress = 1;
+        break;
+      default:
+        break;
+    }
+
+    if (nextProgress === null) {
+      return;
+    }
+
+    event.preventDefault();
+    commitProgress(nextProgress);
+  });
 };
 
 const clearNativeStageAnimations = (context: WhyStageContext) => {
@@ -417,25 +612,6 @@ export const setupWhyItMattersStage = () => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ignoreResize = createCoarseViewportResizeGuard();
 
-  if (reducedMotion) {
-    stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) => {
-      if (!isVisibleRoot(root)) {
-        return;
-      }
-
-      updateStageProgress(root, stage, stageFrame, visualTrack, true);
-    });
-    return;
-  }
-
-  stageContexts.forEach((context) => {
-    if (!isVisibleRoot(context.root)) {
-      return;
-    }
-
-    setupNativeStageAnimations(context);
-  });
-
   let frameId = 0;
 
   const render = () => {
@@ -457,6 +633,29 @@ export const setupWhyItMattersStage = () => {
 
     frameId = window.requestAnimationFrame(render);
   };
+
+  if (reducedMotion) {
+    stageContexts.forEach(({ root, stage, stageFrame, visualTrack }) => {
+      if (!isVisibleRoot(root)) {
+        return;
+      }
+
+      updateStageProgress(root, stage, stageFrame, visualTrack, true);
+    });
+    return;
+  }
+
+  stageContexts.forEach((context) => {
+    setupScrollSlider(context, requestRender);
+  });
+
+  stageContexts.forEach((context) => {
+    if (!isVisibleRoot(context.root)) {
+      return;
+    }
+
+    setupNativeStageAnimations(context);
+  });
 
   requestRender();
 
