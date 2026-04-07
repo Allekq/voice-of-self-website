@@ -14,10 +14,9 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 const normalize = (value: number, start: number, end: number) =>
   clamp((value - start) / Math.max(end - start, 0.001), 0, 1);
 
-type WhyNativeAnimation = Animation & {
-  rangeEnd?: string;
-  rangeStart?: string;
-  timeline?: unknown;
+type WhyScrollRange = {
+  end: number;
+  start: number;
 };
 
 type WhyTimelineInsets = {
@@ -30,18 +29,7 @@ type WhyStageContext = {
   stage: HTMLElement;
   stageFrame: HTMLElement;
   visualTrack: HTMLElement;
-  nativeAnimations: WhyNativeAnimation[];
 };
-
-const getViewTimelineCtor = () =>
-  (window as Window & { ViewTimeline?: new (options?: Record<string, unknown>) => unknown }).ViewTimeline;
-
-const supportsNativeWhyTimelines = () =>
-  typeof window !== "undefined" &&
-  typeof HTMLElement !== "undefined" &&
-  typeof Element !== "undefined" &&
-  typeof Element.prototype.animate === "function" &&
-  typeof getViewTimelineCtor() === "function";
 
 const isVisibleRoot = (element: HTMLElement) => {
   const styles = window.getComputedStyle(element);
@@ -231,9 +219,9 @@ const getCurrentProgress = (context: WhyStageContext) => {
     return clamp(stageProgress, 0, 1);
   }
 
-  return window.matchMedia("(max-width: 47.99rem)").matches
-    ? getMobileProgress(context.visualTrack, context.stageFrame)
-    : getRootProgress(context.root);
+  const { start, end } = getScrollRange(context.root, context.visualTrack, context.stageFrame);
+
+  return normalize(window.scrollY, start, end);
 };
 
 const getPanelTravel = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
@@ -266,28 +254,18 @@ const updateScrollSlider = (stage: HTMLElement, progress: number) => {
   slider.setAttribute("aria-valuetext", `${solvedCount} of ${whyItMattersSolvedGoal} worries resolved`);
 };
 
-const getFrameTranslateY = (stageFrame: HTMLElement) => {
-  const transform = window.getComputedStyle(stageFrame).transform;
-
-  if (!transform || transform === "none") {
-    return 0;
-  }
-
-  try {
-    return new DOMMatrixReadOnly(transform).m42;
-  } catch {
-    return 0;
-  }
-};
-
-const getRootProgress = (root: HTMLElement) => {
+const getDesktopScrollRange = (root: HTMLElement): WhyScrollRange => {
   const rect = root.getBoundingClientRect();
   const viewportHeight = getStableViewportHeight();
   const { topInset, bottomInset } = getDesktopInsets(viewportHeight);
+  const absoluteTop = rect.top + window.scrollY;
   const endTop = viewportHeight - bottomInset - rect.height;
   const travel = Math.max(topInset - endTop, viewportHeight * 0.58);
 
-  return clamp((topInset - rect.top) / Math.max(travel, 1), 0, 1);
+  return {
+    end: absoluteTop - topInset + travel,
+    start: absoluteTop - topInset,
+  };
 };
 
 const syncMobileStickyLayout = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
@@ -311,17 +289,29 @@ const syncMobileStickyLayout = (visualTrack: HTMLElement, stageFrame: HTMLElemen
   visualTrack.style.setProperty("--why-mobile-track-span", `${trackSpan.toFixed(2)}px`);
 };
 
-const getMobileProgress = (visualTrack: HTMLElement, stageFrame: HTMLElement) => {
+const getMobileScrollRange = (visualTrack: HTMLElement, stageFrame: HTMLElement): WhyScrollRange => {
   const rect = visualTrack.getBoundingClientRect();
   const viewportHeight = getStableViewportHeight();
   const { bottomInset, topInset } = getMobileInsets(viewportHeight);
+  const absoluteTop = rect.top + window.scrollY;
   const frameHeight = stageFrame.getBoundingClientRect().height;
   const stickyTop = clamp(viewportHeight - bottomInset - frameHeight, topInset, viewportHeight - frameHeight);
-  const startTop = stickyTop;
   const travel = Math.max(rect.height - frameHeight, 1);
 
-  return clamp((startTop - rect.top) / travel, 0, 1);
+  return {
+    end: absoluteTop - stickyTop + travel,
+    start: absoluteTop - stickyTop,
+  };
 };
+
+const getScrollRange = (
+  root: HTMLElement,
+  visualTrack: HTMLElement,
+  stageFrame: HTMLElement,
+): WhyScrollRange =>
+  window.matchMedia("(max-width: 47.99rem)").matches
+    ? getMobileScrollRange(visualTrack, stageFrame)
+    : getDesktopScrollRange(root);
 
 const updateStageProgress = (
   root: HTMLElement,
@@ -330,21 +320,11 @@ const updateStageProgress = (
   visualTrack: HTMLElement,
   reducedMotion = false,
 ) => {
-  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
   syncDesktopTrackLayout(root, visualTrack, stageFrame);
   syncMobileStickyLayout(visualTrack, stageFrame);
 
-  const fallbackProgress = isPhoneViewport ? getMobileProgress(visualTrack, stageFrame) : getRootProgress(root);
-  const nativeTravel = getPanelTravel(visualTrack, stageFrame);
-  const nativeProgress =
-    nativeTravel > 0 ? clamp(getFrameTranslateY(stageFrame) / nativeTravel, 0, 1) : fallbackProgress;
-  const progress = reducedMotion
-    ? 0.92
-    : isPhoneViewport
-      ? fallbackProgress
-      : supportsNativeWhyTimelines()
-        ? nativeProgress
-        : fallbackProgress;
+  const { start, end } = getScrollRange(root, visualTrack, stageFrame);
+  const progress = reducedMotion ? 0.92 : normalize(window.scrollY, start, end);
 
   stage.style.setProperty("--why-progress", progress.toFixed(3));
   stage.classList.toggle("is-stage-active", progress > 0.04);
@@ -365,44 +345,15 @@ const getClampedWindowScrollTarget = (target: number) => {
   return clamp(target, 0, maxScroll);
 };
 
-const getDesktopScrollTarget = (root: HTMLElement, progress: number) => {
-  const viewportHeight = getStableViewportHeight();
-  const { topInset, bottomInset } = getDesktopInsets(viewportHeight);
-  const rect = root.getBoundingClientRect();
-  const absoluteTop = rect.top + window.scrollY;
-  const endTop = viewportHeight - bottomInset - rect.height;
-  const travel = Math.max(topInset - endTop, viewportHeight * 0.58);
-  const targetTop = topInset - clamp(progress, 0, 1) * travel;
-
-  return getClampedWindowScrollTarget(absoluteTop - targetTop);
-};
-
-const getMobileScrollTarget = (visualTrack: HTMLElement, stageFrame: HTMLElement, progress: number) => {
-  const viewportHeight = getStableViewportHeight();
-  const { bottomInset, topInset } = getMobileInsets(viewportHeight);
-  const rect = visualTrack.getBoundingClientRect();
-  const absoluteTop = rect.top + window.scrollY;
-  const frameHeight = stageFrame.getBoundingClientRect().height;
-  const stickyTop = clamp(viewportHeight - bottomInset - frameHeight, topInset, viewportHeight - frameHeight);
-  const travel = Math.max(rect.height - frameHeight, 1);
-  const targetTop = stickyTop - clamp(progress, 0, 1) * travel;
-
-  return getClampedWindowScrollTarget(absoluteTop - targetTop);
-};
-
 const scrollStageToProgress = (context: WhyStageContext, progress: number) => {
-  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
-
   syncDesktopTrackLayout(context.root, context.visualTrack, context.stageFrame);
   syncMobileStickyLayout(context.visualTrack, context.stageFrame);
-
-  const target = isPhoneViewport
-    ? getMobileScrollTarget(context.visualTrack, context.stageFrame, progress)
-    : getDesktopScrollTarget(context.root, progress);
+  const { start, end } = getScrollRange(context.root, context.visualTrack, context.stageFrame);
+  const target = start + clamp(progress, 0, 1) * (end - start);
 
   window.scrollTo({
     behavior: "auto",
-    top: target,
+    top: getClampedWindowScrollTarget(target),
   });
 };
 
@@ -424,11 +375,8 @@ const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) 
   updateScrollSlider(context.stage, getCurrentProgress(context));
 
   let activePointerId: number | null = null;
-
-  const getProgressFromClientX = (clientX: number) => {
-    const rect = slider.getBoundingClientRect();
-    return clamp((clientX - rect.left) / Math.max(rect.width, 1), 0, 1);
-  };
+  let dragStartClientX = 0;
+  let dragStartProgress = 0;
 
   const commitProgress = (nextProgress: number) => {
     scrollStageToProgress(context, nextProgress);
@@ -454,10 +402,11 @@ const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) 
     }
 
     activePointerId = event.pointerId;
+    dragStartClientX = event.clientX;
+    dragStartProgress = getCurrentProgress(context);
     slider.classList.add("is-dragging");
     slider.setPointerCapture(event.pointerId);
     event.preventDefault();
-    commitProgress(getProgressFromClientX(event.clientX));
   });
 
   slider.addEventListener("pointermove", (event) => {
@@ -465,8 +414,11 @@ const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) 
       return;
     }
 
+    const rect = slider.getBoundingClientRect();
+    const delta = (event.clientX - dragStartClientX) / Math.max(rect.width, 1);
+
     event.preventDefault();
-    commitProgress(getProgressFromClientX(event.clientX));
+    commitProgress(dragStartProgress + delta);
   });
 
   slider.addEventListener("pointerup", (event) => {
@@ -521,67 +473,6 @@ const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) 
   });
 };
 
-const clearNativeStageAnimations = (context: WhyStageContext) => {
-  context.nativeAnimations.forEach((animation) => animation.cancel());
-  context.nativeAnimations = [];
-};
-
-const setupNativeStageAnimations = (context: WhyStageContext) => {
-  clearNativeStageAnimations(context);
-
-  if (!supportsNativeWhyTimelines()) {
-    return;
-  }
-
-  const viewportHeight = getStableViewportHeight();
-  const isPhoneViewport = window.matchMedia("(max-width: 47.99rem)").matches;
-
-  if (isPhoneViewport) {
-    return;
-  }
-
-  syncDesktopTrackLayout(context.root, context.visualTrack, context.stageFrame);
-
-  const subject = isPhoneViewport ? context.visualTrack : context.root;
-  const { topInset, bottomInset } = isPhoneViewport
-    ? getMobileInsets(viewportHeight)
-    : getDesktopInsets(viewportHeight);
-  const ViewTimelineCtor = getViewTimelineCtor();
-
-  if (!ViewTimelineCtor) {
-    return;
-  }
-
-  const timeline = new ViewTimelineCtor({
-    axis: "block",
-    inset: `${topInset}px ${bottomInset}px`,
-    subject,
-  });
-
-  const animateWithTimeline = (
-    element: Element,
-    keyframes: Keyframe[] | PropertyIndexedKeyframes,
-    rangeStart = "contain 0%",
-    rangeEnd = "contain 100%",
-  ) => {
-    const animation = element.animate(keyframes, {
-      fill: "both",
-      easing: "linear",
-      rangeEnd,
-      rangeStart,
-      timeline,
-    } as KeyframeAnimationOptions & { rangeEnd: string; rangeStart: string; timeline: unknown }) as WhyNativeAnimation;
-
-    context.nativeAnimations.push(animation);
-  };
-
-  animateWithTimeline(context.stageFrame, [
-    { transform: "translate3d(0, 0, 0)" },
-    { transform: `translate3d(0, ${getPanelTravel(context.visualTrack, context.stageFrame).toFixed(2)}px, 0)` },
-  ]);
-
-};
-
 export const setupWhyItMattersStage = () => {
   const roots = Array.from(document.querySelectorAll<HTMLElement>("[data-why-progress-root]"));
 
@@ -600,7 +491,6 @@ export const setupWhyItMattersStage = () => {
         stage,
         stageFrame,
         visualTrack,
-        nativeAnimations: [] as WhyNativeAnimation[],
       };
     })
     .filter((context): context is WhyStageContext => context !== null);
@@ -649,35 +539,15 @@ export const setupWhyItMattersStage = () => {
     setupScrollSlider(context, requestRender);
   });
 
-  stageContexts.forEach((context) => {
-    if (!isVisibleRoot(context.root)) {
-      return;
-    }
-
-    setupNativeStageAnimations(context);
-  });
-
   requestRender();
 
   window.addEventListener("scroll", requestRender, { passive: true });
-  const handleResize = () => {
-    stageContexts.forEach((context) => {
-      if (!isVisibleRoot(context.root)) {
-        clearNativeStageAnimations(context);
-        return;
-      }
-
-      setupNativeStageAnimations(context);
-    });
-
-    requestRender();
-  };
 
   window.addEventListener("resize", () => {
     if (ignoreResize()) {
       return;
     }
 
-    handleResize();
+    requestRender();
   });
 };
