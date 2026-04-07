@@ -242,11 +242,12 @@ const getDesktopProgress = (root: HTMLElement, stageFrame: HTMLElement) => {
   const baselineTravel = Math.max(topInset - baselineEndTop, viewportHeight * 0.58);
   const baselineFullProgressTop = topInset - baselineTravel;
   const frameHeight = stageFrame.getBoundingClientRect().height;
-  const startDelay = clamp(viewportHeight * 0.018, 12, 24);
-  const startTop = Math.max(viewportHeight - frameHeight - startDelay, topInset);
-  const travel = Math.max(startTop - baselineFullProgressTop, 1);
+  const rootPaddingTop = Number.parseFloat(window.getComputedStyle(root).paddingTop) || 0;
+  const startDelay = clamp(viewportHeight * 0.012, 8, 14);
+  const startRootTop = viewportHeight - frameHeight - startDelay - rootPaddingTop;
+  const travel = Math.max(startRootTop - baselineFullProgressTop, 1);
 
-  return clamp((startTop - rect.top) / travel, 0, 1);
+  return clamp((startRootTop - rect.top) / travel, 0, 1);
 };
 
 const getMobileStickyTop = (viewportHeight: number) =>
