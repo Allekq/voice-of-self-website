@@ -2123,9 +2123,6 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  transition:
-    width var(--motion-emphasis),
-    box-shadow var(--motion-standard);
   width: calc(var(--why-progress) * 100%);
 }
 
@@ -2141,7 +2138,6 @@
   position: absolute;
   top: 50%;
   transition:
-    left var(--motion-emphasis),
     transform var(--motion-standard),
     box-shadow var(--motion-standard);
   transform: translate(-50%, -50%);

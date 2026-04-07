@@ -345,16 +345,29 @@ const getClampedWindowScrollTarget = (target: number) => {
   return clamp(target, 0, maxScroll);
 };
 
+const scrollWindowImmediately = (top: number) => {
+  const html = document.documentElement;
+  const body = document.body;
+  const previousHtmlBehavior = html.style.scrollBehavior;
+  const previousBodyBehavior = body.style.scrollBehavior;
+
+  html.style.scrollBehavior = "auto";
+  body.style.scrollBehavior = "auto";
+  window.scrollTo({
+    behavior: "auto",
+    top,
+  });
+  html.style.scrollBehavior = previousHtmlBehavior;
+  body.style.scrollBehavior = previousBodyBehavior;
+};
+
 const scrollStageToProgress = (context: WhyStageContext, progress: number) => {
   syncDesktopTrackLayout(context.root, context.visualTrack, context.stageFrame);
   syncMobileStickyLayout(context.visualTrack, context.stageFrame);
   const { start, end } = getScrollRange(context.root, context.visualTrack, context.stageFrame);
   const target = start + clamp(progress, 0, 1) * (end - start);
 
-  window.scrollTo({
-    behavior: "auto",
-    top: getClampedWindowScrollTarget(target),
-  });
+  scrollWindowImmediately(getClampedWindowScrollTarget(target));
 };
 
 const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) => {
