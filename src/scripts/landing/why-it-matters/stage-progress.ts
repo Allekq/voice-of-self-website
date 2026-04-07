@@ -256,6 +256,21 @@ const updateScrollSlider = (stage: HTMLElement, progress: number) => {
   slider.setAttribute("aria-valuetext", `${getSolvedCount(progress)} of ${whyItMattersSolvedGoal} worries resolved`);
 };
 
+const applyStageProgress = (
+  stage: HTMLElement,
+  stageFrame: HTMLElement,
+  visualTrack: HTMLElement,
+  progress: number,
+) => {
+  stage.style.setProperty("--why-progress", progress.toFixed(3));
+  stage.classList.toggle("is-stage-active", progress > 0.04);
+
+  updateStageFrame(visualTrack, stageFrame, progress);
+  updateRelicCards(stage, progress);
+  updateStageMetrics(stage, progress);
+  updateScrollSlider(stage, progress);
+};
+
 const getClampedWindowScrollTarget = (target: number) => {
   const documentHeight = Math.max(
     document.documentElement.scrollHeight,
@@ -264,6 +279,32 @@ const getClampedWindowScrollTarget = (target: number) => {
   const maxScroll = Math.max(documentHeight - window.innerHeight, 0);
 
   return clamp(target, 0, maxScroll);
+};
+
+const scrollWindowInstant = (target: number) => {
+  const rootStyle = document.documentElement.style;
+  const bodyStyle = document.body?.style;
+  const previousRootScrollBehavior = rootStyle.scrollBehavior;
+  const previousBodyScrollBehavior = bodyStyle?.scrollBehavior ?? "";
+
+  try {
+    rootStyle.scrollBehavior = "auto";
+
+    if (bodyStyle) {
+      bodyStyle.scrollBehavior = "auto";
+    }
+
+    window.scrollTo({
+      behavior: "auto",
+      top: target,
+    });
+  } finally {
+    rootStyle.scrollBehavior = previousRootScrollBehavior;
+
+    if (bodyStyle) {
+      bodyStyle.scrollBehavior = previousBodyScrollBehavior;
+    }
+  }
 };
 
 const getDesktopScrollRange = (root: HTMLElement, stageFrame: HTMLElement): WhyScrollRange => {
@@ -340,14 +381,14 @@ const scrollStageToProgress = (context: WhyStageContext, progress: number) => {
   const clampedProgress = clamp(progress, 0, 1);
   const range = getStageScrollRange(context.root, context.visualTrack, context.stageFrame);
   const target = getClampedWindowScrollTarget(range.startScrollY + clampedProgress * range.travel);
+  const appliedProgress = clamp((target - range.startScrollY) / Math.max(range.travel, 1), 0, 1);
 
-  window.scrollTo({
-    behavior: "auto",
-    top: target,
-  });
+  scrollWindowInstant(target);
+
+  return appliedProgress;
 };
 
-const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) => {
+const setupScrollSlider = (context: WhyStageContext) => {
   const slider = context.stage.querySelector<HTMLElement>("[data-why-scroll-slider]");
 
   if (!slider || slider.dataset.whyScrollEnhanced === "true") {
@@ -372,8 +413,8 @@ const setupScrollSlider = (context: WhyStageContext, requestRender: () => void) 
   };
 
   const commitProgress = (nextProgress: number) => {
-    scrollStageToProgress(context, nextProgress);
-    requestRender();
+    const appliedProgress = scrollStageToProgress(context, nextProgress);
+    applyStageProgress(context.stage, context.stageFrame, context.visualTrack, appliedProgress);
   };
 
   const releasePointer = (pointerId?: number) => {
@@ -477,13 +518,7 @@ const updateStageProgress = (
     : getDesktopScrollRange(root, stageFrame);
   const progress = clamp((window.scrollY - range.startScrollY) / Math.max(range.travel, 1), 0, 1);
 
-  stage.style.setProperty("--why-progress", progress.toFixed(3));
-  stage.classList.toggle("is-stage-active", progress > 0.04);
-
-  updateStageFrame(visualTrack, stageFrame, progress);
-  updateRelicCards(stage, progress);
-  updateStageMetrics(stage, progress);
-  updateScrollSlider(stage, progress);
+  applyStageProgress(stage, stageFrame, visualTrack, progress);
 };
 
 const clearNativeStageAnimations = (context: WhyStageContext) => {
@@ -600,7 +635,7 @@ export const setupWhyItMattersStage = () => {
   };
 
   stageContexts.forEach((context) => {
-    setupScrollSlider(context, requestRender);
+    setupScrollSlider(context);
   });
 
   if (!reducedMotion) {
