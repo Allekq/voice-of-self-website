@@ -6,8 +6,8 @@ description: Voice of Self privacy policy.
 
 # Voice Of Self Privacy Policy
 
-Effective Date: 2026-04-04  
-Version: 1.2.2
+Effective Date: 2026-04-13  
+Version: 1.2.5
 
 This Privacy Policy explains how Voice Of Self (also referred to in some parts
 of the product as "Closure") processes personal information when you use the
@@ -17,7 +17,13 @@ other services that link to this policy.
 Voice Of Self is provided by Aleksander Jałtuszyk ("Developer", "we", "us", or
 "our").
 
-Contact: alekgameshelp2@gmail.com
+Contact:
+
+- Email: `alekgameshelp2@gmail.com`
+- Telephone: `+48 73 2099027`
+- Mailing address: `Aleksander Jałtuszyk, Skrytka Pocztowa 59, UP Warszawa 93, 02-800, Warszawa`
+- Support page: `https://voiceofself.life/support/`
+- Country: Poland
 
 ## Summary Of Key Points
 
@@ -42,6 +48,10 @@ Contact: alekgameshelp2@gmail.com
 - Apple handles billing, RevenueCat handles subscription syncing, Firebase /
   Google handles authentication and backend infrastructure, Tally handles the
   website waitlist form, and GitHub Pages hosts the public site.
+- If you grant notification permission, the app may schedule local device
+  reminders, including reminders before an account-mode free trial ends or
+  before a paid App Store subscription period ends. These reminders are
+  generated on your device.
 - If you use the in-app support or issue-report flow, the email draft may
   include recent app logs plus device, app-version, and error details that you
   choose to send.
@@ -166,6 +176,12 @@ subscription and transaction status information from Apple or RevenueCat, such
 as product identifiers, entitlement status, renewal state, and related
 timestamps, but we do not receive or store your full payment card number.
 
+The app may use subscription status already available to it to schedule a
+local device reminder about 24 hours before an account-mode free trial ends or
+before a paid App Store subscription period ends. This reminder uses the app's
+existing notification permission, is generated on your device, and does not
+add new backend data collection, retention, deletion, or third-party sharing.
+
 ### 1.7 Information processed automatically
 
 When you use the website, sign in, call backend features, or use subscription
@@ -187,8 +203,11 @@ If you use the app, it may also request access to features such as:
 - Your microphone
 - Speech recognition or transcription-related capabilities
 - Local storage used for recordings, exports, imports, and app data
-- Notifications, so the app can schedule local reminders or local
-  processing-status notifications if you enable those features
+- Notifications, so the app can schedule local reminders and local
+  processing-status notifications, including reminders about an account-mode
+  free trial or paid App Store subscription period ending when notification
+  permission is available, even if you have not enabled a daily reminder
+  feature
 
 You can control device permissions in iOS Settings.
 
@@ -532,8 +551,8 @@ purposes permitted by applicable law.
 
 ### 12.3 Exercising your rights
 
-To exercise applicable rights, contact us at `alekgameshelp2@gmail.com` or use
-the support page at `https://voiceofself.life/support/`.
+To exercise applicable rights, contact us using the details in
+[Section 14](#14-how-can-you-contact-us-about-this-policy).
 
 ### 12.4 Verification, authorized agents, and appeals
 
@@ -543,7 +562,8 @@ applicable law allows, you may use an authorized agent to submit a request on
 your behalf, and we may ask for proof of that authorization.
 
 If we deny a request and applicable law gives you an appeal right, you may
-appeal by emailing `alekgameshelp2@gmail.com`.
+appeal by emailing `alekgameshelp2@gmail.com` or by using the other contact
+details in [Section 14](#14-how-can-you-contact-us-about-this-policy).
 
 We do not currently disclose personal information to third parties for their
 own direct-marketing purposes.
@@ -560,6 +580,8 @@ If you have questions or comments about this Privacy Policy, you may contact us
 at:
 
 - Email: `alekgameshelp2@gmail.com`
+- Telephone: `+48 73 2099027`
+- Mailing address: `Aleksander Jałtuszyk, Skrytka Pocztowa 59, UP Warszawa 93, 02-800, Warszawa`
 - Support page: `https://voiceofself.life/support/`
 - Country: Poland
 
@@ -600,7 +622,7 @@ parties under their own obligations.
 ### 15.3 Waitlist and support data
 
 To request review, correction, or deletion of backend-linked data, waitlist
-data, or support-request data, contact us at `alekgameshelp2@gmail.com` or use
-the support page at `https://voiceofself.life/support/`. If you contacted us
-by email, you may also need to delete copies from your own mailbox, sent-mail
-folder, or other email systems you used.
+data, or support-request data, contact us using the details in
+[Section 14](#14-how-can-you-contact-us-about-this-policy). If you contacted
+us by email, you may also need to delete copies from your own mailbox,
+sent-mail folder, or other email systems you used.

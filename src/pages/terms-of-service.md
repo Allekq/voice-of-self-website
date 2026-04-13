@@ -6,8 +6,8 @@ description: Voice of Self terms of service.
 
 # Voice Of Self Terms Of Service
 
-Effective Date: 2026-04-05  
-Version: 1.2.2
+Effective Date: 2026-04-13  
+Version: 1.2.4
 
 These Terms of Service ("Terms") govern your use of Voice Of Self (also referred
 to in some parts of the product as "Closure"), including the iOS app, the
@@ -20,8 +20,8 @@ Voice Of Self is provided by Aleksander Jałtuszyk ("Developer", "we", "us", or
 Contact:
 
 - Email: `alekgameshelp2@gmail.com`
-- Telephone: `__________`
-- Mailing address: `__________`
+- Telephone: `+48 73 2099027`
+- Mailing address: `Aleksander Jałtuszyk, Skrytka Pocztowa 59, UP Warszawa 93, 02-800, Warszawa`
 - Support page: `https://voiceofself.life/support/`
 - Country: Poland
 
@@ -165,6 +165,14 @@ billing, renewals, cancellations, and refunds under Apple's policies.
 
 Deleting your app account does not automatically cancel an App Store
 subscription. You must manage cancellation through Apple.
+
+The app may also try to schedule a local device reminder before an upcoming
+eligible free-trial end or subscription-period end if you have granted
+notification permission. This reminder is a courtesy, best-effort feature
+only, depends on notification permission, app/device conditions, and technical
+availability, and may not be delivered on time or at all. You remain
+responsible for reviewing, managing, and canceling subscriptions through
+Apple.
 
 To the fullest extent permitted by law:
 

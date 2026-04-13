@@ -90,9 +90,20 @@ Closure is a privacy-first iOS reflection app built with SwiftUI.
 - If the task changes collected data, retention, deletion, account behavior, or other legal-facing product behavior, make sure the legal docs are updated as part of the same change.
 - If a change likely affects legal disclosures but legal edits are out of scope, pause and ask the user whether the legal docs should be updated now. If the runtime supports approval-gated commands, use the reminder prompt described in `skills/legal-update-sync/CHECKLIST.md` so the user has to acknowledge the follow-up.
 
+## Public Identity And Contact Changes
+
+- If a task changes support/contact email, phone number, mailing address, legal/business name, support URL, privacy-policy URL, website domain, or hosted legal-manifest URL, open `skills/change-impact-map/BIG.md` before editing or declaring the task done.
+- Use `skills/change-impact-map/SKILL.md` as the workflow entry point for these cross-repo contact/business-identity changes.
+- Treat these changes as potentially spanning:
+  - website repo files
+  - `/Users/alekj/Documents/GitHub/closure-app`
+  - App Store Connect / Apple Developer account state that is not stored in git
+- If the change also touches legal text, follow `skills/legal-update-sync/CHECKLIST.md` in the same pass.
+
 ## Repo Skill Sources
 
 - Repo-local skill/source guides live under `skills/`.
+- Use `skills/change-impact-map/` for cross-repo email / phone / address / legal-name / public-URL change mapping.
 - Use `skills/landing-page-workflow/` for landing-page structure, motion, and modularity work.
 - Use `skills/legal-update-sync/` for privacy-policy / terms coordination work.
 - Use `skills/user-provided-images/` when a site change needs a new image asset and the user may want to create or provide the image directly.

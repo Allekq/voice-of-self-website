@@ -83,6 +83,13 @@ If a change makes the code harder to find, harder to rename, or harder to reuse,
 - If data collection, deletion, retention, account, or subscription behavior changes, legal text likely needs updating in the same task.
 - If the task probably requires a legal update but legal edits are not being made in the same pass, stop and ask the user whether the legal docs should be updated now. If the runtime supports approval-gated commands, prefer using the reminder prompt documented in `skills/legal-update-sync/CHECKLIST.md`.
 
+## Public Identity And Contact Workflow
+
+- If a task changes support/contact email, phone number, mailing address, legal/business name, support URL, privacy-policy URL, website domain, or hosted legal-manifest URL, read `skills/change-impact-map/BIG.md` before finishing.
+- Use `skills/change-impact-map/SKILL.md` as the workflow entry point for these cross-repo contact/business-identity changes.
+- Treat these tasks as potentially spanning the website repo, `/Users/alekj/Documents/GitHub/closure-app`, and App Store Connect / Apple Developer account state outside git.
+- If the change also updates legal text, follow `skills/legal-update-sync/CHECKLIST.md` in the same pass.
+
 ## Validation Checklist
 
 Run these after meaningful site changes:
@@ -98,5 +105,6 @@ For local preview:
 
 If you need repeatable workflow guidance, see:
 
+- `skills/change-impact-map/SKILL.md`
 - `skills/landing-page-workflow/SKILL.md`
 - `skills/legal-update-sync/SKILL.md`
