@@ -6,8 +6,8 @@ description: Voice of Self privacy policy.
 
 # Voice Of Self Privacy Policy
 
-Effective Date: 2026-04-13  
-Version: 1.2.5
+Effective Date: 2026-04-30  
+Version: 1.2.8
 
 This Privacy Policy explains how Voice Of Self (also referred to in some parts
 of the product as "Closure") processes personal information when you use the
@@ -31,6 +31,10 @@ Contact:
   on your device by default.
 - Local app data can also be copied into export files, Files/iCloud locations,
   or device backups if you create or enable them.
+- In limited developer/testing configurations, optional diagnostic capture of
+  AI interactions may be available to help investigate failures. These
+  diagnostics are intended for temporary troubleshooting and are not intended
+  to be persisted as backend account records.
 - If you use account, subscription, managed AI, live-question, waitlist, or
   support features, some information leaves your device so those features can
   work.
@@ -287,7 +291,7 @@ needed to operate the service. Categories include:
 
 - Firebase / Google for authentication, backend functions, infrastructure, and
   App Check related protection
-- Google Vertex AI / Gemini for managed account-mode AI processing
+- Google Vertex AI / Gemini and Groq for managed account-mode AI processing
 - Apple for Sign in with Apple, App Store billing, DeviceCheck / App Attest,
   and transcription-related services when Apple services are used
 - RevenueCat for subscription syncing and entitlement management
@@ -324,9 +328,10 @@ Yes. Voice Of Self includes AI-assisted features such as:
 ### 5.1 Managed account-mode AI
 
 If you use account mode, content needed to fulfill the request may pass through
-our Firebase backend to Google Vertex AI / Gemini. This may include transcript
-text and, in some flows, live transcript excerpts while a recording session is
-still in progress.
+our Firebase backend to the managed AI provider selected by our backend
+configuration for that workflow, such as Google Vertex AI / Gemini or Groq.
+This may include transcript text and, in some flows, live transcript excerpts
+while a recording session is still in progress.
 
 Our systems are designed so raw audio, raw transcript text, and AI output are
 not stored as persistent backend account records after the request is
@@ -334,7 +339,11 @@ fulfilled. We do, however, retain limited security, subscription, diagnostic,
 and usage/accounting metadata such as token counts, workflow labels,
 timestamps, processing duration, and derived cost. Transient handling,
 provider-side processing, retries, abuse/security tooling, and short-lived
-logs or caches may still occur as part of ordinary service operation.
+logs or caches may still occur as part of ordinary service operation. Where a
+managed provider offers privacy or retention controls, such as reduced or
+disabled retention settings, we may enable those operational controls, but
+third-party provider handling is still governed by that provider's service,
+privacy, and infrastructure terms.
 
 ### 5.2 Custom-provider mode
 
@@ -345,13 +354,15 @@ the feature.
 
 ### 5.3 On-device and Apple-assisted processing
 
-The app prefers on-device processing when available. Depending on the feature
-and your device capability:
+Depending on the feature and your device capability:
 
 - Transcription may run on-device or with Apple speech / transcription
   services.
-- Some live-question or related AI features may use Apple Intelligence
-  on-device if you enable that provider and your device supports it.
+- Live-question AI normally uses the provider route you selected in the app,
+  such as managed account mode or your custom provider.
+- If Apple Intelligence is enabled in app settings and available on your
+  device, live-question requests may retry on-device as a fallback after the
+  selected provider fails.
 
 ### 5.4 How to limit or avoid AI processing
 
@@ -611,6 +622,12 @@ to remove:
 - Usage records and usage-event records tied to your account
 - Any user-owned Cloud Storage objects stored under your user prefix, if such
   objects exist
+
+If a backend, storage, or provider deletion step cannot be completed after
+retrying, the app may leave your sign-in account in place, tell you which
+cleanup steps still need a retry, and let you try the delete-account flow
+again later instead of silently finalizing account removal while cleanup is
+still incomplete.
 
 Deleting your account does not remove journals, transcripts, recordings, or
 other content that already exists only on your device. Deleting your account

@@ -1,13 +1,14 @@
 ---
-layout: ../layouts/SiteLayout.astro
+
+## layout: ../layouts/SiteLayout.astro
+
 title: Terms of Service | Voice of Self
 description: Voice of Self terms of service.
----
 
 # Voice Of Self Terms Of Service
 
-Effective Date: 2026-04-13  
-Version: 1.2.4
+Effective Date: 2026-04-30  
+Version: 1.2.7
 
 These Terms of Service ("Terms") govern your use of Voice Of Self (also referred
 to in some parts of the product as "Closure"), including the iOS app, the
@@ -42,9 +43,9 @@ By using the Service, you represent and warrant that:
 - You have the legal capacity to enter into these Terms.
 - Any information you provide to us is accurate and kept reasonably current.
 - If you use the Service on behalf of a company, organization, or other entity,
-  you have authority to bind that entity to these Terms.
+you have authority to bind that entity to these Terms.
 - You are not prohibited from using the Service under applicable export-control,
-  sanctions, or similar laws.
+sanctions, or similar laws.
 
 ## 2. License Scope
 
@@ -64,7 +65,7 @@ If you access the app through Apple, you acknowledge and agree that:
 - These Terms are between you and us, not Apple.
 - Apple has no obligation to provide maintenance or support for the app.
 - Apple and its subsidiaries are third-party beneficiaries of these Terms as
-  they relate to the app and may enforce them against you.
+they relate to the app and may enforce them against you.
 - You must comply with any applicable third-party terms when using the Service.
 
 ## 4. What The Service Does
@@ -100,11 +101,11 @@ Do not use the Service:
 - As an emergency service.
 - To diagnose, treat, monitor, or prevent any health or mental-health condition.
 - To make decisions that could materially affect a person's health, safety,
-  liberty, legal rights, employment, credit, housing, insurance, education, or
-  access to essential services.
+liberty, legal rights, employment, credit, housing, insurance, education, or
+access to essential services.
 - In any high-risk or safety-critical context where errors, delay, or failure
-  could cause death, personal injury, severe emotional harm, or significant
-  property or environmental damage.
+could cause death, personal injury, severe emotional harm, or significant
+property or environmental damage.
 
 If you are in crisis or believe you may harm yourself or someone else, contact
 local emergency services or a qualified crisis resource immediately.
@@ -124,11 +125,11 @@ You are responsible for:
 
 - Maintaining the confidentiality and security of your credentials.
 - Controlling access to your devices, backups, exported files, and email
-  accounts.
+accounts.
 - Keeping local copies, exports, and backups you want to preserve.
 - All activity that occurs through your account or devices, whether or not
-  authorized by you, except to the extent caused by our breach of applicable
-  law.
+authorized by you, except to the extent caused by our breach of applicable
+law.
 
 You may not share credentials, transfer account access, or create accounts
 under false pretenses or in a way that circumvents subscription, rate, or usage
@@ -149,7 +150,7 @@ your device to that provider. You are solely responsible for:
 - Your use of that provider.
 - The provider's terms, policies, retention, and security practices.
 - All provider-side charges, errors, refusals, outages, and compliance
-  obligations.
+obligations.
 
 We may set, change, or enforce usage caps, token limits, concurrency limits,
 rate limits, safety filters, or account restrictions at any time to protect the
@@ -174,16 +175,24 @@ availability, and may not be delivered on time or at all. You remain
 responsible for reviewing, managing, and canceling subscriptions through
 Apple.
 
+Billing, entitlement, and access states can occasionally be delayed,
+inconsistent, unavailable, or incorrect due to platform, provider, network, or
+system faults (for example, webhook delays, provider outages, malformed
+responses, temporary backend failures, or app/client sync issues). To the
+fullest extent permitted by law, we are not liable for temporary
+misclassification of subscription or feature access, delayed status updates, or
+temporary inability to use paid features while such issues are being resolved.
+
 To the fullest extent permitted by law:
 
 - We do not owe refunds, credits, or price protection except where required by
-  Apple or applicable law.
+Apple or applicable law.
 - We may change paid features, plan structure, usage limits, or pricing with
-  prospective effect for valid reasons, including changes in law, fraud or
-  abuse risk, security, provider or infrastructure cost, technical constraints,
-  product changes, or commercial viability.
+prospective effect for valid reasons, including changes in law, fraud or
+abuse risk, security, provider or infrastructure cost, technical constraints,
+product changes, or commercial viability.
 - Promotional access, credits, manual overrides, or goodwill exceptions are
-  discretionary, may be revoked, and do not create an ongoing entitlement.
+discretionary, may be revoked, and do not create an ongoing entitlement.
 
 If Apple, RevenueCat, or our systems indicate that you are not entitled to paid
 access, we may limit or disable the affected features until the entitlement
@@ -195,31 +204,31 @@ You agree not to, and not to help others to:
 
 - Use the Service unlawfully or in violation of another person's rights.
 - Use the Service to facilitate violence, self-harm, abuse, harassment, hate,
-  fraud, deception, stalking, exploitation, or other harmful conduct.
+fraud, deception, stalking, exploitation, or other harmful conduct.
 - Upload, submit, or process content that you do not have the right to use.
 - Use the Service with sensitive third-party information or minors' information
-  without all rights, consents, and notices required by law.
+without all rights, consents, and notices required by law.
 - Interfere with, damage, disable, overburden, or disrupt the Service or its
-  security, integrity, moderation, rate limiting, or access-control systems.
+security, integrity, moderation, rate limiting, or access-control systems.
 - Circumvent usage limits, safety systems, account restrictions, pricing,
-  entitlement checks, or other technical or business controls.
+entitlement checks, or other technical or business controls.
 - Reverse engineer, decompile, disassemble, decode, adapt, scrape, benchmark,
-  mirror, or extract the Service, except where applicable law clearly permits
-  that activity despite this restriction.
+mirror, or extract the Service, except where applicable law clearly permits
+that activity despite this restriction.
 - Use bots, scripts, automated tools, or other non-human means to access the
-  Service in a way we have not authorized.
+Service in a way we have not authorized.
 - Copy, reproduce, sell, sublicense, rent, lease, distribute, publish, or
-  commercially exploit the Service except as expressly allowed by us in
-  writing.
+commercially exploit the Service except as expressly allowed by us in
+writing.
 - Use the Service to build, train, or improve a competing service through
-  unauthorized extraction, systematic testing, or misuse of the Service.
+unauthorized extraction, systematic testing, or misuse of the Service.
 - Publicly disclose benchmarks, stress-test results, or similar performance or
-  comparative analysis about the Service without our prior written consent.
+comparative analysis about the Service without our prior written consent.
 - Misrepresent your identity, affiliation, or authority, or impersonate any
-  person or entity.
+person or entity.
 - Upload malware, spyware, surveillance code, or other harmful materials.
 - Use the Service in any way that creates disproportionate cost, traffic, or
-  operational burden for us or our providers.
+operational burden for us or our providers.
 
 ## 10. Your Content, Feedback, And Permissions
 
@@ -230,9 +239,9 @@ submissions, and similar materials ("Your Content").
 You are solely responsible for Your Content and represent and warrant that:
 
 - You have all rights needed to create, submit, process, and use it through the
-  Service.
+Service.
 - Your Content and your use of it do not violate law, these Terms, or any third
-  party's rights.
+party's rights.
 - Your Content is not intentionally false, deceptive, malicious, or abusive.
 
 You grant us and our service providers a worldwide, non-exclusive,
@@ -242,7 +251,7 @@ Your Content only as reasonably necessary to:
 
 - Provide and operate the Service.
 - Route requests to authentication, billing, hosting, storage, and AI-service
-  providers.
+providers.
 - Protect security, prevent abuse, enforce these Terms, and troubleshoot issues.
 - Comply with law and respond to valid legal process.
 - Provide support you request.
@@ -265,10 +274,10 @@ To the fullest extent permitted by law, we may without prior notice:
 - Warn, suspend, restrict, rate-limit, or terminate access.
 - Remove, block, refuse, or disable content or features.
 - Preserve, review, or disclose information where we reasonably believe doing
-  so is necessary for security, fraud prevention, legal compliance, or rights
-  protection.
+so is necessary for security, fraud prevention, legal compliance, or rights
+protection.
 - Cooperate with regulators, law enforcement, platforms, payment processors,
-  hosting providers, AI providers, or other partners.
+hosting providers, AI providers, or other partners.
 
 We have no obligation to review, pre-screen, or restore any content, account,
 or feature.
@@ -293,6 +302,11 @@ described in the Privacy Policy, but it does not automatically cancel an App
 Store subscription and does not delete copies that exist only on your device,
 in your backups, in exports, or in third-party systems that maintain their own
 records.
+
+If a backend, storage, or provider cleanup step cannot be completed after
+reasonable retries, we may keep the sign-in account available so deletion can
+be retried, and the app may show which cleanup steps still failed, rather than
+finalizing account removal while backend cleanup is still incomplete.
 
 ## 13. Third-Party Services And Links
 
@@ -327,11 +341,13 @@ WITHOUT LIMITING THE ABOVE, WE DO NOT WARRANT THAT:
 
 - THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
 - ANY FEATURE, MODEL, PROVIDER, OUTPUT, OR SAFETY CHECK WILL ALWAYS BE
-  AVAILABLE OR WORK AS EXPECTED.
+AVAILABLE OR WORK AS EXPECTED.
+- BUGS, DEFECTS, OUTAGES, DATA-PROCESSING FAILURES, OR DEGRADED USER
+EXPERIENCE WILL NOT OCCUR.
 - ANY OUTPUT WILL BE ACCURATE, COMPLETE, SAFE, OR SUITABLE FOR YOUR NEEDS.
 - ANY DEFECT WILL BE CORRECTED.
 - THE SERVICE OR FILES SENT THROUGH IT WILL BE FREE OF VIRUSES OR OTHER
-  HARMFUL COMPONENTS.
+HARMFUL COMPONENTS.
 
 ## 16. Limitation Of Liability
 
@@ -347,7 +363,7 @@ CLAIMS ARISING OUT OF OR RELATING TO THE SERVICE OR THESE TERMS WILL NOT EXCEED
 THE GREATER OF:
 
 - THE TOTAL AMOUNT YOU PAID TO US FOR THE SERVICE IN THE 12 MONTHS BEFORE THE
-  EVENT GIVING RISE TO THE CLAIM; OR
+EVENT GIVING RISE TO THE CLAIM; OR
 - EUR 100
 
 THIS LIMITATION APPLIES REGARDLESS OF THE FORM OF ACTION AND EVEN IF ANY
@@ -386,7 +402,7 @@ reasonably believe:
 - Your use causes disproportionate cost or burden.
 - We are required to do so by a platform, service provider, law, or regulator.
 - Continuing to offer the Service or a feature is no longer commercially,
-  technically, or operationally viable.
+technically, or operationally viable.
 
 We may also discontinue all or part of the Service at any time.
 
