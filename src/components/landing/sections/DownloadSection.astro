@@ -1,0 +1,20 @@
+---
+import { siteConfig } from "../../../config/site";
+import AppStoreButton from "../ui/AppStoreButton.astro";
+import SectionShell from "../ui/SectionShell.astro";
+---
+
+<SectionShell id="contact" className="download-section">
+  <div class="download-callout landing-surface" data-reveal>
+    <h2 class="download-callout__title">Get started with Voice of Self today.</h2>
+    <p class="download-callout__body">
+      Download the app and start noticing the growth and resolved worries you would otherwise miss.
+    </p>
+    <div class="download-callout__actions">
+      <AppStoreButton />
+    </div>
+    <p class="download-callout__caption">
+      Need help? <a href={siteConfig.supportHref}>Support is available via email</a>.
+    </p>
+  </div>
+</SectionShell>

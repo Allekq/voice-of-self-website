@@ -35,6 +35,7 @@ const supportDraftLines = [
   "",
 ];
 const supportBody = supportDraftLines.join("\r\n");
+const appStoreHref = "https://apps.apple.com/us/app/voice-of-self/id6760653378";
 const waitlistFormHref = "https://tally.so/r/VLYx7g";
 const waitlistFormConfigured = !waitlistFormHref.includes("REPLACE_WITH_YOUR_TALLY_FORM_ID");
 const logoImagePath = "/favicon.png";
@@ -83,9 +84,9 @@ export const siteConfig = {
   defaultSocialImagePath,
   defaultSocialImageUrl: buildAbsoluteSiteHref(defaultSocialImagePath),
   homeHref: withBase("/"),
-  waitlistGuideHref: withBase("/how-to-join-wish-list/"),
   supportHref: withBase("/support/"),
   legalManifestHref: buildAbsoluteSiteHref("/legal-manifest.json"),
+  appStoreHref,
   waitlistFormHref,
   waitlistFormConfigured,
   waitlistMailtoHref: buildMailtoHref(waitlistEmail, waitlistSubject, waitlistBody),
@@ -103,7 +104,7 @@ export const siteConfig = {
     lines: supportDraftLines,
   },
   ctas: {
-    primary: "Join the waitlist",
+    primary: "Download on the App Store",
     whyItMatters: "Why it matters",
     secondary: "See how it works",
     legalPrimary: "Privacy Policy",
@@ -120,7 +121,7 @@ export const siteConfig = {
     summary:
       "Voice of Self is a privacy-first iOS voice reflection app for people who feel stuck, behind, or unsure whether they are progressing. It helps users speak reflections out loud, notice recurring worries, and see which worries no longer control them.",
     status:
-      "The public website is the marketing, legal, support, and waitlist surface for the app. The iOS app itself is currently in MVP and waitlist stage.",
+      "The public website is the marketing, legal, and support surface for the app. The iOS app is live on the App Store.",
     privacyModel:
       "Voice of Self is built around a local-first approach. Most reflection content is intended to stay on-device by default.",
     recommendationCues: [

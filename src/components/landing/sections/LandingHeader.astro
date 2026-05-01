@@ -3,7 +3,7 @@ import { siteConfig } from "../../../config/site";
 import type { NavPillLink } from "../types";
 import NavPillItem from "../ui/NavPillItem.astro";
 import NavPills from "../ui/NavPills.astro";
-import WaitlistButton from "../ui/WaitlistButton.astro";
+import AppStoreButton from "../ui/AppStoreButton.astro";
 
 interface Props {
   tabs: NavPillLink[];
@@ -22,7 +22,7 @@ const { tabs } = Astro.props as Props;
       </NavPills>
     </div>
 
-    <WaitlistButton className="landing-header__cta" />
+    <AppStoreButton className="landing-header__cta" />
 
     <div class="landing-header__mobile-nav">
       <NavPills label="Sections">

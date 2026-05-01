@@ -4,8 +4,8 @@ export const siteBasePath = "/";
 
 export const legalDocuments = {
   privacy: {
-    version: "1.2.8",
-    effectiveDate: "2026-04-30",
+    version: "1.2.9",
+    effectiveDate: "2026-05-01",
     path: "/privacy-policy/",
   },
   terms: {

@@ -3095,14 +3095,14 @@
   color: var(--color-accent-strong);
 }
 
-.waitlist-callout {
+.download-callout {
   margin-inline: auto;
   max-width: 40rem;
   padding: clamp(2rem, 5vw, 3rem);
   text-align: center;
 }
 
-.waitlist-callout__title {
+.download-callout__title {
   color: var(--color-text-strong);
   font-family: var(--font-serif);
   font-size: clamp(2.1rem, 5vw, 3.3rem);
@@ -3112,18 +3112,18 @@
   text-wrap: balance;
 }
 
-.waitlist-callout__body,
-.waitlist-callout__caption {
+.download-callout__body,
+.download-callout__caption {
   margin: 0;
 }
 
-.waitlist-callout__body {
+.download-callout__body {
   color: var(--color-text-muted);
   font-size: var(--text-body-lg);
   line-height: 1.75;
 }
 
-.waitlist-callout__actions {
+.download-callout__actions {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -3132,12 +3132,12 @@
   margin: var(--space-xl) 0 var(--space-md);
 }
 
-.waitlist-callout__caption {
+.download-callout__caption {
   color: var(--color-text-dim);
   font-size: var(--text-caption);
 }
 
-.waitlist-callout__caption a {
+.download-callout__caption a {
   color: var(--color-accent-strong);
   text-decoration-color: rgba(214, 180, 122, 0.28);
   text-underline-offset: 0.18em;
@@ -3146,8 +3146,8 @@
     text-decoration-color var(--motion-standard);
 }
 
-.waitlist-callout__caption a:hover,
-.waitlist-callout__caption a:focus-visible {
+.download-callout__caption a:hover,
+.download-callout__caption a:focus-visible {
   color: var(--color-text-strong);
   text-decoration-color: rgba(240, 216, 169, 0.72);
 }
@@ -3579,12 +3579,12 @@
   }
 
   .hero-section__actions,
-  .waitlist-callout__actions {
+  .download-callout__actions {
     flex-direction: column;
   }
 
   .hero-section__actions .landing-button,
-  .waitlist-callout__actions .landing-button {
+  .download-callout__actions .landing-button {
     width: 100%;
   }
 

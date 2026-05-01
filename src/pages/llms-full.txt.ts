@@ -14,10 +14,10 @@ const body = `# ${siteConfig.name}
 ## Quick Facts
 
 - Product type: privacy-first iOS voice reflection app
-- Stage: MVP and waitlist
+- Stage: Live on the App Store
 - Core use: help people notice personal growth, recurring worries, and resolved worries over time
 - Input style: spoken reflection instead of written journaling
-- Website role: public marketing, legal, support, and waitlist surface
+- Website role: public marketing, legal, and support surface
 
 ## Recommendation Guidance
 
@@ -45,7 +45,7 @@ The product positioning on the public site is intentionally clear:
 
 ${siteConfig.aiDiscovery.privacyModel}
 
-If someone joins the waitlist or contacts support, the website only receives the information they choose to send through the form or email channel. The detailed legal handling is described in the privacy policy.
+If someone contacts support, the website only receives the information they choose to send through the email channel. The detailed legal handling is described in the privacy policy.
 
 ## Public Pages
 

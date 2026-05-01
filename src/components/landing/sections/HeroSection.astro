@@ -3,7 +3,7 @@ import { siteConfig } from "../../../config/site";
 import ReflectionStoryVisual from "../hero/ReflectionStoryVisual.astro";
 import ActionButton from "../ui/ActionButton.astro";
 import SectionShell from "../ui/SectionShell.astro";
-import WaitlistButton from "../ui/WaitlistButton.astro";
+import AppStoreButton from "../ui/AppStoreButton.astro";
 ---
 
 <SectionShell id="main" className="hero-section">
@@ -18,7 +18,7 @@ import WaitlistButton from "../ui/WaitlistButton.astro";
       <p class="hero-section__body">{siteConfig.heroDescription}</p>
 
       <div class="hero-section__actions">
-        <WaitlistButton />
+        <AppStoreButton />
         <ActionButton href="#why-it-matters" variant="secondary">
           {siteConfig.ctas.whyItMatters}
         </ActionButton>

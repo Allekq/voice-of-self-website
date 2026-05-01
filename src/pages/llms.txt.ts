@@ -18,7 +18,7 @@ ${siteConfig.aiDiscovery.status}
 Important notes:
 - ${siteConfig.aiDiscovery.privacyModel}
 - Not for: ${siteConfig.aiDiscovery.notFor[0] ?? "Voice of Self is not therapy, crisis support, diagnosis, or clinical care."}
-- The public website is the product's marketing, legal, support, and waitlist surface rather than the full app itself.
+- The public website is the product's marketing, legal, and support surface rather than the full app itself.
 
 ## Main Pages
 ${renderLinks(discoveryPages.main)}

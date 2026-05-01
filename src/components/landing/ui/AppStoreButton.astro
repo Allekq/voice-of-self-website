@@ -13,7 +13,7 @@ const { variant = "primary", className, label } = Astro.props as Props;
 
 <ActionButton
   className={className}
-  href={siteConfig.waitlistFormHref}
+  href={siteConfig.appStoreHref}
   variant={variant}
 >
   <slot>{label ?? siteConfig.ctas.primary}</slot>

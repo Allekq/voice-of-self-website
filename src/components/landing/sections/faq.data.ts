@@ -19,7 +19,7 @@ export const faqEntries: FaqEntry[] = [
   {
     question: "Is my data private?",
     answer:
-      "Yes. Voice of Self is built around a local-first approach, and the app is designed so your reflections stay under your control by default. If you choose to use the waitlist or support email, we only receive the information you send through those channels.",
+      "Yes. Voice of Self is built around a local-first approach, and the app is designed so your reflections stay under your control by default. If you contact support, we only receive the information you choose to share.",
   },
   {
     question: "Who is Voice of Self for?",
@@ -27,8 +27,8 @@ export const faqEntries: FaqEntry[] = [
       "It is for people who feel stuck, behind, or unsure whether they are really progressing. Especially anyone who wants a calmer, more honest relationship with their own progress and rarely stops to notice how far they have already come.",
   },
   {
-    question: "When will it launch?",
+    question: "How do I get the app?",
     answer:
-      "The MVP is still being shaped. If you want early access, the waitlist page gives you the current signup option plus email alternatives without requiring an account on the site.",
+      "Voice of Self is live on the App Store. You can download the app today and start reflecting immediately.",
   },
 ];

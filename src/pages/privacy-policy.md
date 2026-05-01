@@ -6,12 +6,12 @@ description: Voice of Self privacy policy.
 
 # Voice Of Self Privacy Policy
 
-Effective Date: 2026-04-30  
-Version: 1.2.8
+Effective Date: 2026-05-01  
+Version: 1.2.9
 
 This Privacy Policy explains how Voice Of Self (also referred to in some parts
 of the product as "Closure") processes personal information when you use the
-Voice Of Self iOS app, the public website, the waitlist, support channels, and
+Voice Of Self iOS app, the public website, support channels, and
 other services that link to this policy.
 
 Voice Of Self is provided by Aleksander Jałtuszyk ("Developer", "we", "us", or
@@ -35,7 +35,7 @@ Contact:
   AI interactions may be available to help investigate failures. These
   diagnostics are intended for temporary troubleshooting and are not intended
   to be persisted as backend account records.
-- If you use account, subscription, managed AI, live-question, waitlist, or
+- If you use account, subscription, managed AI, live-question, or
   support features, some information leaves your device so those features can
   work.
 - Journal content may include sensitive topics such as health, religion,
@@ -50,8 +50,8 @@ Contact:
   to that provider, and that provider's policy governs its handling of the
   data.
 - Apple handles billing, RevenueCat handles subscription syncing, Firebase /
-  Google handles authentication and backend infrastructure, Tally handles the
-  website waitlist form, and GitHub Pages hosts the public site.
+  Google handles authentication and backend infrastructure, and GitHub Pages
+  hosts the public site.
 - If you grant notification permission, the app may schedule local device
   reminders, including reminders before an account-mode free trial ends or
   before a paid App Store subscription period ends. These reminders are
@@ -135,9 +135,9 @@ Our backend usage and accounting records are intended to track access, limits,
 cost, fraud prevention, and service operations. They are not intended to store
 raw transcript text, raw audio, or AI response content as account records.
 
-### 1.4 Website waitlist, support, and contact submissions
+### 1.4 Website support and contact submissions
 
-If you join the waitlist on the public website or contact us through support or
+If you contact us through support or
 email channels, we may process:
 
 - Your email address
@@ -149,7 +149,7 @@ email channels, we may process:
   analysis-step context, and similar troubleshooting details included in the
   drafted email
 
-Website waitlist submissions may be collected through Tally. Support or direct
+Support or direct
 contact emails may be processed through your email provider and ours. Please
 avoid sending more personal information than needed when contacting support.
 
@@ -226,14 +226,13 @@ service, including:
 - Google or Apple sign-in providers
 - Apple App Store billing systems
 - RevenueCat subscription systems
-- Tally waitlist submissions
 - Website hosting or email providers
 
 ### 1.9 Children
 
 Voice Of Self is not intended for children under 16, and we do not knowingly
 seek to collect personal data from children under 16. If you believe a child
-under 16 has provided personal information through the app, waitlist, or
+under 16 has provided personal information through the app or
 support channels, contact us and we will investigate and, where appropriate,
 delete the information.
 
@@ -241,7 +240,7 @@ delete the information.
 
 We may process personal information to:
 
-- Provide the app, website, waitlist, and support channels
+- Provide the app, website, and support channels
 - Authenticate users and secure accounts
 - Provide managed AI-assisted reflections, summaries, live questions, and
   related features
@@ -256,7 +255,7 @@ We may process personal information to:
   context if you choose to use those flows
 - Apply safety checks and limit, defer, or block some AI features when content
   appears to present safety or policy risks
-- Respond to support requests and waitlist submissions
+- Respond to support requests
 - Send account, billing, security, safety, legal, or policy notices
 - Comply with law, defend legal rights, and protect users or the service
 
@@ -295,13 +294,12 @@ needed to operate the service. Categories include:
 - Apple for Sign in with Apple, App Store billing, DeviceCheck / App Attest,
   and transcription-related services when Apple services are used
 - RevenueCat for subscription syncing and entitlement management
-- Tally for the public website waitlist form
 - GitHub Pages / GitHub for website hosting
 - Your selected custom AI provider when you choose to use your own API key,
   including OpenAI, Google AI Studio, Vertex AI, or Anthropic
 - Other apps, Files locations, or storage providers you choose if you export
   or share a `.vos` backup file
-- Email providers involved in delivering or receiving support, waitlist, or
+- Email providers involved in delivering or receiving support or
   direct contact email
 
 We may also disclose personal information when reasonably necessary to:
@@ -462,12 +460,12 @@ records after fulfilling the request. Limited transient processing, in-memory
 handling, provider-side processing, retries, or short-lived system-level logs
 or caches may still occur as part of ordinary service operation.
 
-### 8.6 Waitlist and support data
+### 8.6 Support data
 
-Website waitlist or support submissions may remain until we no longer need them
-for early-access coordination you asked for, support follow-up,
-service-related replies, or legal/business recordkeeping, unless you ask us to
-delete them sooner and we are not legally required to keep them.
+Support submissions may remain until we no longer need them
+for support follow-up, service-related replies, or legal/business
+recordkeeping, unless you ask us to delete them sooner and we are not legally
+required to keep them.
 
 ## 9. How Do We Keep Your Information Safe?
 
@@ -503,8 +501,8 @@ Depending on where you live, you may have rights to:
   applicable law grants that right
 
 Because most journal content is stored locally on your device, you already
-control much of that data directly. For backend-linked account data, waitlist
-data, or support-request data, contact us using the details below.
+control much of that data directly. For backend-linked account data or
+support-request data, contact us using the details below.
 
 We do not currently use solely automated decision-making to make legal or
 similarly significant decisions about you in the sense used by privacy law.
@@ -537,7 +535,7 @@ Depending on how you use the service, we may process categories such as:
 
 - Identifiers, such as email address, Firebase user ID, provider identifiers,
   and IP address
-- Customer-record information, such as contact details and support or waitlist
+- Customer-record information, such as contact details and support
   submissions
 - Commercial information, such as subscription status, entitlements, and
   purchase-related metadata
@@ -636,10 +634,10 @@ necessarily remove transaction records, provider-side logs, or legally required
 records kept by Apple, RevenueCat, Google, email providers, or other third
 parties under their own obligations.
 
-### 15.3 Waitlist and support data
+### 15.3 Support data
 
-To request review, correction, or deletion of backend-linked data, waitlist
-data, or support-request data, contact us using the details in
+To request review, correction, or deletion of backend-linked data or
+support-request data, contact us using the details in
 [Section 14](#14-how-can-you-contact-us-about-this-policy). If you contacted
 us by email, you may also need to delete copies from your own mailbox,
 sent-mail folder, or other email systems you used.

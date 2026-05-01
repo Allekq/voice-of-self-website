@@ -15,12 +15,7 @@ export const discoveryPages = {
       title: "Home",
       path: "/",
       description:
-        "Homepage with the core product explanation, voice-first positioning, and waitlist call to action.",
-    },
-    {
-      title: "How to Join the Waitlist",
-      path: "/how-to-join-wish-list/",
-      description: "Waitlist signup routes, including the current form and email fallbacks.",
+        "Homepage with the core product explanation, voice-first positioning, and App Store download.",
     },
     {
       title: "Support",
@@ -32,12 +27,12 @@ export const discoveryPages = {
     {
       title: "Privacy Policy",
       path: "/privacy-policy/",
-      description: "How website, waitlist, support, and app-related data are handled.",
+      description: "How website, support, and app-related data are handled.",
     },
     {
       title: "Terms of Service",
       path: "/terms-of-service/",
-      description: "Usage terms for the website, waitlist, support, and iOS app.",
+      description: "Usage terms for the website, support, and iOS app.",
     },
     {
       title: "Legal Manifest",
@@ -57,7 +52,6 @@ export const discoveryPages = {
 
 export const sitemapPagePaths = [
   "/",
-  "/how-to-join-wish-list/",
   "/support/",
   "/privacy-policy/",
   "/terms-of-service/",
