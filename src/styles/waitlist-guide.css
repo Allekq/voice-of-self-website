@@ -124,6 +124,7 @@
 .waitlist-guide__detail--email {
   container-type: inline-size;
   flex: 1 1 auto;
+  max-width: 100%;
   min-width: 0;
 }
 
@@ -143,10 +144,8 @@
 
 .waitlist-guide__detail-value--email {
   font-size: clamp(1.05rem, 6cqi, 2rem);
-  overflow: hidden;
-  text-overflow: clip;
-  white-space: nowrap;
-  word-break: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .waitlist-guide__pill {
@@ -208,7 +207,12 @@
   }
 
   .waitlist-guide__card-head {
+    align-items: stretch;
     flex-direction: column;
+  }
+
+  .waitlist-guide__detail--email {
+    width: 100%;
   }
 
   .waitlist-guide__copy {

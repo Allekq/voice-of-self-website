@@ -292,11 +292,15 @@
   position: absolute;
   top: 0.18rem;
   transform: translateX(0);
+  transition: none;
+  width: 0;
+  z-index: 0;
+}
+
+.nav-pills.is-nav-ready .nav-pills__highlight {
   transition:
     transform var(--motion-standard),
     width var(--motion-standard);
-  width: 0;
-  z-index: 0;
 }
 
 .nav-pill {

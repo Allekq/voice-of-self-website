@@ -15,6 +15,7 @@ export const setupActiveSectionNav = () => {
 
     let activePill: HTMLElement | null = null;
     let frameId = 0;
+    let hasMeasured = false;
     let shouldForceSync = false;
     const ignoreResize = createCoarseViewportResizeGuard();
 
@@ -32,6 +33,11 @@ export const setupActiveSectionNav = () => {
 
       highlight.style.width = `${pill.offsetWidth}px`;
       highlight.style.transform = `translateX(${pill.offsetLeft}px)`;
+
+      if (!hasMeasured) {
+        hasMeasured = true;
+        window.requestAnimationFrame(() => root.classList.add("is-nav-ready"));
+      }
     };
 
     const syncFromScroll = (force = false) => {
@@ -67,6 +73,16 @@ export const setupActiveSectionNav = () => {
     });
 
     syncFromScroll(true);
+
+    if ("ResizeObserver" in window) {
+      const observer = new ResizeObserver(() => requestSync(true));
+      observer.observe(root);
+      pills.forEach((pill) => observer.observe(pill));
+    }
+
+    document.fonts?.ready.then(() => requestSync(true)).catch(() => {});
+    window.addEventListener("load", () => requestSync(true), { once: true });
+
     window.addEventListener("resize", () => {
       if (ignoreResize()) {
         return;
