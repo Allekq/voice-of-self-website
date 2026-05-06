@@ -1,0 +1,225 @@
+.visibility-page {
+  display: grid;
+  gap: clamp(var(--space-lg), 4vw, var(--space-2xl));
+}
+
+.visibility-page--hub {
+  gap: clamp(var(--space-xl), 4vw, var(--space-3xl));
+}
+
+.visibility-breadcrumb {
+  align-items: center;
+  color: var(--color-text-dim);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-body-sm);
+  gap: var(--space-xs);
+}
+
+.visibility-breadcrumb a {
+  color: var(--color-text-muted);
+  transition: color var(--motion-quick);
+}
+
+.visibility-breadcrumb a:hover,
+.visibility-breadcrumb a:focus-visible {
+  color: var(--color-text-strong);
+  outline: none;
+}
+
+.visibility-answer,
+.visibility-stack {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.visibility-hero,
+.visibility-panel,
+.visibility-card {
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+}
+
+.visibility-hero {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.visibility-hero h1,
+.visibility-panel h2,
+.visibility-card h2,
+.visibility-faq h3 {
+  color: var(--color-text-strong);
+  font-family: var(--font-serif);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.visibility-hero h1 {
+  font-size: clamp(2.45rem, 5.4vw, 4.7rem);
+  line-height: 0.98;
+  max-width: 13ch;
+}
+
+.visibility-panel h2 {
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  line-height: 1.08;
+}
+
+.visibility-card h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  line-height: 1.12;
+}
+
+.visibility-card h2 a {
+  transition: color var(--motion-quick);
+}
+
+.visibility-card h2 a:hover,
+.visibility-card h2 a:focus-visible {
+  color: var(--color-accent-strong);
+  outline: none;
+}
+
+.visibility-eyebrow,
+.visibility-card__kicker {
+  color: var(--color-accent);
+  font-size: var(--text-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.visibility-lead,
+.visibility-panel p,
+.visibility-card p,
+.visibility-check-list,
+.visibility-link-list {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.visibility-lead {
+  font-size: var(--text-body-lg);
+  line-height: 1.8;
+  max-width: 48rem;
+}
+
+.visibility-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.visibility-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.visibility-card,
+.visibility-panel {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.visibility-card {
+  align-content: start;
+}
+
+.visibility-card--wide {
+  max-width: var(--container-reading);
+}
+
+.visibility-panel {
+  line-height: 1.75;
+}
+
+.visibility-panel--split {
+  align-items: start;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+.visibility-check-list,
+.visibility-link-list {
+  display: grid;
+  gap: var(--space-sm);
+  padding-left: 1.2rem;
+}
+
+.visibility-check-list li::marker {
+  color: var(--color-accent);
+}
+
+.visibility-check-list--muted li::marker {
+  color: var(--color-blue);
+}
+
+.visibility-link-list a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-border-strong);
+  text-underline-offset: 0.2em;
+  transition:
+    color var(--motion-quick),
+    text-decoration-color var(--motion-quick);
+}
+
+.visibility-link-list a:hover,
+.visibility-link-list a:focus-visible {
+  color: var(--color-accent-strong);
+  outline: none;
+  text-decoration-color: currentColor;
+}
+
+.visibility-faq-list {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.visibility-faq {
+  border-top: 1px solid var(--color-divider);
+  display: grid;
+  gap: var(--space-xs);
+  padding-top: var(--space-md);
+}
+
+.visibility-faq:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.visibility-faq h3 {
+  font-size: var(--text-card-title);
+  line-height: 1.2;
+}
+
+@media (max-width: 58rem) {
+  .visibility-grid,
+  .visibility-panel--split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 42rem) {
+  .visibility-actions {
+    flex-direction: column;
+  }
+
+  .visibility-actions .landing-button {
+    width: 100%;
+  }
+
+  .visibility-hero h1 {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visibility-breadcrumb a,
+  .visibility-card h2 a,
+  .visibility-link-list a {
+    transition: none;
+  }
+}

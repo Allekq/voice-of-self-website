@@ -1,0 +1,26 @@
+---
+import { visibilityUpdateHub, visibilityUpdatePosts } from "../../config/visibility";
+import { withBase } from "../../lib/paths";
+---
+
+<div class="visibility-page visibility-page--hub">
+  <section class="visibility-hero landing-surface">
+    <p class="visibility-eyebrow">Updates</p>
+    <h1>{visibilityUpdateHub.title}</h1>
+    <p class="visibility-lead">{visibilityUpdateHub.description}</p>
+  </section>
+
+  <section class="visibility-stack" aria-label="Voice of Self updates">
+    {visibilityUpdatePosts.map((post) => (
+      <article class="visibility-card visibility-card--wide landing-surface">
+        <p class="visibility-card__kicker">
+          <time datetime={post.publishedDate}>{post.publishedDate}</time>
+        </p>
+        <h2>
+          <a href={withBase(`/updates/${post.slug}/`)}>{post.title}</a>
+        </h2>
+        <p>{post.description}</p>
+      </article>
+    ))}
+  </section>
+</div>

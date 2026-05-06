@@ -84,6 +84,8 @@ export const siteConfig = {
   defaultSocialImagePath,
   defaultSocialImageUrl: buildAbsoluteSiteHref(defaultSocialImagePath),
   homeHref: withBase("/"),
+  answersHref: withBase("/answers/"),
+  updatesHref: withBase("/updates/"),
   supportHref: withBase("/support/"),
   legalManifestHref: buildAbsoluteSiteHref("/legal-manifest.json"),
   appStoreHref,

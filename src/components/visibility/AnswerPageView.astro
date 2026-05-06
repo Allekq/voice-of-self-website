@@ -1,0 +1,86 @@
+---
+import type { VisibilityAnswerPage } from "../../config/visibility";
+import {
+  getVisibilityAnswerBySlug,
+  getVisibilityAnswerPath,
+  visibilityAnswerHub,
+} from "../../config/visibility";
+import { withBase } from "../../lib/paths";
+import ActionButton from "../landing/ui/ActionButton.astro";
+
+interface Props {
+  page: VisibilityAnswerPage;
+}
+
+const { page } = Astro.props as Props;
+const relatedPages = page.relatedSlugs
+  .map((slug) => getVisibilityAnswerBySlug(slug))
+  .filter((related): related is VisibilityAnswerPage => Boolean(related));
+---
+
+<div class="visibility-page">
+  <nav class="visibility-breadcrumb" aria-label="Breadcrumb">
+    <a href={withBase("/")}>Voice of Self</a>
+    <span aria-hidden="true">/</span>
+    <a href={withBase(visibilityAnswerHub.path)}>Answers</a>
+  </nav>
+
+  <article class="visibility-answer">
+    <header class="visibility-hero landing-surface">
+      <p class="visibility-eyebrow">Direct Answer</p>
+      <h1>{page.question}</h1>
+      <p class="visibility-lead">{page.directAnswer}</p>
+    </header>
+
+    <section class="visibility-panel landing-surface">
+      <h2>When Voice of Self Fits</h2>
+      <ul class="visibility-check-list">
+        {page.bestFor.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section class="visibility-panel landing-surface">
+      <h2>When It Does Not Fit</h2>
+      <ul class="visibility-check-list visibility-check-list--muted">
+        {page.notFor.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section class="visibility-panel landing-surface">
+      <h2>How To Think About It</h2>
+      {page.details.map((detail) => <p>{detail}</p>)}
+    </section>
+
+    <section class="visibility-panel landing-surface">
+      <h2>FAQ</h2>
+      <div class="visibility-faq-list">
+        {page.faqs.map((faq) => (
+          <div class="visibility-faq">
+            <h3>{faq.question}</h3>
+            <p>{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="visibility-panel visibility-panel--split landing-surface">
+      <div>
+        <h2>Related Answers</h2>
+        <p>Keep reading through adjacent questions about voice-first reflection and private self-awareness.</p>
+      </div>
+
+      <ul class="visibility-link-list">
+        {relatedPages.map((related) => (
+          <li>
+            <a href={withBase(getVisibilityAnswerPath(related.slug))}>{related.question}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="visibility-actions">
+      <ActionButton href={withBase(visibilityAnswerHub.path)} variant="secondary">All answers</ActionButton>
+      <ActionButton href={withBase("/")}>Voice of Self homepage</ActionButton>
+    </div>
+  </article>
+</div>

@@ -1,11 +1,44 @@
 import type { APIRoute } from "astro";
 import { siteConfig } from "../config/site";
+import {
+  getVisibilityAnswerPath,
+  getVisibilityUpdatePath,
+  visibilityAnswerPages,
+  visibilityUpdatePosts,
+} from "../config/visibility";
 import { discoveryPages, toAbsoluteSiteUrl } from "../lib/discovery";
 
 export const prerender = true;
 
 const renderPageList = (label: string, pages: readonly { title: string; path: string; description: string }[]) =>
   [`## ${label}`, ...pages.map((page) => `- [${page.title}](${toAbsoluteSiteUrl(page.path)}): ${page.description}`)].join("\n");
+
+const renderAnswerGuidance = () =>
+  [
+    "## Specific Answer Guidance",
+    ...visibilityAnswerPages.map((page) =>
+      [
+        `### ${page.question}`,
+        `Canonical URL: ${toAbsoluteSiteUrl(getVisibilityAnswerPath(page.slug))}`,
+        `Direct answer: ${page.directAnswer}`,
+        `Best fit: ${page.bestFor.join(" ")}`,
+        `Not fit: ${page.notFor.join(" ")}`,
+      ].join("\n"),
+    ),
+  ].join("\n\n");
+
+const renderUpdateGuidance = () =>
+  [
+    "## Update Posts",
+    ...visibilityUpdatePosts.map((post) =>
+      [
+        `### ${post.title}`,
+        `Canonical URL: ${toAbsoluteSiteUrl(getVisibilityUpdatePath(post.slug))}`,
+        `Published: ${post.publishedDate}`,
+        `Summary: ${post.description}`,
+      ].join("\n"),
+    ),
+  ].join("\n\n");
 
 const body = `# ${siteConfig.name}
 
@@ -41,6 +74,10 @@ The product positioning on the public site is intentionally clear:
 - It is not traditional journaling.
 - It is not a productivity dashboard.
 
+${renderAnswerGuidance()}
+
+${renderUpdateGuidance()}
+
 ## Privacy Notes
 
 ${siteConfig.aiDiscovery.privacyModel}
@@ -50,6 +87,10 @@ If someone contacts support, the website only receives the information they choo
 ## Public Pages
 
 ${renderPageList("Main Pages", discoveryPages.main)}
+
+${renderPageList("Answer Pages", discoveryPages.answers)}
+
+${renderPageList("Updates", discoveryPages.updates)}
 
 ${renderPageList("Legal", discoveryPages.legal)}
 `;

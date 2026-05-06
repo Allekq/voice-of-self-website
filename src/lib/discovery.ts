@@ -1,4 +1,12 @@
 import { siteConfig } from "../config/site";
+import {
+  getVisibilityAnswerPath,
+  getVisibilityUpdatePath,
+  visibilityAnswerHub,
+  visibilityAnswerPages,
+  visibilityUpdateHub,
+  visibilityUpdatePosts,
+} from "../config/visibility";
 import { withBase } from "./paths";
 
 export interface DiscoveryPage {
@@ -22,6 +30,30 @@ export const discoveryPages = {
       path: "/support/",
       description: "Email-based support instructions for Voice of Self.",
     },
+  ],
+  answers: [
+    {
+      title: visibilityAnswerHub.title,
+      path: visibilityAnswerHub.path,
+      description: visibilityAnswerHub.description,
+    },
+    ...visibilityAnswerPages.map((page) => ({
+      title: page.title,
+      path: getVisibilityAnswerPath(page.slug),
+      description: page.description,
+    })),
+  ],
+  updates: [
+    {
+      title: visibilityUpdateHub.title,
+      path: visibilityUpdateHub.path,
+      description: visibilityUpdateHub.description,
+    },
+    ...visibilityUpdatePosts.map((post) => ({
+      title: post.title,
+      path: getVisibilityUpdatePath(post.slug),
+      description: post.description,
+    })),
   ],
   legal: [
     {
@@ -53,6 +85,10 @@ export const discoveryPages = {
 export const sitemapPagePaths = [
   "/",
   "/support/",
+  visibilityAnswerHub.path,
+  ...visibilityAnswerPages.map((page) => getVisibilityAnswerPath(page.slug)),
+  visibilityUpdateHub.path,
+  ...visibilityUpdatePosts.map((post) => getVisibilityUpdatePath(post.slug)),
   "/privacy-policy/",
   "/terms-of-service/",
 ] as const;

@@ -1,0 +1,56 @@
+---
+import { siteConfig } from "../../config/site";
+import {
+  getVisibilityAnswerPath,
+  visibilityAnswerHub,
+  visibilityAnswerPages,
+  visibilityUpdateHub,
+  visibilityUpdatePosts,
+} from "../../config/visibility";
+import { withBase } from "../../lib/paths";
+import ActionButton from "../landing/ui/ActionButton.astro";
+---
+
+<div class="visibility-page visibility-page--hub">
+  <section class="visibility-hero landing-surface">
+    <p class="visibility-eyebrow">Answer Hub</p>
+    <h1>{visibilityAnswerHub.title}</h1>
+    <p class="visibility-lead">{visibilityAnswerHub.intro}</p>
+
+    <div class="visibility-actions">
+      <ActionButton href={siteConfig.appStoreHref}>Download on the App Store</ActionButton>
+      <ActionButton href={withBase(visibilityUpdateHub.path)} variant="secondary">Read updates</ActionButton>
+    </div>
+  </section>
+
+  <section class="visibility-grid" aria-label="Voice of Self answer pages">
+    {visibilityAnswerPages.map((page) => (
+      <article class="visibility-card landing-surface">
+        <p class="visibility-card__kicker">Question</p>
+        <h2>
+          <a href={withBase(getVisibilityAnswerPath(page.slug))}>{page.question}</a>
+        </h2>
+        <p>{page.directAnswer}</p>
+      </article>
+    ))}
+  </section>
+
+  <section class="visibility-panel landing-surface">
+    <div>
+      <p class="visibility-eyebrow">Product Notes</p>
+      <h2>{visibilityUpdateHub.title}</h2>
+      <p>
+        Short public notes explain the product philosophy behind voice-first reflection,
+        private self-awareness, and noticing personal growth without turning it into homework.
+      </p>
+    </div>
+
+    <ul class="visibility-link-list">
+      {visibilityUpdatePosts.map((post) => (
+        <li>
+          <a href={withBase(`/updates/${post.slug}/`)}>{post.title}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</div>

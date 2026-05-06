@@ -1,0 +1,52 @@
+---
+import "../../styles/landing.css";
+import "../../styles/visibility.css";
+import SiteFooter from "../../components/landing/sections/SiteFooter.astro";
+import UpdatePostView from "../../components/visibility/UpdatePostView.astro";
+import { siteConfig } from "../../config/site";
+import { visibilityUpdatePosts } from "../../config/visibility";
+import { toAbsoluteSiteUrl } from "../../lib/discovery";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const getStaticPaths = () =>
+  visibilityUpdatePosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+
+const { post } = Astro.props;
+const postUrl = toAbsoluteSiteUrl(`/updates/${post.slug}/`);
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    url: postUrl,
+    datePublished: post.publishedDate,
+    author: {
+      "@type": "Person",
+      name: siteConfig.legalName,
+    },
+    publisher: {
+      "@id": `${siteConfig.origin}#organization`,
+    },
+    about: {
+      "@type": "SoftwareApplication",
+      name: siteConfig.name,
+      applicationCategory: "LifestyleApplication",
+      operatingSystem: "iOS",
+    },
+  },
+];
+---
+
+<SiteLayout
+  title={post.title}
+  description={post.description}
+  pageType="content"
+  structuredData={structuredData}
+>
+  <UpdatePostView post={post} />
+  <SiteFooter />
+</SiteLayout>

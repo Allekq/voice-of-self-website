@@ -1,0 +1,42 @@
+---
+import "../../styles/landing.css";
+import "../../styles/visibility.css";
+import SiteFooter from "../../components/landing/sections/SiteFooter.astro";
+import UpdatesIndexView from "../../components/visibility/UpdatesIndexView.astro";
+import { visibilityUpdateHub, visibilityUpdatePosts } from "../../config/visibility";
+import { siteConfig } from "../../config/site";
+import { toAbsoluteSiteUrl } from "../../lib/discovery";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: visibilityUpdateHub.title,
+    url: toAbsoluteSiteUrl(visibilityUpdateHub.path),
+    description: visibilityUpdateHub.description,
+    about: {
+      "@type": "SoftwareApplication",
+      name: siteConfig.name,
+      applicationCategory: "LifestyleApplication",
+      operatingSystem: "iOS",
+    },
+    blogPost: visibilityUpdatePosts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: toAbsoluteSiteUrl(`/updates/${post.slug}/`),
+      datePublished: post.publishedDate,
+    })),
+  },
+];
+---
+
+<SiteLayout
+  title={visibilityUpdateHub.title}
+  description={visibilityUpdateHub.description}
+  pageType="content"
+  structuredData={structuredData}
+>
+  <UpdatesIndexView />
+  <SiteFooter />
+</SiteLayout>

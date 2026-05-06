@@ -1,5 +1,7 @@
 ---
 import { faqEntries } from "./faq.data";
+import { siteConfig } from "../../../config/site";
+import ActionButton from "../ui/ActionButton.astro";
 import FaqList from "../ui/FaqList.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
 import SectionShell from "../ui/SectionShell.astro";
@@ -13,4 +15,10 @@ import SectionShell from "../ui/SectionShell.astro";
   />
 
   <FaqList items={faqEntries} />
+
+  <div class="faq-section__answers-cta" data-reveal>
+    <ActionButton href={siteConfig.answersHref} variant="secondary">
+      Browse all answers
+    </ActionButton>
+  </div>
 </SectionShell>

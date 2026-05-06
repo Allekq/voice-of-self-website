@@ -2993,6 +2993,12 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.faq-section__answers-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(var(--space-lg), 4vw, var(--space-2xl));
+}
+
 .faq-item {
   align-self: start;
   border-bottom: 1px solid var(--color-divider);

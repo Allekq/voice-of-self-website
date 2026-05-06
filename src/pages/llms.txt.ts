@@ -23,6 +23,12 @@ Important notes:
 ## Main Pages
 ${renderLinks(discoveryPages.main)}
 
+## Answer Pages
+${renderLinks(discoveryPages.answers)}
+
+## Updates
+${renderLinks(discoveryPages.updates)}
+
 ## Legal
 ${renderLinks(discoveryPages.legal)}
 

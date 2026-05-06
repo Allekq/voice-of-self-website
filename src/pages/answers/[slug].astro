@@ -1,0 +1,65 @@
+---
+import "../../styles/landing.css";
+import "../../styles/visibility.css";
+import SiteFooter from "../../components/landing/sections/SiteFooter.astro";
+import AnswerPageView from "../../components/visibility/AnswerPageView.astro";
+import { visibilityAnswerPages } from "../../config/visibility";
+import { siteConfig } from "../../config/site";
+import { toAbsoluteSiteUrl } from "../../lib/discovery";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const getStaticPaths = () =>
+  visibilityAnswerPages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+
+const { page } = Astro.props;
+const pageUrl = toAbsoluteSiteUrl(`/answers/${page.slug}/`);
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: page.title,
+    url: pageUrl,
+    description: page.description,
+    about: {
+      "@type": "SoftwareApplication",
+      name: siteConfig.name,
+      applicationCategory: "LifestyleApplication",
+      operatingSystem: "iOS",
+      url: siteConfig.origin,
+    },
+    mainEntity: {
+      "@type": "Question",
+      name: page.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: page.directAnswer,
+      },
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: page.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  },
+];
+---
+
+<SiteLayout
+  title={page.title}
+  description={page.description}
+  pageType="content"
+  structuredData={structuredData}
+>
+  <AnswerPageView page={page} />
+  <SiteFooter />
+</SiteLayout>

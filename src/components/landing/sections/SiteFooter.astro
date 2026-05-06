@@ -7,6 +7,8 @@ import { siteConfig } from "../../../config/site";
     <a class="site-footer__brand" href={siteConfig.homeHref}>{siteConfig.name}</a>
 
     <nav class="site-footer__links" aria-label="Footer">
+      <a href={siteConfig.answersHref}>Answers</a>
+      <a href={siteConfig.updatesHref}>Updates</a>
       <a href={siteConfig.supportHref}>Support</a>
       {siteConfig.legalLinks.map((link) => (
         <a

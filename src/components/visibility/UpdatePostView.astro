@@ -1,0 +1,42 @@
+---
+import type { VisibilityUpdatePost } from "../../config/visibility";
+import { visibilityAnswerHub, visibilityUpdateHub } from "../../config/visibility";
+import { withBase } from "../../lib/paths";
+import ActionButton from "../landing/ui/ActionButton.astro";
+
+interface Props {
+  post: VisibilityUpdatePost;
+}
+
+const { post } = Astro.props as Props;
+---
+
+<div class="visibility-page">
+  <nav class="visibility-breadcrumb" aria-label="Breadcrumb">
+    <a href={withBase("/")}>Voice of Self</a>
+    <span aria-hidden="true">/</span>
+    <a href={withBase(visibilityUpdateHub.path)}>Updates</a>
+  </nav>
+
+  <article class="visibility-answer">
+    <header class="visibility-hero landing-surface">
+      <p class="visibility-eyebrow">
+        <time datetime={post.publishedDate}>{post.publishedDate}</time>
+      </p>
+      <h1>{post.title}</h1>
+      <p class="visibility-lead">{post.intro}</p>
+    </header>
+
+    {post.sections.map((section) => (
+      <section class="visibility-panel landing-surface">
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+    ))}
+
+    <div class="visibility-actions">
+      <ActionButton href={withBase(visibilityUpdateHub.path)} variant="secondary">All updates</ActionButton>
+      <ActionButton href={withBase(visibilityAnswerHub.path)}>Read answer pages</ActionButton>
+    </div>
+  </article>
+</div>

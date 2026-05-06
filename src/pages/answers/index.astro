@@ -1,0 +1,45 @@
+---
+import "../../styles/landing.css";
+import "../../styles/visibility.css";
+import SiteFooter from "../../components/landing/sections/SiteFooter.astro";
+import AnswerHubView from "../../components/visibility/AnswerHubView.astro";
+import { visibilityAnswerHub, visibilityAnswerPages } from "../../config/visibility";
+import { siteConfig } from "../../config/site";
+import { toAbsoluteSiteUrl } from "../../lib/discovery";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: visibilityAnswerHub.title,
+    url: toAbsoluteSiteUrl(visibilityAnswerHub.path),
+    description: visibilityAnswerHub.description,
+    about: {
+      "@type": "SoftwareApplication",
+      name: siteConfig.name,
+      applicationCategory: "LifestyleApplication",
+      operatingSystem: "iOS",
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: visibilityAnswerPages.map((page, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: toAbsoluteSiteUrl(`/answers/${page.slug}/`),
+        name: page.question,
+      })),
+    },
+  },
+];
+---
+
+<SiteLayout
+  title={visibilityAnswerHub.title}
+  description={visibilityAnswerHub.description}
+  pageType="content"
+  structuredData={structuredData}
+>
+  <AnswerHubView />
+  <SiteFooter />
+</SiteLayout>
