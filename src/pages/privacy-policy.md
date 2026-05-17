@@ -6,8 +6,8 @@ description: Voice of Self privacy policy.
 
 # Voice Of Self Privacy Policy
 
-Effective Date: 2026-05-01  
-Version: 1.2.9
+Effective Date: 2026-05-17  
+Version: 1.2.10
 
 This Privacy Policy explains how Voice Of Self (also referred to in some parts
 of the product as "Closure") processes personal information when you use the
@@ -61,6 +61,21 @@ Contact:
   choose to send.
 - We do not sell personal data, and we do not use your personal content to
   train our own models.
+- Voice Of Self is not an ad-supported app. We do not display third-party ads,
+  sponsored placements, or ad-network content inside the Voice Of Self app.
+- We may advertise Voice Of Self by buying ads on services such as Meta,
+  Instagram, TikTok, Apple Search Ads, Google, or similar platforms. Those
+  platforms process ad interactions under their own policies.
+- Buying ads does not mean we send your journal content, audio, transcripts, AI
+  outputs, support-message text, or account email address to ad platforms.
+- We do not currently use Meta Pixel, TikTok Pixel, Google advertising tags,
+  third-party advertising SDKs, server-side conversion APIs, custom audience
+  uploads, or similar ad-tracking or retargeting tools in the Voice Of Self app
+  or website.
+- If we later add an advertising pixel, app event SDK, server-side conversion
+  API, custom audience upload, or similar measurement tool, we will update this
+  policy and use required consent or choice controls before activating that
+  tool.
 - Depending on where you live, you may have rights to access, correct, delete,
   or object to some processing. Most local journal content remains under your
   direct control on your device.
@@ -77,11 +92,12 @@ Contact:
 8. [How long do we keep your information?](#8-how-long-do-we-keep-your-information)
 9. [How do we keep your information safe?](#9-how-do-we-keep-your-information-safe)
 10. [What are your privacy rights?](#10-what-are-your-privacy-rights)
-11. [Controls for Do Not Track features](#11-controls-for-do-not-track-features)
-12. [Do United States residents have specific privacy rights?](#12-do-united-states-residents-have-specific-privacy-rights)
-13. [Do we make updates to this policy?](#13-do-we-make-updates-to-this-policy)
-14. [How can you contact us about this policy?](#14-how-can-you-contact-us-about-this-policy)
-15. [How can you review, update, or delete data?](#15-how-can-you-review-update-or-delete-data)
+11. [Advertising, tracking, and campaign measurement](#11-advertising-tracking-and-campaign-measurement)
+12. [Controls for Do Not Track features](#12-controls-for-do-not-track-features)
+13. [Do United States residents have specific privacy rights?](#13-do-united-states-residents-have-specific-privacy-rights)
+14. [Do we make updates to this policy?](#14-do-we-make-updates-to-this-policy)
+15. [How can you contact us about this policy?](#15-how-can-you-contact-us-about-this-policy)
+16. [How can you review, update, or delete data?](#16-how-can-you-review-update-or-delete-data)
 
 ## 1. What Information Do We Collect?
 
@@ -201,6 +217,10 @@ process limited technical information such as:
 - Request identifiers, status codes, model/workflow labels, and similar
   service-operation diagnostics
 - Standard server, security, fraud-prevention, and diagnostic log data
+- Advertising and campaign information if you interact with our ads or campaign
+  links, such as ad click metadata processed by the ad platform, referral
+  source, campaign parameters, landing-page request metadata, and aggregated
+  campaign reports from ad platforms
 
 If you use the app, it may also request access to features such as:
 
@@ -256,6 +276,9 @@ We may process personal information to:
 - Apply safety checks and limit, defer, or block some AI features when content
   appears to present safety or policy risks
 - Respond to support requests
+- Measure, understand, and improve our own advertising campaigns where lawful,
+  using the limited campaign measurement practices described in
+  [Section 11](#11-advertising-tracking-and-campaign-measurement)
 - Send account, billing, security, safety, legal, or policy notices
 - Comply with law, defend legal rights, and protect users or the service
 
@@ -301,6 +324,11 @@ needed to operate the service. Categories include:
   or share a `.vos` backup file
 - Email providers involved in delivering or receiving support or
   direct contact email
+- Advertising platforms when they show or measure Voice Of Self ads on their
+  own platforms and provide campaign reports
+- Future advertising measurement providers only if the relevant pixel, SDK,
+  conversion API, custom audience, or similar tool is added with required
+  notice and compliance controls before activation
 
 We may also disclose personal information when reasonably necessary to:
 
@@ -517,19 +545,70 @@ If processing depends on your consent, you can withdraw that consent at any
 time. This does not affect the lawfulness of processing before withdrawal or
 processing based on another lawful basis.
 
-## 11. Controls For Do Not Track Features
+## 11. Advertising, Tracking, And Campaign Measurement
+
+Voice Of Self may be promoted through paid or organic campaigns on third-party
+platforms such as Meta, Instagram, TikTok, Apple Search Ads, Google, or similar
+services. We may choose campaign settings inside those platforms, such as
+region, language, placement, keyword, interest, app-category, campaign
+objective, budget, schedule, creative, and similar platform-provided targeting
+or optimization settings, where lawful.
+
+For clarity, advertising Voice Of Self on external platforms is different from
+showing ads inside the app. Voice Of Self is not an ad-supported app: we do not
+display third-party ads, sponsored placements, ad-network content, or paid
+promotions inside the Voice Of Self app.
+
+If you see, click, view, save, share, comment on, install from, or otherwise
+interact with a Voice Of Self ad on one of those platforms, the platform may
+process information about that interaction under its own terms and privacy
+policy. We may receive campaign reports from those platforms, such as
+impressions, clicks, installs, video views, engagement, spend, and other
+aggregated or campaign-level performance information.
+
+We may use non-sensitive campaign links or parameters, such as UTM parameters,
+referral source, landing-page path, and aggregated platform reports, to
+understand whether a campaign is working. Website hosting, browser, and
+security systems may also receive ordinary request metadata such as IP address,
+user agent, request time, and the page requested.
+
+Today, the Voice Of Self app and website do not include Meta Pixel, TikTok
+Pixel, Google advertising tags, third-party ad SDKs, server-side conversion
+APIs, or similar ad-tracking code. We do not currently upload customer lists,
+account email addresses, support email addresses, device advertising
+identifiers, app activity, website activity, journal text, raw audio,
+transcripts, AI outputs, or similar user data to ad platforms for custom
+audiences, lookalike audiences, retargeting, attribution, or conversion
+measurement.
+
+If we later add a website pixel, app event SDK, server-side conversion API,
+custom audience upload, retargeting audience, lookalike audience, or similar
+advertising measurement tool, we will treat that as a material advertising-data
+practice. Before activating that tool, we will update this policy and App Store
+privacy disclosures, use legally required cookie or tracking consent controls,
+and comply with Apple App Tracking Transparency where the iOS app tracks users
+across other companies' apps or websites.
+
+We will not intentionally send journal text, raw audio, transcripts, AI
+outputs, live-question content, support-message text, children's data, or
+other sensitive app content to Meta, TikTok, Google, Apple Search Ads, or
+similar ad platforms for targeting or campaign measurement. We also will not
+upload support lists or account email addresses for custom-audience advertising
+unless we have a lawful basis, required notice, and any required consent.
+
+## 12. Controls For Do Not Track Features
 
 Some browsers offer a Do Not Track ("DNT") setting. Because there is no
 consistent industry standard for recognizing and enforcing DNT signals, we do
 not currently respond to them.
 
-## 12. Do United States Residents Have Specific Privacy Rights?
+## 13. Do United States Residents Have Specific Privacy Rights?
 
 If you live in a US state with a privacy law that applies to us, you may have
 rights to know, access, correct, delete, or obtain a copy of certain personal
 information, and to opt out of some kinds of processing where applicable.
 
-### 12.1 Categories of personal information we may process
+### 13.1 Categories of personal information we may process
 
 Depending on how you use the service, we may process categories such as:
 
@@ -551,19 +630,23 @@ Depending on how you use the service, we may process categories such as:
 Audio recordings may contain your voice, but we do not use those recordings to
 create biometric identity templates or voiceprints for identity verification.
 
-### 12.2 Sale, sharing, and sensitive information
+### 13.2 Sale, sharing, and sensitive information
 
-We do not sell personal data. We do not share personal data for targeted or
-cross-context behavioral advertising. We use sensitive personal information
-only as needed to provide the service, secure it, comply with law, or for other
-purposes permitted by applicable law.
+We do not sell personal data. We do not currently share personal data from our
+app or website for targeted or cross-context behavioral advertising. We use
+sensitive personal information only as needed to provide the service, secure it,
+comply with law, or for other purposes permitted by applicable law.
 
-### 12.3 Exercising your rights
+If we add a practice that qualifies as sale, sharing, targeted advertising, or
+cross-context behavioral advertising under an applicable law, we will provide
+the legally required notice and opt-out or consent mechanism.
+
+### 13.3 Exercising your rights
 
 To exercise applicable rights, contact us using the details in
-[Section 14](#14-how-can-you-contact-us-about-this-policy).
+[Section 15](#15-how-can-you-contact-us-about-this-policy).
 
-### 12.4 Verification, authorized agents, and appeals
+### 13.4 Verification, authorized agents, and appeals
 
 We may ask for information needed to verify your identity before responding to
 an access, correction, deletion, or similar privacy-rights request. Where
@@ -572,18 +655,18 @@ your behalf, and we may ask for proof of that authorization.
 
 If we deny a request and applicable law gives you an appeal right, you may
 appeal by emailing `alekgameshelp2@gmail.com` or by using the other contact
-details in [Section 14](#14-how-can-you-contact-us-about-this-policy).
+details in [Section 15](#15-how-can-you-contact-us-about-this-policy).
 
 We do not currently disclose personal information to third parties for their
 own direct-marketing purposes.
 
-## 13. Do We Make Updates To This Policy?
+## 14. Do We Make Updates To This Policy?
 
 Yes. We may update this Privacy Policy from time to time. The current version
 and effective date are published in the hosted legal manifest and surfaced in
 the app when a new acceptance is required.
 
-## 14. How Can You Contact Us About This Policy?
+## 15. How Can You Contact Us About This Policy?
 
 If you have questions or comments about this Privacy Policy, you may contact us
 at:
@@ -594,9 +677,9 @@ at:
 - Support page: `https://voiceofself.life/support/`
 - Country: Poland
 
-## 15. How Can You Review, Update, Or Delete Data?
+## 16. How Can You Review, Update, Or Delete Data?
 
-### 15.1 Local app data
+### 16.1 Local app data
 
 You can delete local journals, transcripts, recordings, exports, and related
 content directly on your device. Standard `.vos` exports can include
@@ -606,7 +689,7 @@ the app may remove some local app data, but it may not remove copies in export
 files, Files/iCloud locations, email drafts, sent-mail folders, or device
 backups.
 
-### 15.2 Backend-linked account data
+### 16.2 Backend-linked account data
 
 The app includes an in-app delete-account flow. When completed, it is intended
 to remove:
@@ -634,10 +717,10 @@ necessarily remove transaction records, provider-side logs, or legally required
 records kept by Apple, RevenueCat, Google, email providers, or other third
 parties under their own obligations.
 
-### 15.3 Support data
+### 16.3 Support data
 
 To request review, correction, or deletion of backend-linked data or
 support-request data, contact us using the details in
-[Section 14](#14-how-can-you-contact-us-about-this-policy). If you contacted
+[Section 15](#15-how-can-you-contact-us-about-this-policy). If you contacted
 us by email, you may also need to delete copies from your own mailbox,
 sent-mail folder, or other email systems you used.
